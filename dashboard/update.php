@@ -7,7 +7,7 @@ if (!isset($_SESSION['authed'])) {
 if (!isset($_POST['name']) || !isset($_POST['html']) || !isset($_POST['id']) || !isset($_POST['site'])) { header('Location: .'); }
 
 include_once('settings.php');
-$con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], 'fancy');
+$con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], $fancyVars['dbname']);
 mysqli_set_charset($con, "utf8");
 $name = $_POST['name'];
 $html = $_POST['html'];

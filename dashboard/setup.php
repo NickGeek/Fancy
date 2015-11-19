@@ -52,7 +52,7 @@
 						<div id="elementList" class="list-group">
 							<h1 class="page-header">Welcome to Fancy!</h1>
 							<p>
-								<em>Before you start you will need to create a MySQL/MariaDB database called 'fancy'. PHP will also need read/write access to this folder.</em>
+								<em>Before you start you will need to create a MySQL/MariaDB database remember its name.</em>
 							</p>
 							<form action="createConfig.php" method="post">
 								<p><strong>Fancy Settings:</strong></p>
@@ -61,6 +61,8 @@
 								<input type="password" class="form-control" name="password" placeholder="Dashboard Password" required><br />
 								
 								<p><strong>Database Settings:</strong></p>
+								<input type="text" class="form-control" name="dbname" placeholder="Database Name" required>
+								<br>
 								<input type="text" class="form-control" name="address" placeholder="Database Address (usually 'localhost')" required>
 								<br>
 								<input type="text" class="form-control" name="dbuser" placeholder="Database Username" required>

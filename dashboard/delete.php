@@ -5,7 +5,7 @@ if (!isset($_SESSION['authed'])) {
 }
 
 include_once('settings.php');
-$con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], 'fancy');
+$con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], $fancyVars['dbname']);
 mysqli_set_charset($con, "utf8");
 $type = $_GET['type'];
 

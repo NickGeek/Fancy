@@ -4,8 +4,8 @@ if (count(array_filter($_POST)) < 6) {
 	exit();
 }
 
-$fancyVars = array('fancy_password' => password_hash($_POST['password'], PASSWORD_BCRYPT),'dbaddr' => addslashes($_POST['address']),'dbuser' => addslashes($_POST['dbuser']),'dbpass' => addslashes($_POST['dbpass']));
-$fancyVarsStr = htmlspecialchars('<?php').' $fancyVars = array("fancy_password" => \''.password_hash($_POST["password"], PASSWORD_BCRYPT).'\',"dbaddr" => "'.addslashes($_POST["address"]).'","dbuser" => "'.addslashes($_POST["dbuser"]).'","dbpass" => \''.addslashes($_POST["dbpass"]).'\'); '.htmlspecialchars('?>');
+$fancyVars = array('fancy_password' => password_hash($_POST['password'], PASSWORD_BCRYPT),'dbaddr' => addslashes($_POST['address']),'dbuser' => addslashes($_POST['dbuser']),'dbpass' => addslashes($_POST['dbpass']), "dbname" => addslashes($_POST['dbname']));
+$fancyVarsStr = htmlspecialchars('<?php').' $fancyVars = array("fancy_password" => \''.password_hash($_POST["password"], PASSWORD_BCRYPT).'\',"dbaddr" => \''.addslashes($_POST["address"]).'\',"dbuser" => \''.addslashes($_POST["dbuser"]).'\',"dbpass" => \''.addslashes($_POST["dbpass"]).'\', "dbname" => \''.addslashes($_POST['dbname']).'\'); '.htmlspecialchars('?>');
 
 // Create an settings file
 $file = fopen("settings.php", "w");
@@ -21,7 +21,7 @@ session_start();
 $_SESSION['authed'] = true;
 
 //Add the site
-$con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], 'fancy');
+$con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], $fancyVars['dbname']);
 $name = $_POST['site'];
 
 $con->query("SET SQL_MODE = \"NO_AUTO_VALUE_ON_ZERO\";");

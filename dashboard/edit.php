@@ -8,7 +8,7 @@ if (!isset($_GET['id']) || !isset($_GET['site'])) { header('Location: .'); }
 $id = $_GET['id'];
 $site = $_GET['site'];
 include_once('settings.php');
-$con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], 'fancy');
+$con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], $fancyVars['dbname']);
 mysqli_set_charset($con, "utf8");
 
 if ($id == 0) {
