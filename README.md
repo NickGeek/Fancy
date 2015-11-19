@@ -1,5 +1,5 @@
 # Fancy
-Fancy is a way to let users edit static HTML websites from an awesome dashboard. You can have easy to update pages without a CMS!
+Fancy is a way to let users edit static HTML websites from an awesome dashboard. You can have easy to update pages without a CMS! Go to http://fancyxht.ml for more information.
 
 #Demo
 You can view a live demo at [http://fancyxht.ml/demo](http://fancyxht.ml/demo) and view its dashboard at [http://fancyxht.ml/demodash](http://fancyxht.ml/demodash).
