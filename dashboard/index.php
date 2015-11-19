@@ -163,7 +163,7 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 								<code>
 									<?php
 										echo htmlspecialchars('<?php');
-										echo ' $site = \''.$site.'\';';
+										echo ' $site = \''.addslashes($site).'\';';
 										echo ' require_once(\'fancyConnector.php\');';
 										echo ' ?>';
 									?>

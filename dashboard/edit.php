@@ -204,7 +204,7 @@ foreach ($sql as $row) {
 							<code>
 								<?php
 									echo htmlspecialchars('<?php');
-									echo ' fancy(\'<span id="nameCode">'.$name.'</span>\');';
+									echo ' fancy(\'<span id="nameCode">'.addslashes($name).'</span>\');';
 									echo ' ?>';
 								?>
 							</code>
