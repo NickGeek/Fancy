@@ -7,25 +7,14 @@ mysqli_set_charset($con, "utf8");
 $sql = $con->query("show tables;");
 $res = array();
 $sites = array();
+$sites[0]= 'demo';
+$site = $sites[0];
+
+//Get elements
+$sql = $con->query("SELECT `id`, `name` FROM `{$con->real_escape_string($site)}` WHERE 1;");
+$elements = array();
 foreach ($sql as $row) {
-	$res[] = $row;
-}
-foreach ($res as $x) {
-	$sites[] = $x['Tables_in_fancy'];
-}
-
-if (isset($_GET['site']) && $_GET['site'] == "demo" || $_GET['site'] == "test") {
-	$site = $_GET['site'];
-
-	//Get elements
-	$sql = $con->query("SELECT `id`, `name` FROM `{$con->real_escape_string($site)}` WHERE 1;");
-	$elements = array();
-	foreach ($sql as $row) {
-		$elements[] = $row;
-	}
-}
-else {
-	header('Location: index.php?site=demo');
+	$elements[] = $row;
 }
 ?>
 
