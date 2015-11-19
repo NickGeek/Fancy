@@ -1,0 +1,14 @@
+/* Website template by freewebsitetemplates.com */
+/*------------------------- Layout styles ------------------------*/ 
+
+/*------------------------- Header ------------------------*/
+
+/*------------------------- Body ------------------------*/
+.body ul.blog li div a{
+	background:url(../images/button-more.jpg) no-repeat center 3px;
+}
+.body ul li div.featured a{
+	padding:9px 0 0;
+}
+
+/*------------------------- Footer ------------------------*/
