@@ -1,11 +1,11 @@
 <?php
-if (count(array_filter($_POST)) < 5) {
+if (count(array_filter($_POST)) < 6) {
 	echo "You must fill out all the text boxes.";
 	exit();
 }
 
-$fancyVars = array('fancy_password' => password_hash($_POST['password'], PASSWORD_BCRYPT),'dbaddr' => $_POST['address'],'dbuser' => $_POST['dbuser'],'dbpass' => $_POST['dbpass']);
-$fancyVarsStr = htmlspecialchars('<?php').' $fancyVars = array("fancy_password" => \''.password_hash($_POST["password"], PASSWORD_BCRYPT).'\',"dbaddr" => "'.$_POST["address"].'","dbuser" => "'.$_POST["dbuser"].'","dbpass" => \''.$_POST["dbpass"].'\'); '.htmlspecialchars('?>');
+$fancyVars = array('fancy_password' => password_hash($_POST['password'], PASSWORD_BCRYPT),'dbaddr' => addslashes($_POST['address']),'dbuser' => addslashes($_POST['dbuser']),'dbpass' => addslashes($_POST['dbpass']));
+$fancyVarsStr = htmlspecialchars('<?php').' $fancyVars = array("fancy_password" => \''.password_hash($_POST["password"], PASSWORD_BCRYPT).'\',"dbaddr" => "'.addslashes($_POST["address"]).'","dbuser" => "'.addslashes($_POST["dbuser"]).'","dbpass" => \''.addslashes($_POST["dbpass"]).'\'); '.htmlspecialchars('?>');
 
 // Create an settings file
 $file = fopen("settings.php", "w");
