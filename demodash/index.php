@@ -142,7 +142,7 @@ else {
 						
 						<h3>How to enable Fancy on your webpages:</h3>
 						<ol>
-							<li>Download these two files (<a href="download.php?id=settings" target="_blank">settings.php</a> and <a href="download.php?id=connector" target="_blank">fancyConnector.php</a>)</li>
+							<li>Download these two files (<a href="javascript:void(0);">settings.php</a> and <a href="javascript:void(0);" target="_blank">fancyConnector.php</a>)</li>
 							<li>Put the files in the folder of the site.</li>
 							<li>
 								Paste the following code at the very top of any page you wish to add Fancy elements to:<br />
