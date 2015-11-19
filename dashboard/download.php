@@ -1,9 +1,5 @@
 <?php
 session_start();
-if (!isset($_SESSION['authed'])) {
-	header("Location: login.php");
-}
-
 function download($file) {
 	header('Content-Description: File Transfer');
 	header('Content-Type: application/octet-stream');
@@ -16,10 +12,16 @@ function download($file) {
 	exit;
 }
 
-if ($_GET['id'] == "settings") {
-	download('settings.php');
+if (!isset($_SESSION['authed'])) {
+	header("Location: login.php");
 }
-elseif ($_GET['id'] == "connector") {
-	download('fancyConnector.php');
+else {
+	if ($_GET['id'] == "settings") {
+		download('settings.php');
+	}
+	elseif ($_GET['id'] == "connector") {
+		download('fancyConnector.php');
+	}
 }
+
 ?>
