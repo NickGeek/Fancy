@@ -5,7 +5,7 @@ if (count(array_filter($_POST)) < 5) {
 }
 
 $fancyVars = array('fancy_password' => password_hash($_POST['password'], PASSWORD_BCRYPT),'dbaddr' => $_POST['address'],'dbuser' => $_POST['dbuser'],'dbpass' => $_POST['dbpass']);
-$fancyVarsStr = htmlspecialchars('<?php').' $fancyVars = array("fancy_password" => \''.password_hash($_POST["password"], PASSWORD_BCRYPT).'\',"dbaddr" => "'.$_POST["address"].'","dbuser" => "'.$_POST["dbuser"].'","dbpass" => "'.$_POST["dbpass"].'"); '.htmlspecialchars('?>');
+$fancyVarsStr = htmlspecialchars('<?php').' $fancyVars = array("fancy_password" => \''.password_hash($_POST["password"], PASSWORD_BCRYPT).'\',"dbaddr" => "'.$_POST["address"].'","dbuser" => "'.$_POST["dbuser"].'","dbpass" => \''.$_POST["dbpass"].'\'); '.htmlspecialchars('?>');
 
 // Create an settings file
 $file = fopen("settings.php", "w");

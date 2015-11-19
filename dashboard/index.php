@@ -33,7 +33,7 @@ else {
 }
 
 if (file_exists(realpath(getcwd().'/setup.php'))) {
-	echo "<script>alert('You need to delete setup.php');</script>";
+	echo "<script>alert('You need to delete createConfig.php');</script>";
 }
 ?>
 
