@@ -4,6 +4,10 @@ function noscript(strCode){
 	return html.html();
 }
 
+String.prototype.addSlashes = function() {
+	return this.replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
+}
+
 $(document).ready(function() {
 	$('#md').bind('input propertychange', function() {
 		$('#page').contents().find('html').html(markdown.toHTML(this.value));
@@ -19,7 +23,7 @@ $(document).ready(function() {
 		var raw = $('#name').text();
 		var formatted = $('<textarea />').html(raw).val();
 		$('#nameInput').val(formatted);
-		$('#nameCode').html(formatted);
+		$('#nameCode').html(formatted.addSlashes());
 	}, false);
 
 	//Handle DOCX stuff
