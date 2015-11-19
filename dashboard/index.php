@@ -32,7 +32,7 @@ else {
 	header('Location: index.php?site='.$sites[0]);
 }
 
-if (file_exists(realpath(getcwd().'/setup.php'))) {
+if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 	echo "<script>alert('You need to delete createConfig.php');</script>";
 }
 ?>
