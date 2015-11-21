@@ -15,7 +15,7 @@ foreach ($sql as $row) {
 	$res[] = $row;
 }
 foreach ($res as $x) {
-	$sites[] = $x['Tables_in_fancy'];
+	$sites[] = $x['Tables_in_'.$fancyVars['dbname']];
 }
 
 if (isset($_GET['site'])) {
