@@ -4,14 +4,12 @@ $con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass
 mysqli_set_charset($con, "utf8");
 
 //Get sites
-$sql = $con->query("show tables;");
-$res = array();
 $sites = array();
 $sites[0]= 'demo';
 $site = $sites[0];
 
 //Get elements
-$sql = $con->query("SELECT `id`, `name` FROM `{$con->real_escape_string($site)}` WHERE 1;");
+$sql = $con->query("SELECT `id`, `name` FROM `{$site}` WHERE 1;");
 $elements = array();
 foreach ($sql as $row) {
 	$elements[] = $row;
