@@ -26,7 +26,7 @@ require_once('fancyConnector.php');
 			<div class="body">
 				<div id="featured">
 					<h3>This page is very <a href="http://fancyxht.ml" target="_blank"><em>Fancy</em></a></h3>
-					<p>This website has dynamic content all throughout it using Fancy. This entire website took next to no time to class it up and make it <em>fancy</em>! Have a look around and see how this website has no CMS junk; just simple HTML, CSS, and a little bit of fanciness. Once you're done here condider saving yourself time and hassle by putting Fancy in your website.</p>
+					<p>This website has dynamic content all throughout it using Fancy. This entire website took next to no time to class it up and make it <em>fancy</em>! Have a look around and see how this website has no CMS junk; just simple HTML, CSS, and a little bit of fanciness. Once you're done here consider saving yourself time and hassle by putting Fancy in your website.</p>
 					<input type="button" value="Read more" onClick="parent.location='about.php'"/>
 				</div>
 				<ul class="featuredItems">
