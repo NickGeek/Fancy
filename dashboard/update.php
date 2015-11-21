@@ -2,6 +2,7 @@
 session_start();
 if (!isset($_SESSION['authed'])) {
 	header("Location: login.php");
+	exit();
 }
 else {
 	if (!isset($_POST['name']) || !isset($_POST['html']) || !isset($_POST['id']) || !isset($_POST['site'])) { header('Location: .'); }
@@ -25,5 +26,6 @@ else {
 	$con->query($sql);
 
 	header('Location: index.php?site='.$site);
+	exit();
 }
 ?>

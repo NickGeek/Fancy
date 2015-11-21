@@ -2,9 +2,10 @@
 session_start();
 if (!isset($_SESSION['authed'])) {
 	header("Location: login.php");
+	exit();
 }
 else {
-	if (!isset($_GET['name'])) { header('Location: .'); }
+	if (!isset($_GET['name'])) { header('Location: .'); exit(); }
 	include_once('settings.php');
 	$con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], $fancyVars['dbname']);
 	mysqli_set_charset($con, "utf8");

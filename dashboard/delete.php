@@ -2,6 +2,7 @@
 session_start();
 if (!isset($_SESSION['authed'])) {
 	header("Location: login.php");
+	exit();
 }
 else {
 	include_once('settings.php');
@@ -22,5 +23,6 @@ else {
 	$con->query($sql);
 
 	header('Location: .');
+	exit();
 }
 ?>

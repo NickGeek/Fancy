@@ -2,6 +2,7 @@
 session_start();
 if (!isset($_SESSION['authed'])) {
 	header("Location: login.php");
+	exit();
 }
 include_once('settings.php');
 $con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], $fancyVars['dbname']);
@@ -30,6 +31,7 @@ if (isset($_GET['site'])) {
 }
 else {
 	header('Location: index.php?site='.$sites[0]);
+	exit();
 }
 
 if (file_exists(realpath(getcwd().'/createConfig.php'))) {

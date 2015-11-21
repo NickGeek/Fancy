@@ -5,6 +5,7 @@ if (isset($_POST['password'])) {
 		session_start();
 		$_SESSION['authed'] = true;
 		header('Location: .');
+		exit();
 	}
 	else {
 		echo "Incorrect Password";

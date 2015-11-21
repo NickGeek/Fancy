@@ -2,9 +2,10 @@
 session_start();
 if (!isset($_SESSION['authed'])) {
 	header("Location: login.php");
+	exit();
 }
 
-if (!isset($_GET['id']) || !isset($_GET['site'])) { header('Location: .'); }
+if (!isset($_GET['id']) || !isset($_GET['site'])) { header('Location: .'); exit(); }
 $id = $_GET['id'];
 $site = $_GET['site'];
 include_once('settings.php');

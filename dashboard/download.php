@@ -14,6 +14,7 @@ function download($file) {
 
 if (!isset($_SESSION['authed'])) {
 	header("Location: login.php");
+	exit();
 }
 else {
 	if ($_GET['id'] == "settings") {
