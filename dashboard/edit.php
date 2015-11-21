@@ -192,7 +192,7 @@ foreach ($sql as $row) {
 									<input id="nameInput" name="name" type="hidden" value="<?php echo $name; ?>" />
 									<input name="id" type="hidden" value="<?php echo $id; ?>" />
 									<input name="site" type="hidden" value="<?php echo $site; ?>" />
-									<input type="submit" class="btn btn-success" style="margin-left: 10px; float: right;" />
+									<input type="submit" class="btn btn-success" style="margin-left: 10px; float: right;" value="Submit" />
 									<a href="javascript:void(0);" class="btn btn-danger" style="float: right;" onclick="del(<?php echo "'".$name."'"; ?>);">Delete Element</a>
 									</div>
 								</form>
