@@ -31,8 +31,7 @@ body {
 	height: 400px;
 }
 
-iframe {
-	border: none;
+page {
 	height: 310px;
 	width: 100%;
 }

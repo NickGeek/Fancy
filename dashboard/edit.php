@@ -55,6 +55,9 @@ foreach ($sql as $row) {
 	<!-- Custom Fonts -->
 	<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+	<link rel="stylesheet" href="css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
+	<link rel="stylesheet" href="css/editor-theme.css" type="text/css" media="screen" charset="utf-8">
+
 	<!-- My CSS -->
 	<link href="css/style.css" rel="stylesheet">
 
@@ -62,6 +65,7 @@ foreach ($sql as $row) {
 	<script src="js/markdown.min.js"></script>
 	<script src="js/mammoth.browser.min.js"></script>
 	<script src="js/emmet.min.js"></script>
+	<script src="js/medium-editor.js"></script>
 	<script src="js/index.js"></script>
 
 	<script>
@@ -173,10 +177,10 @@ foreach ($sql as $row) {
 							<div id="preview"  class="col-sm-4">
 								<div class="panel panel-yellow" style="height: auto; min-height: 400px;">
 									<div class="panel-heading">
-										<h3 class="panel-title">Preview</h3>
+										<h3 class="panel-title">Preview (with Simple Editor)</h3>
 									</div>
 									<div class="panel-body">
-										<iframe id="page" style="margin: 0px;"></iframe>
+										<div id="visualEditor"></div>
 									</div>
 								</div>
 							</div>
@@ -200,7 +204,7 @@ foreach ($sql as $row) {
 								</form>
 							</div>
 						<p><em>Note: &lt;script&gt; tags are not ran in the preview but will remain live in the actual page<br />
-						If you want to use advanced HTML it is advised you do not use the Markdown editor as it can break non-formatting HTML.</em></p>
+						If you want to use advanced HTML it is advised you only use the HTML editor as the other editors can break advanced HTML.</em></p>
 
 						<p><h3>How to add this element to your site:</h3>
 							<code>

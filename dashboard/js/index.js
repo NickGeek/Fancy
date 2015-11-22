@@ -14,14 +14,28 @@ $(document).ready(function() {
 		use_tab: true
 	});
 
+	var editor = new MediumEditor('#visualEditor', {
+		placeholder: {
+			text : ''
+		},
+		buttons: ["bold", "italic", "underline", "header1", "header2", "anchor", "image", "quote", "removeFormat"],
+		firstHeader: 'h1',
+		secondHeader: 'h2'
+	});
+
 	$('#md').bind('input propertychange', function() {
-		$('#page').contents().find('html').html(markdown.toHTML(this.value));
+		$('#visualEditor').html(markdown.toHTML(this.value));
 		$('#htmleditor').val(markdown.toHTML(this.value));
 	});
 
 	$('#htmleditor').bind('input propertychange', function() {
-		$('#page').contents().find('html').html(noscript(this.value));
+		$('#visualEditor').html(noscript(this.value));
 		$('#md').val(toMarkdown(this.value, { gfm: true }));
+	});
+
+	$('#visualEditor').bind('input propertychange', function() {
+		$('#htmleditor').val($(this).html());
+		$('#md').val(toMarkdown($(this).html(), { gfm: true }));
 	});
 	
 	document.getElementById("name").addEventListener("input", function() {
@@ -57,6 +71,6 @@ function readFileInputEventAsArrayBuffer(event, callback) {
 
 function displayResult(result) {
 	$('#htmleditor').val(result.value);
-	$('#page').contents().find('html').html(noscript(result.value));
+	$('#visualEditor').html(noscript(result.value));
 	$('#md').val(toMarkdown(result.value, { gfm: true }));
 }
