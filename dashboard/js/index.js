@@ -9,6 +9,11 @@ String.prototype.addSlashes = function() {
 }
 
 $(document).ready(function() {
+	emmet.require('textarea').setup({
+		pretty_break: true,
+		use_tab: true
+	});
+
 	$('#md').bind('input propertychange', function() {
 		$('#page').contents().find('html').html(markdown.toHTML(this.value));
 		$('#htmleditor').val(markdown.toHTML(this.value));

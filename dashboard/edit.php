@@ -61,6 +61,7 @@ foreach ($sql as $row) {
 	<script src="js/jquery.js"></script>
 	<script src="js/markdown.min.js"></script>
 	<script src="js/mammoth.browser.min.js"></script>
+	<script src="js/emmet.min.js"></script>
 	<script src="js/index.js"></script>
 
 	<script>
@@ -164,7 +165,7 @@ foreach ($sql as $row) {
 										<h3 class="panel-title">Markdown</h3>
 									</div>
 									<div class="panel-body">
-										<textarea id="md" class="form-control" style="min-height: 310px;" autocomplete="off"></textarea>
+										<textarea no-emmet id="md" class="form-control" style="min-height: 310px;" autocomplete="off"></textarea>
 									</div>
 								</div>
 							</div>
@@ -184,7 +185,7 @@ foreach ($sql as $row) {
 									<form action="update.php" method="post">
 										<div class="panel panel-yellow">
 											<div class="panel-heading">
-												<h3 class="panel-title" seamless='seamless'>HTML</h3>
+												<h3 class="panel-title" seamless='seamless'>HTML (with <a href="http://emmet.io/" target="_blank"><u>emmet</u></a>)</h3>
 											</div>
 											<div class="panel-body">
 												<textarea id="htmleditor" name="html" class="form-control" style="min-height: 310px;" autocomplete="off"></textarea>
