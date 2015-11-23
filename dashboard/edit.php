@@ -97,7 +97,7 @@ foreach ($sql as $row) {
 			$('<form action="<?php echo 'simpleEditor.php?site='.$site.'&id='.$id; ?>" method="POST">' +
 			  '<input type="hidden" name="html" value="'+encodeURIComponent($('#visualEditor').html())+'">' +
 			  '<input type="hidden" name="name" value="'+encodeURIComponent(formatted)+'">' +
-			  '</form>').submit();
+			  '</form>').appendTo("body").submit();
 		}
 	</script>
 

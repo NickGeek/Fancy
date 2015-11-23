@@ -106,7 +106,7 @@ foreach ($sql as $row) {
 				  '<input type="hidden" name="name" value="'+encodeURIComponent(formatted)+'">' +
 				  '<input type="hidden" name="id" value="<?php echo $id; ?>">' +
 				  '<input type="hidden" name="site" value="<?php echo $site; ?>">' +
-				  '</form>').submit();
+				  '</form>').appendTo("body").submit();submit();
 			}
 			else {
 				$('<form action="<?php echo 'edit.php?site='.$site.'&id='.$id; ?>" method="POST">' +
@@ -114,7 +114,7 @@ foreach ($sql as $row) {
 				  '<input type="hidden" name="name" value="'+encodeURIComponent(formatted)+'">' +
 				  '<input type="hidden" name="id" value="<?php echo $id; ?>">' +
 				  '<input type="hidden" name="site" value="<?php echo $site; ?>">' +
-				  '</form>').submit();
+				  '</form>').appendTo("body").submit();
 			}
 		}
 	</script>
