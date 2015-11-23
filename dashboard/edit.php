@@ -23,6 +23,9 @@ else {
 	$name = $row['name'];
 }
 
+if (isset($_POST['html'])) { $html = urldecode($_POST['html']); }
+if (isset($_POST['name'])) { $name = urldecode($_POST['name']); }
+
 $site = $_GET['site'];
 
 //Get elements
@@ -69,6 +72,10 @@ foreach ($sql as $row) {
 	<script src="js/index.js"></script>
 
 	<script>
+		String.prototype.addSlashes = function() {
+			return this.replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
+		}
+
 		$(document).ready(function() {
 			var result = {
 				value: <?php echo json_encode($html); ?>
@@ -82,6 +89,15 @@ foreach ($sql as $row) {
 			} else {
 				return;
 			}
+		}
+
+		function changeEditor() {
+			var raw = $('#name').text();
+			var formatted = $('<textarea />').html(raw).val();
+			$('<form action="<?php echo 'simpleEditor.php?site='.$site.'&id='.$id; ?>" method="POST">' +
+			  '<input type="hidden" name="html" value="'+encodeURIComponent($('#visualEditor').html())+'">' +
+			  '<input type="hidden" name="name" value="'+encodeURIComponent(formatted)+'">' +
+			  '</form>').submit();
 		}
 	</script>
 
@@ -152,7 +168,7 @@ foreach ($sql as $row) {
 
 						<ol class="breadcrumb">
 							<li>
-								<i class="fa fa-file"></i>  <a href="<?php echo 'index.php?site='.$site ?>">Dashboard</a>
+								<i class="fa fa-file"></i>  <a href="<?php echo 'index.php?site='.$site; ?>">Dashboard</a>
 							</li>
 							<li class="active">
 								<i class="fa fa-pencil-square-o"></i> Element Editor
@@ -160,6 +176,7 @@ foreach ($sql as $row) {
 						</ol>
 						
 						<!-- Page content -->
+						<p>Power Editor | <a href="javascript:void(0);" onclick="changeEditor();">Simple Editor</a></p>
 						<b>Upload a Microsoft Word (docx) file:</b>
 						<input id="docxUpload" type="file"><br />
 						<div id="siteDash" class="row">

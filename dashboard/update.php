@@ -10,8 +10,8 @@ else {
 	include_once('settings.php');
 	$con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], $fancyVars['dbname']);
 	mysqli_set_charset($con, "utf8");
-	$name = $_POST['name'];
-	$html = $_POST['html'];
+	$name = urldecode($_POST['name']);
+	$html = urldecode($_POST['html']);
 	$site = $_POST['site'];
 	$id = $_POST['id'];
 
