@@ -1,7 +1,7 @@
 <?php
-if (!isset($_GET['id']) || !isset($_GET['site'])) { header('Location: .'); }
+if (!isset($_GET['id']) || !isset($_GET['site'])) { header('Location: .'); exit(); }
 $id = $_GET['id'];
-$site = 'demo';
+$site = $_GET['site'];
 include_once('settings.php');
 $con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], $fancyVars['dbname']);
 mysqli_set_charset($con, "utf8");
@@ -16,6 +16,11 @@ else {
 	$html = $row['html'];
 	$name = $row['name'];
 }
+
+if (isset($_POST['html'])) { $html = urldecode($_POST['html']); }
+if (isset($_POST['name'])) { $name = urldecode($_POST['name']); }
+
+$site = $_GET['site'];
 
 //Get elements
 $sql = $con->query("SELECT `id`, `name` FROM `{$con->real_escape_string($site)}` WHERE 1;");
@@ -47,15 +52,24 @@ foreach ($sql as $row) {
 	<!-- Custom Fonts -->
 	<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+	<link rel="stylesheet" href="css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
+	<link rel="stylesheet" href="css/editor-theme.css" type="text/css" media="screen" charset="utf-8">
+
 	<!-- My CSS -->
 	<link href="css/style.css" rel="stylesheet">
 
 	<script src="js/jquery.js"></script>
 	<script src="js/markdown.min.js"></script>
 	<script src="js/mammoth.browser.min.js"></script>
+	<script src="js/emmet.min.js"></script>
+	<script src="js/medium-editor.js"></script>
 	<script src="js/index.js"></script>
 
 	<script>
+		String.prototype.addSlashes = function() {
+			return this.replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
+		}
+
 		$(document).ready(function() {
 			var result = {
 				value: <?php echo json_encode($html); ?>
@@ -64,7 +78,20 @@ foreach ($sql as $row) {
 		});
 
 		function del(name) {
-			return;
+			if (confirm('Are you sure you want to delete this?')) {
+				window.location.href="delete.php?type=element&site=<?php echo $site; ?>&name="+name;
+			} else {
+				return;
+			}
+		}
+
+		function changeEditor() {
+			var raw = $('#name').text();
+			var formatted = $('<textarea />').html(raw).val();
+			$('<form action="<?php echo 'simpleEditor.php?site='.$site.'&id='.$id; ?>" method="POST">' +
+			  '<input type="hidden" name="html" value="'+encodeURIComponent($('#visualEditor').html())+'">' +
+			  '<input type="hidden" name="name" value="'+encodeURIComponent(formatted)+'">' +
+			  '</form>').submit();
 		}
 	</script>
 
@@ -96,10 +123,10 @@ foreach ($sql as $row) {
 			<!-- Top Menu Items -->
 			<ul class="nav navbar-right top-nav">
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Demo Dashboard <b class="caret"></b></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Logged In <b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="javascript:void(0);"><i class="fa fa-fw fa-power-off"></i> Logout</a>
+							<a href="logout.php"><i class="fa fa-fw fa-power-off"></i> Logout</a>
 						</li>
 					</ul>
 				</li>
@@ -135,7 +162,7 @@ foreach ($sql as $row) {
 
 						<ol class="breadcrumb">
 							<li>
-								<i class="fa fa-file"></i>  <a href="<?php echo 'index.php?site='.$site ?>">Dashboard</a>
+								<i class="fa fa-file"></i>  <a href="<?php echo 'index.php?site='.$site; ?>">Dashboard</a>
 							</li>
 							<li class="active">
 								<i class="fa fa-pencil-square-o"></i> Element Editor
@@ -143,6 +170,7 @@ foreach ($sql as $row) {
 						</ol>
 						
 						<!-- Page content -->
+						<p>Power Editor | <a href="javascript:void(0);" onclick="changeEditor();">Simple Editor</a></p>
 						<b>Upload a Microsoft Word (docx) file:</b>
 						<input id="docxUpload" type="file"><br />
 						<div id="siteDash" class="row">
@@ -152,7 +180,7 @@ foreach ($sql as $row) {
 										<h3 class="panel-title">Markdown</h3>
 									</div>
 									<div class="panel-body">
-										<textarea id="md" class="form-control" style="min-height: 310px;" autocomplete="off"></textarea>
+										<textarea no-emmet id="md" class="form-control" style="min-height: 310px;" autocomplete="off"></textarea>
 									</div>
 								</div>
 							</div>
@@ -160,19 +188,19 @@ foreach ($sql as $row) {
 							<div id="preview"  class="col-sm-4">
 								<div class="panel panel-yellow" style="height: auto; min-height: 400px;">
 									<div class="panel-heading">
-										<h3 class="panel-title">Preview</h3>
+										<h3 class="panel-title">Preview (with Simple Editor)</h3>
 									</div>
 									<div class="panel-body">
-										<iframe id="page" style="margin: 0px;"></iframe>
+										<div id="visualEditor"></div>
 									</div>
 								</div>
 							</div>
 							
 								<div id="html"     class="col-sm-4">
-									<form action="javascript:void(0);" method="post">
+									<form action="update.php" method="post">
 										<div class="panel panel-yellow">
 											<div class="panel-heading">
-												<h3 class="panel-title" seamless='seamless'>HTML</h3>
+												<h3 class="panel-title" seamless='seamless'>HTML (with <a href="http://emmet.io/" target="_blank"><u>emmet</u></a>)</h3>
 											</div>
 											<div class="panel-body">
 												<textarea id="htmleditor" name="html" class="form-control" style="min-height: 310px;" autocomplete="off"></textarea>
@@ -181,13 +209,13 @@ foreach ($sql as $row) {
 									<input id="nameInput" name="name" type="hidden" value="<?php echo $name; ?>" />
 									<input name="id" type="hidden" value="<?php echo $id; ?>" />
 									<input name="site" type="hidden" value="<?php echo $site; ?>" />
-									<input type="submit" class="btn btn-success" style="margin-left: 10px; float: right;" />
+									<input type="submit" class="btn btn-success" style="margin-left: 10px; float: right;" value="Save" />
 									<a href="javascript:void(0);" class="btn btn-danger" style="float: right;" onclick="del(<?php echo "'".$name."'"; ?>);">Delete Element</a>
 									</div>
 								</form>
 							</div>
 						<p><em>Note: &lt;script&gt; tags are not ran in the preview but will remain live in the actual page<br />
-						If you want to use advanced HTML it is advised you do not use the Markdown editor as it can break non-formatting HTML.</em></p>
+						If you want to use advanced HTML it is advised you only use the HTML editor as the other editors can break advanced HTML.</em></p>
 
 						<p><h3>How to add this element to your site:</h3>
 							<code>

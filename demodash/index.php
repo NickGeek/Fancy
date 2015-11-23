@@ -4,15 +4,33 @@ $con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass
 mysqli_set_charset($con, "utf8");
 
 //Get sites
+$sql = $con->query("show tables;");
+$res = array();
 $sites = array();
-$sites[0]= 'demo';
-$site = $sites[0];
-
-//Get elements
-$sql = $con->query("SELECT `id`, `name` FROM `{$con->real_escape_string($site)}` WHERE 1;");
-$elements = array();
 foreach ($sql as $row) {
-	$elements[] = $row;
+	$res[] = $row;
+}
+foreach ($res as $x) {
+	$sites[] = $x['Tables_in_'.$fancyVars['dbname']];
+}
+
+if (isset($_GET['site'])) {
+	$site = $_GET['site'];
+
+	//Get elements
+	$sql = $con->query("SELECT `id`, `name` FROM `{$con->real_escape_string($site)}` WHERE 1;");
+	$elements = array();
+	foreach ($sql as $row) {
+		$elements[] = $row;
+	}
+}
+else {
+	header('Location: index.php?site='.$sites[0]);
+	exit();
+}
+
+if (file_exists(realpath(getcwd().'/createConfig.php'))) {
+	echo "<script>alert('You need to delete createConfig.php');</script>";
 }
 ?>
 
@@ -50,11 +68,17 @@ foreach ($sql as $row) {
 
 	<script>
 		function del(name) {
-			return;
+			if (confirm('Are you sure you want to delete this?')) {
+				window.location.href="delete.php?type=site&name="+name;
+			} else {
+				return;
+			}
 		}
 
 		function newsite() {
-			return;
+			var name = prompt("Name of site:", "");
+			if (name.length == 0) return;
+			window.location.href="newsite.php?name="+name;
 		}
 	</script>
 </head>
@@ -78,10 +102,10 @@ foreach ($sql as $row) {
 			<!-- Top Menu Items -->
 			<ul class="nav navbar-right top-nav">
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Demo Dashboard <b class="caret"></b></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Logged In <b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="javascript:void(0);"><i class="fa fa-fw fa-power-off"></i> Logout</a>
+							<a href="logout.php"><i class="fa fa-fw fa-power-off"></i> Logout</a>
 						</li>
 					</ul>
 				</li>
@@ -129,7 +153,7 @@ foreach ($sql as $row) {
 						
 						<h3>How to enable Fancy on your webpages:</h3>
 						<ol>
-							<li>Download these two files (<a href="javascript:void(0);">settings.php</a> and <a href="javascript:void(0);" target="_blank">fancyConnector.php</a>)</li>
+							<li>Download these two files (<a href="download.php?id=settings" target="_blank">settings.php</a> and <a href="download.php?id=connector" target="_blank">fancyConnector.php</a>)</li>
 							<li>Put the files in the folder of the site.</li>
 							<li>
 								Paste the following code at the very top of any page you wish to add Fancy elements to:<br />
