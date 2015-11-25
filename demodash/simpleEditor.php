@@ -147,6 +147,7 @@ foreach ($sql as $row) {
 
 		@media (max-width: 768px) {
 			#visualEditor {
+				height: 100%;
 				width: 100%;
 			}
 		}
