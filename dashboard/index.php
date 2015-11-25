@@ -64,6 +64,9 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 	<!-- My CSS -->
 	<link href="css/style.css" rel="stylesheet">
 
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -72,13 +75,20 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 	<![endif]-->
 
 	<script>
-		function del(name) {
-			if (confirm('Are you sure you want to delete this?')) {
-				window.location.href="delete.php?type=site&name="+name;
-			} else {
-				return;
+		$(document).ready(function() {
+			//Set to default editor
+			if (localStorage.getItem('defaultEditor') == 'simple') {
+				var url = 'simpleEditor.php';
 			}
-		}
+			else {
+				var url = 'edit.php';
+				localStorage.setItem('defaultEditor', 'power')
+			}
+			$('.editLinks').each(function() {
+				var oldHref = $(this).attr('href');
+				$(this).attr('href', url+oldHref);
+			});
+		});
 
 		function newsite() {
 			var name = prompt("Name of site:", "");
@@ -148,10 +158,10 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 						<!-- Page content -->
 						<div id="elementList" class="list-group">
 							<?php
-							echo '<a href="edit.php?site='.$site.'&id=0"class="list-group-item"><i class="fa fa-fw fa-plus"></i> Add a new Fancy element</a>';
+							echo '<a href="?site='.$site.'&id=0" class="editLinks list-group-item"><i class="fa fa-fw fa-plus"></i> Add a new Fancy element</a>';
 
 							foreach ($elements as $element) {
-								echo '<a href="edit.php?site='.$site.'&id='.$element['id'].'"class="list-group-item">'.$element['name'].'</a>';
+								echo '<a href="?site='.$site.'&id='.$element['id'].'" class="editLinks list-group-item">'.$element['name'].'</a>';
 							}
 							?>
 						</div>
@@ -184,13 +194,6 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 
 	</div>
 	<!-- /#wrapper -->
-
-	<!-- jQuery -->
-	<script src="js/jquery.js"></script>
-
-	<!-- Bootstrap Core JavaScript -->
-	<script src="js/bootstrap.min.js"></script>
-
 </body>
 
 </html>

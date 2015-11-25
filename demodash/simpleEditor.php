@@ -84,6 +84,8 @@ foreach ($sql as $row) {
 				firstHeader: 'h1',
 				secondHeader: 'h2'
 			});
+
+			if (localStorage.getItem('defaultEditor') == 'simple') $('#defaulter').hide(); 
 		});
 
 
@@ -106,7 +108,7 @@ foreach ($sql as $row) {
 				  '<input type="hidden" name="name" value="'+encodeURIComponent(formatted)+'">' +
 				  '<input type="hidden" name="id" value="<?php echo $id; ?>">' +
 				  '<input type="hidden" name="site" value="<?php echo $site; ?>">' +
-				  '</form>').appendTo("body").submit();submit();
+				  '</form>').appendTo("body").submit();
 			}
 			else {
 				$('<form action="<?php echo 'edit.php?site='.$site.'&id='.$id; ?>" method="POST">' +
@@ -171,6 +173,7 @@ foreach ($sql as $row) {
 			<ul class="nav navbar-nav">
 				<!-- Save -->
 				<li><a href="javascript:void(0);" onclick="save(true);">Save</a></li>
+				<li><a id="defaulter" href="javascript:void(0);" onclick="localStorage.setItem('defaultEditor', 'simple'); if (localStorage.getItem('defaultEditor') == 'simple') $('#defaulter').hide();">Set this as the default editor</a></li>
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">

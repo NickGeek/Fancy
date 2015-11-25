@@ -81,6 +81,8 @@ foreach ($sql as $row) {
 				value: <?php echo json_encode($html); ?>
 			}
 			displayResult(result);
+
+			if (localStorage.getItem('defaultEditor') == 'power') $('#defaulter').hide(); 
 		});
 
 		function del(name) {
@@ -204,7 +206,7 @@ foreach ($sql as $row) {
 						</ol>
 						
 						<!-- Page content -->
-						<p>Power Editor | <a href="javascript:void(0);" onclick="changeEditor();">Simple Editor</a></p>
+						<p>Power Editor <a id="defaulter" href="javascript:void(0);" onclick="localStorage.setItem('defaultEditor', 'power'); if (localStorage.getItem('defaultEditor') == 'power') $('#defaulter').hide();">(Set as default editor)</a> | <a href="javascript:void(0);" onclick="changeEditor();">Simple Editor</a></p>
 						<b>Upload a Microsoft Word (docx) file:</b>
 						<input id="docxUpload" type="file"><br />
 						<div id="siteDash" class="row">
