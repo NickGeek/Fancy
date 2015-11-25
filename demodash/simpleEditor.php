@@ -140,6 +140,7 @@ foreach ($sql as $row) {
 
 		#visualEditor {
 			background-color: #fff;
+			height: 100%;
 			width: 50%;
 			margin: auto;
 		}
