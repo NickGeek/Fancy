@@ -99,6 +99,34 @@ foreach ($sql as $row) {
 			  '<input type="hidden" name="name" value="'+encodeURIComponent(formatted)+'">' +
 			  '</form>').appendTo("body").submit();
 		}
+
+		function fullscreenMe(element) {
+			var element = document.getElementById(element);
+			$(element).css("min-height", "100%");
+
+			//Handle changing CSS back when we go out of full screen
+			$(element).bind("webkitfullscreenchange mozfullscreenchange fullscreenchange", function() {
+				if (!document.fullScreen && !document.mozFullScreen && !document.webkitIsFullScreen) {
+					$(element).css("min-height", "310px");
+				}
+			});
+
+			if (element.requestFullscreen) {
+				element.requestFullscreen();
+			}
+			else if (element.msRequestFullscreen) {
+				element.msRequestFullscreen();
+			}
+			else if (element.mozRequestFullScreen) {
+				element.mozRequestFullScreen();
+			}
+			else if (element.webkitRequestFullscreen) {
+				element.webkitRequestFullscreen();
+			}
+			else {
+				alert("Your browser doesn't support fullscreen mode");
+			}
+		}
 	</script>
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -183,7 +211,7 @@ foreach ($sql as $row) {
 							<div id="markdown" class="col-sm-4">
 								<div class="panel panel-yellow">
 									<div class="panel-heading">
-										<h3 class="panel-title">Markdown</h3>
+										<h3 class="panel-title">Markdown <span style="float: right;"><i class="fa fa-arrows-alt" onclick="fullscreenMe('md');"></i></span></h3>
 									</div>
 									<div class="panel-body">
 										<textarea no-emmet id="md" class="form-control" style="min-height: 310px;" autocomplete="off"></textarea>
@@ -206,7 +234,7 @@ foreach ($sql as $row) {
 									<form action="update.php" method="post">
 										<div class="panel panel-yellow">
 											<div class="panel-heading">
-												<h3 class="panel-title" seamless='seamless'>HTML (with <a href="http://emmet.io/" target="_blank"><u>emmet</u></a>)</h3>
+												<h3 class="panel-title" seamless='seamless'>HTML (with <a href="http://emmet.io/" target="_blank"><u>emmet</u></a>)  <span style="float: right;"><i class="fa fa-arrows-alt" onclick="fullscreenMe('htmleditor');"></i></span></h3>
 											</div>
 											<div class="panel-body">
 												<textarea id="htmleditor" name="html" class="form-control" style="min-height: 310px;" autocomplete="off"></textarea>
