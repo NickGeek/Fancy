@@ -107,7 +107,7 @@ foreach ($sql as $row) {
 			$(element).css("min-height", "100%");
 
 			//Handle changing CSS back when we go out of full screen
-			$(element).bind("webkitfullscreenchange mozfullscreenchange fullscreenchange", function() {
+			$(document).bind("webkitfullscreenchange mozfullscreenchange fullscreenchange", function() {
 				if (!document.fullScreen && !document.mozFullScreen && !document.webkitIsFullScreen) {
 					$(element).css("min-height", "310px");
 				}
