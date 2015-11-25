@@ -31,7 +31,7 @@ body {
 	height: 400px;
 }
 
-page {
+#visualEditor {
 	overflow: scroll;
 	height: 310px;
 	width: 100%;
