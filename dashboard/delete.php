@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['authed'])) {
-	header("Location: login.php");
+	header("Location: login.html");
 	exit();
 }
 else {
