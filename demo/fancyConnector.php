@@ -10,7 +10,7 @@ function fancy($name) {
 	
 	$section = $con->query("SELECT `html` FROM `{$con->real_escape_string($site)}` WHERE `name` = '{$con->real_escape_string($name)}';");
 	$row = $section->fetch_array(MYSQLI_ASSOC);
-	echo '<!-- FANCY CODE BLOCK START -->'.$row['html'].'<!-- FANCY CODE BLOCK END -->';
+	echo '<div class="fancyElement">'.$row['html'].'</div>';
 	return;
 }
 ?>
