@@ -101,17 +101,19 @@ foreach ($sql as $row) {
 			$(element).css("min-height", "100%");
 
 			//Handle changing CSS back when we go out of full screen
-			$(document).bind("webkitfullscreenchange mozfullscreenchange fullscreenchange", function() {
-				if (!document.fullScreen && !document.mozFullScreen && !document.webkitIsFullScreen) {
+			$(document).bind("webkitfullscreenchange mozfullscreenchange fullscreenChange MSFullscreenChange", function() {
+				if (!document.fullScreen && !document.mozFullScreen && !document.webkitIsFullScreen && !isMSFullscreen) {
 					$(element).css("min-height", "310px");
 				}
 			});
-
+			
+			var isMSFullscreen = false;
 			if (element.requestFullscreen) {
 				element.requestFullscreen();
 			}
 			else if (element.msRequestFullscreen) {
 				element.msRequestFullscreen();
+				isMSFullscreen = true;
 			}
 			else if (element.mozRequestFullScreen) {
 				element.mozRequestFullScreen();
