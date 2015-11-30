@@ -166,7 +166,7 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 				<!-- Page Heading -->
 				<div class="row">
 					<div class="col-lg-12">
-						<h1 class="page-header"><?php echo $site; ?> <a href="javascript:void(0);" class="btn btn-danger" onclick="del(<?php echo "'".$site."'"; ?>);">Delete Site</a></h1>
+						<h1 class="page-header"><?php echo $site; ?> <a href="javascript:void(0);" class="btn btn-danger" onclick="del(<?php echo "'".addslashes($site)."'"; ?>);">Delete Site</a></h1>
 						
 						<!-- Page content -->
 						<div id="elementList" class="list-group">
