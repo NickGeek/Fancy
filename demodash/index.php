@@ -14,6 +14,10 @@ foreach ($res as $x) {
 	$sites[] = $x['Tables_in_'.$fancyVars['dbname']];
 }
 
+foreach ($sites as $key => $value) {
+	$sites[$key] = stripslashes($value);
+}
+
 if (isset($_GET['site'])) {
 	$site = $_GET['site'];
 

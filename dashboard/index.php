@@ -4,6 +4,7 @@ if (!isset($_SESSION['authed'])) {
 	header("Location: login.html");
 	exit();
 }
+
 include_once('settings.php');
 $con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], $fancyVars['dbname']);
 mysqli_set_charset($con, "utf8");
@@ -17,6 +18,10 @@ foreach ($sql as $row) {
 }
 foreach ($res as $x) {
 	$sites[] = $x['Tables_in_'.$fancyVars['dbname']];
+}
+
+foreach ($sites as $key => $value) {
+	$sites[$key] = stripslashes($value);
 }
 
 if (isset($_GET['site'])) {
