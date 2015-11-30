@@ -98,11 +98,18 @@ foreach ($sql as $row) {
 
 		function fullscreenMe(element) {
 			var element = document.getElementById(element);
+			var turningFullscreen = false;
 			$(element).css("min-height", "100%");
 
 			//Handle changing CSS back when we go out of full screen
 			$(document).bind("webkitfullscreenchange mozfullscreenchange fullscreenChange MSFullscreenChange", function() {
-				if (!document.fullScreen && !document.mozFullScreen && !document.webkitIsFullScreen && !isMSFullscreen) {
+				if (turningFullscreen) {
+					turningFullscreen = false;
+					return;
+				}
+
+				if (!document.fullScreen && !document.mozFullScreen && !document.webkitIsFullScreen && isMSFullscreen && !turningFullscreen) {
+					isMSFullscreen = false;
 					$(element).css("min-height", "310px");
 				}
 			});
@@ -112,14 +119,15 @@ foreach ($sql as $row) {
 				element.requestFullscreen();
 			}
 			else if (element.msRequestFullscreen) {
-				element.msRequestFullscreen();
+				turningFullscreen = true;
 				isMSFullscreen = true;
+				element.msRequestFullscreen();
 			}
 			else if (element.mozRequestFullScreen) {
 				element.mozRequestFullScreen();
 			}
 			else if (element.webkitRequestFullscreen) {
-				element.webkitRequestFullscreen();
+				element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
 			}
 			else {
 				alert("Your browser doesn't support fullscreen mode");
