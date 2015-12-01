@@ -69,13 +69,9 @@ foreach ($sql as $row) {
 	<script src="js/mammoth.browser.min.js"></script>
 	<script src="js/emmet.min.js"></script>
 	<script src="js/medium-editor.js"></script>
-	<script src="js/index.js"></script>
+	<script src="js/edit.js"></script>
 
 	<script>
-		String.prototype.addSlashes = function() {
-			return this.replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
-		}
-
 		$(document).ready(function() {
 			var result = {
 				value: <?php echo json_encode($html); ?>
@@ -102,43 +98,7 @@ foreach ($sql as $row) {
 			  '</form>').appendTo("body").submit();
 		}
 
-		function fullscreenMe(element) {
-			var element = document.getElementById(element);
-			var turningFullscreen = false;
-			$(element).css("min-height", "100%");
-
-			//Handle changing CSS back when we go out of full screen
-			$(document).bind("webkitfullscreenchange mozfullscreenchange fullscreenChange MSFullscreenChange", function() {
-				if (turningFullscreen) {
-					turningFullscreen = false;
-					return;
-				}
-
-				if (!document.fullScreen && !document.mozFullScreen && !document.webkitIsFullScreen && isMSFullscreen && !turningFullscreen) {
-					isMSFullscreen = false;
-					$(element).css("min-height", "310px");
-				}
-			});
-			
-			var isMSFullscreen = false;
-			if (element.requestFullscreen) {
-				element.requestFullscreen();
-			}
-			else if (element.msRequestFullscreen) {
-				turningFullscreen = true;
-				isMSFullscreen = true;
-				element.msRequestFullscreen();
-			}
-			else if (element.mozRequestFullScreen) {
-				element.mozRequestFullScreen();
-			}
-			else if (element.webkitRequestFullscreen) {
-				element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-			}
-			else {
-				alert("Your browser doesn't support fullscreen mode");
-			}
-		}
+		
 	</script>
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
