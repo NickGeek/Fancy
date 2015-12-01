@@ -1,7 +1,4 @@
-<?php
-$site = 'demo';
-require_once('fancyConnector.php');
-?>
+<?php require_once('FancyConnector.php'); $fancyConnector = new FancyConnector('demo'); ?>
 <!DOCTYPE html>
 <!-- Website template by freewebsitetemplates.com -->
 <html>
@@ -32,19 +29,19 @@ require_once('fancyConnector.php');
 				<ul class="featuredItems">
 					<li>
 						<div>
-							<?php fancy('Feature 1'); ?>
+							<?php $fancyConnector->fancy('Feature 1'); ?>
 							<a href="javascript:void(0);"></a>
 						</div>
 					</li>
 					<li>
 						<div>
-							<?php fancy('Feature 2'); ?>
+							<?php $fancyConnector->fancy('Feature 2'); ?>
 							<a href="javascript:void(0);"></a>
 						</div>
 					</li>
 					<li>
 						<div>
-							<?php fancy('Feature 3'); ?>
+							<?php $fancyConnector->fancy('Feature 3'); ?>
 							<a href="javascript:void(0);"></a>
 						</div>
 					</li>

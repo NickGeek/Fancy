@@ -188,8 +188,8 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 								<code>
 									<?php
 										echo htmlspecialchars('<?php');
-										echo ' $site = \''.addslashes($site).'\';';
-										echo ' require_once(\'fancyConnector.php\');';
+										echo ' require_once(\'FancyConnector.php\');';
+										echo ' $fancyConnector = new FancyConnector(\''.addslashes($site).'\');';
 										echo ' ?>';
 									?>
 								</code>

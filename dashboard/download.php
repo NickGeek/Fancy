@@ -21,7 +21,7 @@ else {
 		download('settings.php');
 	}
 	elseif ($_GET['id'] == "connector") {
-		download('fancyConnector.php');
+		download('FancyConnector.php');
 	}
 }
 

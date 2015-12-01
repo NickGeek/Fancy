@@ -1,7 +1,4 @@
-<?php
-$site = 'demo';
-require_once('fancyConnector.php');
-?>
+<?php require_once('FancyConnector.php'); $fancyConnector = new FancyConnector('demo'); ?>
 <!DOCTYPE html>
 <!-- Website template by freewebsitetemplates.com -->
 <html>
@@ -30,7 +27,7 @@ require_once('fancyConnector.php');
 				<p>Also note the 'Coming soon to Fancy' section. Just the text under that heading is dynamic. This means you don't have to go into the code to edit that section.</p>
 
 				<h3>Coming soon to Fancy</h3>
-				<?php fancy('Coming Soon') ?>
+				<?php $fancyConnector->fancy('Coming Soon') ?>
 
 				<h3>What makes Fancy different from a CMS?</h3>
 				<p>Fancy is a drop-in solution for existing static pages. It doesn't require the entire page to be built around it.</p>
@@ -41,19 +38,19 @@ require_once('fancyConnector.php');
 				<ul class="featuredItems">
 					<li>
 						<div>
-							<?php fancy('Feature 1'); ?>
+							<?php $fancyConnector->fancy('Feature 1'); ?>
 							<a href="javascript:void(0);"></a>
 						</div>
 					</li>
 					<li>
 						<div>
-							<?php fancy('Feature 2'); ?>
+							<?php $fancyConnector->fancy('Feature 2'); ?>
 							<a href="javascript:void(0);"></a>
 						</div>
 					</li>
 					<li>
 						<div>
-							<?php fancy('Feature 3'); ?>
+							<?php $fancyConnector->fancy('Feature 3'); ?>
 							<a href="javascript:void(0);"></a>
 						</div>
 					</li>
