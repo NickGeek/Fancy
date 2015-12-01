@@ -95,6 +95,7 @@ function fullscreenMe(element) {
 	
 	var isMSFullscreen = false;
 	if (element.requestFullscreen) {
+		isMSFullscreen = true;
 		element.requestFullscreen();
 	}
 	else if (element.msRequestFullscreen) {
@@ -103,9 +104,11 @@ function fullscreenMe(element) {
 		element.msRequestFullscreen();
 	}
 	else if (element.mozRequestFullScreen) {
+		isMSFullscreen = true;
 		element.mozRequestFullScreen();
 	}
 	else if (element.webkitRequestFullscreen) {
+		isMSFullscreen = true;
 		element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
 	}
 	else {
