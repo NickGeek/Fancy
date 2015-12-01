@@ -13,7 +13,6 @@ class FancyConnector {
 		$this->con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], $fancyVars['dbname']);
 		if ($this->con->connect_errno) { echo "<script>alert('Error connecting to Fancy database');</script>"; }
 		mysqli_set_charset($this->con, "utf8");
-		mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 		//Prepare common statements
 		if ($site) {
