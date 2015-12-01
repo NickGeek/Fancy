@@ -181,7 +181,7 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 						
 						<h3>How to enable Fancy on your webpages:</h3>
 						<ol>
-							<li>Download these two files (<a href="download.php?id=settings" target="_blank">settings.php</a> and <a href="download.php?id=connector" target="_blank">fancyConnector.php</a>)</li>
+							<li>Download these two files (<a href="download.php?id=settings" target="_blank">settings.php</a> and <a href="download.php?id=connector" target="_blank">FancyConnector.php</a>)</li>
 							<li>Put the files in the folder of the site.</li>
 							<li>
 								Paste the following code at the very top of any page you wish to add Fancy elements to:<br />
@@ -189,7 +189,7 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 									<?php
 										echo htmlspecialchars('<?php');
 										echo ' require_once(\'FancyConnector.php\');';
-										echo ' $fancyConnector = new FancyConnector(\''.addslashes($site).'\');';
+										echo ' $f = new FancyConnector(\''.addslashes($site).'\');';
 										echo ' ?>';
 									?>
 								</code>

@@ -227,7 +227,7 @@ foreach ($sql as $row) {
 							<code>
 								<?php
 									echo htmlspecialchars('<?php');
-									echo ' $fancyConnector->fancy(\'<span id="nameCode">'.addslashes($name).'</span>\');';
+									echo ' $f->fancy(\'<span id="nameCode">'.addslashes($name).'</span>\');';
 									echo ' ?>';
 								?>
 							</code>
