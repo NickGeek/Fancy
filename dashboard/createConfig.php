@@ -1,14 +1,14 @@
 <?php
-if (count(array_filter($_POST)) < 6) {
+if (empty($_POST['site']) || empty($_POST['password']) || empty($_POST['dbname']) || empty($_POST['address']) || empty($_POST['dbuser']) || empty($_POST['dbpass'])) {
 	echo "You must fill out all the text boxes.";
 	exit();
 }
 
 $fancyVars = array('fancy_password' => password_hash($_POST['password'], PASSWORD_BCRYPT),'dbaddr' => addslashes($_POST['address']),'dbuser' => addslashes($_POST['dbuser']),'dbpass' => addslashes($_POST['dbpass']), "dbname" => addslashes($_POST['dbname']));
-$fancyVarsStr = htmlspecialchars('<?php').' $fancyVars = array("fancy_password" => \''.password_hash($_POST["password"], PASSWORD_BCRYPT).'\',"dbaddr" => \''.addslashes($_POST["address"]).'\',"dbuser" => \''.addslashes($_POST["dbuser"]).'\',"dbpass" => \''.addslashes($_POST["dbpass"]).'\', "dbname" => \''.addslashes($_POST['dbname']).'\'); '.htmlspecialchars('?>');
+$fancyVarsStr = htmlspecialchars('<?php').' $fancyVars = array("fancy_password" => \''.password_hash($_POST["password"], PASSWORD_BCRYPT).'\',"dbaddr" => \''.addslashes($_POST["address"]).'\',"dbuser" => \''.addslashes($_POST["dbuser"]).'\',"dbpass" => \''.addslashes($_POST["dbpass"]).'\', "dbname" => \''.addslashes($_POST['dbname']).'\', "apiVersion" => 2); '.htmlspecialchars('?>');
 
 // Create an settings file
-$file = fopen("settings.php", "w");
+$file = fopen("api/settings.php", "w");
 if (!is_resource($file)) {
 	echo "Error creating settings.php. Does PHP have filesystem access?";
 	exit();

@@ -5,7 +5,7 @@ if (!isset($_SESSION['authed'])) {
 	exit();
 }
 
-if (!isset($_GET['id']) || !isset($_GET['site'])) { header('Location: .'); exit(); }
+if (empty($_GET['id']) || empty($_GET['site'])) { header('Location: .'); exit(); }
 $id = $_GET['id'];
 $site = $_GET['site'];
 include_once('settings.php');
@@ -23,8 +23,8 @@ else {
 	$name = $row['name'];
 }
 
-if (isset($_POST['html'])) { $html = urldecode($_POST['html']); }
-if (isset($_POST['name'])) { $name = urldecode($_POST['name']); }
+if (!empty($_POST['html'])) { $html = urldecode($_POST['html']); }
+if (!empty($_POST['name'])) { $name = urldecode($_POST['name']); }
 
 $site = $_GET['site'];
 

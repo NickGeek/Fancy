@@ -5,7 +5,7 @@ if (!isset($_SESSION['authed'])) {
 	exit();
 }
 
-include_once('settings.php');
+include_once('api/settings.php');
 $con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], $fancyVars['dbname']);
 mysqli_set_charset($con, "utf8");
 
@@ -24,7 +24,7 @@ foreach ($sites as $key => $value) {
 	$sites[$key] = stripslashes($value);
 }
 
-if (isset($_GET['site'])) {
+if (!empty($_GET['site'])) {
 	$site = $_GET['site'];
 
 	//Get elements

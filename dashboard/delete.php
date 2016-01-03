@@ -10,11 +10,11 @@ else {
 	mysqli_set_charset($con, "utf8");
 	$type = $_GET['type'];
 
-	if ($type == 'site' && isset($_GET['name'])) {
+	if ($type == 'site' && !empty($_GET['name'])) {
 		$name = $_GET['name'];
 		$sql = "DROP TABLE IF EXISTS `{$con->real_escape_string($name)}`;";
 	}
-	elseif ($type == 'element' && isset($_GET['name']) && isset($_GET['site'])) {
+	elseif ($type == 'element' && !empty($_GET['name']) && !empty($_GET['site'])) {
 		$site = $_GET['site'];
 		$name = $_GET['name'];
 		$sql = "DELETE FROM `{$con->real_escape_string($site)}` WHERE `name` = '{$con->real_escape_string($name)}';";

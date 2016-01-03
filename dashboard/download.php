@@ -1,6 +1,7 @@
 <?php
 session_start();
 function download($file) {
+	$file = "api/".$file;
 	header('Content-Description: File Transfer');
 	header('Content-Type: application/octet-stream');
 	header('Content-Disposition: attachment; filename="'.basename($file).'"');

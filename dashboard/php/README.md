@@ -1,1 +1,0 @@
-This is not final - it is just a temporary solution to get PHP out of files with HTML in them

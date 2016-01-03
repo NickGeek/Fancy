@@ -5,7 +5,7 @@ if (!isset($_SESSION['authed'])) {
 	exit();
 }
 else {
-	if (!isset($_POST['name']) || !isset($_POST['html']) || !isset($_POST['id']) || !isset($_POST['site'])) { header('Location: .'); }
+	if (empty($_POST['name']) || empty($_POST['html']) || empty($_POST['id']) || empty($_POST['site'])) { header('Location: .'); exit(); }
 
 	include_once('settings.php');
 	$con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], $fancyVars['dbname']);
