@@ -4,7 +4,6 @@ if (empty($_POST['site']) || empty($_POST['password']) || empty($_POST['dbname']
 	exit();
 }
 
-$fancyVars = array('fancy_password' => password_hash($_POST['password'], PASSWORD_BCRYPT),'dbaddr' => addslashes($_POST['address']),'dbuser' => addslashes($_POST['dbuser']),'dbpass' => addslashes($_POST['dbpass']), "dbname" => addslashes($_POST['dbname']));
 $fancyVarsStr = htmlspecialchars('<?php').' $fancyVars = array("fancy_password" => \''.password_hash($_POST["password"], PASSWORD_BCRYPT).'\',"dbaddr" => \''.addslashes($_POST["address"]).'\',"dbuser" => \''.addslashes($_POST["dbuser"]).'\',"dbpass" => \''.addslashes($_POST["dbpass"]).'\', "dbname" => \''.addslashes($_POST['dbname']).'\', "apiVersion" => 2); '.htmlspecialchars('?>');
 
 // Create an settings file
@@ -21,7 +20,7 @@ session_start();
 $_SESSION['authed'] = true;
 
 //Add the site
-$con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], $fancyVars['dbname']);
+$con = new mysqli($_POST['address'], $_POST['dbuser'], $_POST['dbpass'], $_POST['dbname']);
 $name = $_POST['site'];
 
 $con->query("SET SQL_MODE = \"NO_AUTO_VALUE_ON_ZERO\";");
