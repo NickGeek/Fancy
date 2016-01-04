@@ -103,7 +103,7 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 		
 		function del(name) {
 			if (confirm('Are you sure you want to delete this?')) {
-				window.location.href="delete.php?type=site&name="+name;
+				window.location.href="api/delete.php?type=site&name="+name;
 			} else {
 				return;
 			}

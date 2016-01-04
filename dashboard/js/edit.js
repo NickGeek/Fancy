@@ -2,7 +2,31 @@ String.prototype.addSlashes = function() {
 	return this.replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
 }
 
+
 $(document).ready(function() {
+	/* API Requests START */
+	$.get("api/getElement.php", {id: get.id, site: get.site}).done(function(data) {
+		if (data == "Not enough data has been sent") {
+			alert("Not enough data has been sent");
+			return;
+		}
+
+		var json = JSON.parse(data);
+		displayResult(json);
+		updateHint();
+	}).fail(function() {
+		alert("There was an error contacting the server. Please check your Internet connection.");
+	});
+
+	if (localStorage.getItem('defaultEditor') == 'power') $('#defaulter').hide();
+
+	function displayResult(result) {
+		$('#name').text(result.name);
+		$('#htmleditor').val(result.html);
+		$('#visualEditor').html(noscript(result.html));
+		$('#md').val(toMarkdown(result.html, { gfm: true }));
+	}
+
 	emmet.require('textarea').setup({
 		pretty_break: true,
 		use_tab: true
@@ -31,12 +55,16 @@ $(document).ready(function() {
 		$('#htmleditor').val($(this).html());
 		$('#md').val(toMarkdown($(this).html(), { gfm: true }));
 	});
-	
-	document.getElementById("name").addEventListener("input", function() {
+
+	function updateHint() {
 		var raw = $('#name').text();
 		var formatted = $('<textarea />').html(raw).val();
 		$('#nameInput').val(formatted);
 		$('#nameCode').html(formatted.addSlashes());
+	}
+	
+	document.getElementById("name").addEventListener("input", function() {
+		updateHint();
 	}, false);
 
 	//Handle DOCX stuff
@@ -50,23 +78,21 @@ $(document).ready(function() {
 	}
 });
 
-function readFileInputEventAsArrayBuffer(event, callback) {
-	var file = event.target.files[0];
+function del(name) {
+	if (confirm('Are you sure you want to delete this?')) {
+		$.get("api/delete.php", {type: "element", site: get.site, name: name}).done(function(data) {
+			if (data != "done") {
+				alert(data);
+				return;
+			}
 
-	var reader = new FileReader();
-	
-	reader.onload = function(loadEvent) {
-		var arrayBuffer = loadEvent.target.result;
-		callback(arrayBuffer);
-	};
-	
-	reader.readAsArrayBuffer(file);
-}
-
-function displayResult(result) {
-	$('#htmleditor').val(result.value);
-	$('#visualEditor').html(noscript(result.value));
-	$('#md').val(toMarkdown(result.value, { gfm: true }));
+			window.location.href="."
+		}).fail(function() {
+			alert("There was an error contacting the server. Please check your Internet connection.");
+		});
+	} else {
+		return;
+	}
 }
 
 function noscript(strCode){
@@ -114,4 +140,17 @@ function fullscreenMe(element) {
 	else {
 		alert("Your browser doesn't support fullscreen mode");
 	}
+}
+
+function readFileInputEventAsArrayBuffer(event, callback) {
+	var file = event.target.files[0];
+
+	var reader = new FileReader();
+	
+	reader.onload = function(loadEvent) {
+		var arrayBuffer = loadEvent.target.result;
+		callback(arrayBuffer);
+	};
+	
+	reader.readAsArrayBuffer(file);
 }

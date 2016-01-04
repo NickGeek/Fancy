@@ -5,10 +5,10 @@ if (!isset($_SESSION['authed'])) {
 	exit();
 }
 
-if (empty($_GET['id']) || empty($_GET['site'])) { header('Location: .'); exit(); }
+if (!isset($_GET['id']) || empty($_GET['site'])) { header('Location: .'); exit(); }
 $id = $_GET['id'];
 $site = $_GET['site'];
-include_once('settings.php');
+include_once('api/settings.php');
 $con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], $fancyVars['dbname']);
 mysqli_set_charset($con, "utf8");
 
@@ -69,26 +69,10 @@ foreach ($sql as $row) {
 	<script src="js/mammoth.browser.min.js"></script>
 	<script src="js/emmet.min.js"></script>
 	<script src="js/medium-editor.js"></script>
+	<script src="js/get.js"></script>
 	<script src="js/edit.js"></script>
 
 	<script>
-		$(document).ready(function() {
-			var result = {
-				value: <?php echo json_encode($html); ?>
-			}
-			displayResult(result);
-
-			if (localStorage.getItem('defaultEditor') == 'power') $('#defaulter').hide(); 
-		});
-
-		function del(name) {
-			if (confirm('Are you sure you want to delete this?')) {
-				window.location.href="delete.php?type=element&site=<?php echo $site; ?>&name="+name;
-			} else {
-				return;
-			}
-		}
-
 		function changeEditor() {
 			var raw = $('#name').text();
 			var formatted = $('<textarea />').html(raw).val();
@@ -97,8 +81,6 @@ foreach ($sql as $row) {
 			  '<input type="hidden" name="name" value="'+encodeURIComponent(formatted)+'">' +
 			  '</form>').appendTo("body").submit();
 		}
-
-		
 	</script>
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -164,7 +146,7 @@ foreach ($sql as $row) {
 				<!-- Page Heading -->
 				<div class="row">
 					<div class="col-lg-12">
-						<h1 id="name" class="page-header" contenteditable="true"><?php echo $name; ?></h1>
+						<h1 id="name" class="page-header" contenteditable="true"></h1>
 
 						<ol class="breadcrumb">
 							<li>
@@ -203,7 +185,7 @@ foreach ($sql as $row) {
 							</div>
 							
 								<div id="html"     class="col-sm-4">
-									<form action="update.php" method="post">
+									<form action="api/update.php" method="post">
 										<div class="panel panel-yellow">
 											<div class="panel-heading">
 												<h3 class="panel-title" seamless='seamless'>HTML (with <a href="http://emmet.io/" target="_blank"><u>emmet</u></a>)  <span style="float: right;"><i class="fa fa-arrows-alt" onclick="fullscreenMe('htmleditor');"></i></span></h3>
@@ -227,7 +209,7 @@ foreach ($sql as $row) {
 							<code>
 								<?php
 									echo htmlspecialchars('<?php');
-									echo ' $f->fancy(\'<span id="nameCode">'.addslashes($name).'</span>\');';
+									echo ' $f->fancy(\'<span id="nameCode"></span>\');';
 									echo ' ?>';
 								?>
 							</code>

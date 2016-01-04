@@ -1,10 +1,10 @@
 <?php
 if (!empty($_POST['password'])) {
-	include_once('api/settings.php');
+	include_once('settings.php');
 	if (password_verify($_POST['password'], $fancyVars['fancy_password'])) {
 		session_start();
 		$_SESSION['authed'] = true;
-		header('Location: .');
+		echo "done";
 		exit();
 	}
 	else {
@@ -14,4 +14,3 @@ if (!empty($_POST['password'])) {
 else {
 	echo "You must type in a password";
 }
-?>

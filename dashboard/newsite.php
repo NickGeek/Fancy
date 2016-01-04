@@ -6,7 +6,7 @@ if (!isset($_SESSION['authed'])) {
 }
 else {
 	if (empty($_GET['name'])) { header('Location: .'); exit(); }
-	include_once('settings.php');
+	include_once('api/settings.php');
 	$con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], $fancyVars['dbname']);
 	mysqli_set_charset($con, "utf8");
 	$name = $_GET['name'];
