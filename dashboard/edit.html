@@ -32,6 +32,7 @@
 	<script src="js/emmet.min.js"></script>
 	<script src="js/medium-editor.js"></script>
 	<script src="js/get.js"></script>
+	<script src="js/misc.js"></script>
 	<script src="js/edit.js"></script>
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -125,7 +126,6 @@
 							</div>
 							
 								<div id="html"     class="col-sm-4">
-									<form action="api/update.php" method="post">
 										<div class="panel panel-yellow">
 											<div class="panel-heading">
 												<h3 class="panel-title" seamless='seamless'>HTML (with <a href="http://emmet.io/" target="_blank"><u>emmet</u></a>)  <span style="float: right;"><i class="fa fa-arrows-alt" onclick="fullscreenMe('htmleditor');"></i></span></h3>
@@ -134,10 +134,7 @@
 												<textarea id="htmleditor" name="html" class="form-control" style="min-height: 310px;" autocomplete="off"></textarea>
 											</div>
 										</div>
-									<input id="nameInput" name="name" type="hidden" />
-									<input name="id" type="hidden" />
-									<input name="site" type="hidden" />
-									<input type="submit" class="btn btn-success" style="margin-left: 10px; float: right;" value="Save" />
+									<a class="btn btn-success" style="margin-left: 10px; float: right;" onclick="save();">Save</a>
 									<a href="javascript:void(0);" class="btn btn-danger" style="float: right;" onclick="del($('#name').text());">Delete Element</a>
 									</div>
 								</form>

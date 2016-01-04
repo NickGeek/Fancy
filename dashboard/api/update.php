@@ -6,7 +6,7 @@ if (!isset($_SESSION['authed'])) {
 	exit();
 }
 else {
-	if (empty($_POST['name']) || !isset($_POST['id']) || empty($_POST['site'])) { echo "Not enough data has been sent"; exit(); }
+	if (empty($_POST['name']) || !isset($_POST['id']) || empty($_POST['site']) || empty($_POST['html'])) { echo "Not enough data has been sent"; exit(); }
 
 	$name = urldecode($_POST['name']);
 	$html = urldecode($_POST['html']);

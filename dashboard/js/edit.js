@@ -1,9 +1,11 @@
+var formatted = '';
 String.prototype.addSlashes = function() {
 	return this.replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
 }
 
 
 $(document).ready(function() {
+
 	/* API Requests START */
 	if (get.id === '0') {
 		var data = {
@@ -15,13 +17,7 @@ $(document).ready(function() {
 	}
 	else {
 		$.get("api/getElement.php", {id: get.id, site: get.site}).done(function(data) {
-			if (data === "Not enough data has been sent") {
-				alert("Not enough data has been sent");
-				return;
-			}
-			else if (data === "Authentication Error") {
-				window.location.href = "login.html";
-			}
+			httpCheck(data);
 
 			var json = JSON.parse(data);
 			displayResult(json);
@@ -32,13 +28,7 @@ $(document).ready(function() {
 	}
 
 	$.get("api/getElements.php", {id: get.id, site: get.site}).done(function(data) {
-		if (data == "Not enough data has been sent") {
-			alert("Not enough data has been sent");
-			return;
-		}
-		else if (data === "Authentication Error") {
-				window.location.href = "login.html";
-		}
+		httpCheck(data);
 
 		var json = JSON.parse(data);
 		for (var i = 0; i <= json.length - 1; i++) {
@@ -92,8 +82,7 @@ $(document).ready(function() {
 
 	function updateHint() {
 		var raw = $('#name').text();
-		var formatted = $('<textarea />').html(raw).val();
-		$('#nameInput').val(formatted);
+		formatted = $('<textarea />').html(raw).val();
 		$('#nameCode').html("'"+formatted.addSlashes()+"'");
 		document.title = formatted+' - '+get.site+' - Fancy Dashboard';
 	}
@@ -103,8 +92,8 @@ $(document).ready(function() {
 	}, false);
 
 	//Form prefilling
-	$('#id').val(get.id);
-	$('#site').val(get.site);
+	$('input[name="id"]').val(get.id);
+	$('input[name="site"]').val(get.site);
 
 	//Handle DOCX stuff
 	document.getElementById("docxUpload").addEventListener("change", handleFileSelect, false);
@@ -179,6 +168,16 @@ function fullscreenMe(element) {
 	else {
 		alert("Your browser doesn't support fullscreen mode");
 	}
+}
+
+function save() {
+	$.post("api/update.php", {name: formatted, site: get.site, id: get.id, html: $('#htmleditor').val()}).done(function(data) {
+	httpCheck(data);
+
+	if (data === "done") window.location.href="index.php?site="+get.site;
+	}).fail(function() {
+		alert("There was an error contacting the server. Please check your Internet connection.");
+	});
 }
 
 function changeEditor() {
