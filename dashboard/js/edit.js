@@ -22,6 +22,7 @@ $(document).ready(function() {
 
 	function displayResult(result) {
 		$('#name').text(result.name);
+		document.title = result.name+' - '+get.site+' - Fancy Dashboard';
 		$('#htmleditor').val(result.html);
 		$('#visualEditor').html(noscript(result.html));
 		$('#md').val(toMarkdown(result.html, { gfm: true }));
@@ -61,6 +62,7 @@ $(document).ready(function() {
 		var formatted = $('<textarea />').html(raw).val();
 		$('#nameInput').val(formatted);
 		$('#nameCode').html(formatted.addSlashes());
+		document.title = formatted+' - '+get.site+' - Fancy Dashboard';
 	}
 	
 	document.getElementById("name").addEventListener("input", function() {

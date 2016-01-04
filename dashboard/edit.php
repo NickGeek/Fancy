@@ -47,7 +47,7 @@ foreach ($sql as $row) {
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title><?php echo $site; ?> - Fancy Dashboard</title>
+	<title>Fancy Dashboard</title>
 
 	<!-- Bootstrap Core CSS -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
