@@ -114,7 +114,7 @@ function del(name) {
 				return;
 			}
 
-			window.location.href="."
+			window.location.href="index.php?site="+get.site;
 		}).fail(function() {
 			alert("There was an error contacting the server. Please check your Internet connection.");
 		});
