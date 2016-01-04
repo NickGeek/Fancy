@@ -142,6 +142,15 @@ function fullscreenMe(element) {
 	}
 }
 
+function changeEditor() {
+	var raw = $('#name').text();
+	var formatted = $('<textarea />').html(raw).val();
+	$('<form action="simpleEditor.php?site='+get.site+'&id='+get.id+'" method="POST">' +
+	  '<input type="hidden" name="html" value="'+encodeURIComponent($('#visualEditor').html())+'">' +
+	  '<input type="hidden" name="name" value="'+encodeURIComponent(formatted)+'">' +
+	  '</form>').appendTo("body").submit();
+}
+
 function readFileInputEventAsArrayBuffer(event, callback) {
 	var file = event.target.files[0];
 

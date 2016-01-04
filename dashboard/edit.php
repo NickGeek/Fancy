@@ -72,17 +72,6 @@ foreach ($sql as $row) {
 	<script src="js/get.js"></script>
 	<script src="js/edit.js"></script>
 
-	<script>
-		function changeEditor() {
-			var raw = $('#name').text();
-			var formatted = $('<textarea />').html(raw).val();
-			$('<form action="<?php echo 'simpleEditor.php?site='.$site.'&id='.$id; ?>" method="POST">' +
-			  '<input type="hidden" name="html" value="'+encodeURIComponent($('#visualEditor').html())+'">' +
-			  '<input type="hidden" name="name" value="'+encodeURIComponent(formatted)+'">' +
-			  '</form>').appendTo("body").submit();
-		}
-	</script>
-
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
