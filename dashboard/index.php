@@ -86,7 +86,7 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 				var url = 'simpleEditor.php';
 			}
 			else {
-				var url = 'edit.php';
+				var url = 'edit.html';
 				localStorage.setItem('defaultEditor', 'power')
 			}
 			$('.editLinks').each(function() {

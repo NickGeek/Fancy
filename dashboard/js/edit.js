@@ -5,15 +5,48 @@ String.prototype.addSlashes = function() {
 
 $(document).ready(function() {
 	/* API Requests START */
-	$.get("api/getElement.php", {id: get.id, site: get.site}).done(function(data) {
+	if (get.id === '0') {
+		var data = {
+			name: "Enter name here",
+			html: ""
+		}
+		displayResult(data);
+		updateHint();
+	}
+	else {
+		$.get("api/getElement.php", {id: get.id, site: get.site}).done(function(data) {
+			if (data === "Not enough data has been sent") {
+				alert("Not enough data has been sent");
+				return;
+			}
+			else if (data === "Authentication Error") {
+				window.location.href = "login.html";
+			}
+
+			var json = JSON.parse(data);
+			displayResult(json);
+			updateHint();
+		}).fail(function() {
+			alert("There was an error contacting the server. Please check your Internet connection.");
+		});
+	}
+
+	$.get("api/getElements.php", {id: get.id, site: get.site}).done(function(data) {
 		if (data == "Not enough data has been sent") {
 			alert("Not enough data has been sent");
 			return;
 		}
+		else if (data === "Authentication Error") {
+				window.location.href = "login.html";
+		}
 
 		var json = JSON.parse(data);
-		displayResult(json);
-		updateHint();
+		for (var i = 0; i <= json.length - 1; i++) {
+			var code = '<li>';
+			if (json[i].name === $('#name').text()) code = '<li class="active">';
+			code += "<a href='edit.html?site="+get.site+"&id="+json[i].id+"'>"+json[i].name+"</a></li>";
+			$('#elementSidebar').append(code);
+		};
 	}).fail(function() {
 		alert("There was an error contacting the server. Please check your Internet connection.");
 	});
@@ -61,13 +94,17 @@ $(document).ready(function() {
 		var raw = $('#name').text();
 		var formatted = $('<textarea />').html(raw).val();
 		$('#nameInput').val(formatted);
-		$('#nameCode').html(formatted.addSlashes());
+		$('#nameCode').html("'"+formatted.addSlashes()+"'");
 		document.title = formatted+' - '+get.site+' - Fancy Dashboard';
 	}
 	
 	document.getElementById("name").addEventListener("input", function() {
 		updateHint();
 	}, false);
+
+	//Form prefilling
+	$('#id').val(get.id);
+	$('#site').val(get.site);
 
 	//Handle DOCX stuff
 	document.getElementById("docxUpload").addEventListener("change", handleFileSelect, false);

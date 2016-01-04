@@ -1,41 +1,3 @@
-<?php
-session_start();
-if (!isset($_SESSION['authed'])) {
-	header("Location: login.html");
-	exit();
-}
-
-if (!isset($_GET['id']) || empty($_GET['site'])) { header('Location: .'); exit(); }
-$id = $_GET['id'];
-$site = $_GET['site'];
-include_once('api/settings.php');
-$con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], $fancyVars['dbname']);
-mysqli_set_charset($con, "utf8");
-
-if ($id == 0) {
-	$html = '';
-	$name = 'Enter name here';
-}
-else {
-	$section = $con->query("SELECT * FROM `{$con->real_escape_string($site)}` WHERE `id` = '{$con->real_escape_string($id)}';");
-	$row = $section->fetch_array(MYSQLI_ASSOC);
-	$html = $row['html'];
-	$name = $row['name'];
-}
-
-if (!empty($_POST['html'])) { $html = urldecode($_POST['html']); }
-if (!empty($_POST['name'])) { $name = urldecode($_POST['name']); }
-
-$site = $_GET['site'];
-
-//Get elements
-$sql = $con->query("SELECT `id`, `name` FROM `{$con->real_escape_string($site)}` WHERE 1;");
-$elements = array();
-foreach ($sql as $row) {
-	$elements[] = $row;
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -110,19 +72,8 @@ foreach ($sql as $row) {
 			</ul>
 			<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
-				<ul class="nav navbar-nav side-nav">
-					<?php
-					echo '<li><a href="edit.php?site='.$site.'&id=0"><i class="fa fa-fw fa-plus"></i> New Element</a></li>';
-					foreach ($elements as $element) {
-
-						$code = '<li>';
-						if ($name == $element['name']) {
-							$code = '<li class="active">';
-						}
-						$code .= '<a href="edit.php?site='.$site.'&id='.$element['id'].'">'.$element['name'].'</a></li>';
-						echo $code;
-					}
-					?>
+				<ul id="elementSidebar" class="nav navbar-nav side-nav">
+					<li><a href="javascript:void(0);" onclick="window.location.href='edit.html?site='+get.site+'&id=0'"><i class="fa fa-fw fa-plus"></i> New Element</a></li>
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
@@ -139,7 +90,7 @@ foreach ($sql as $row) {
 
 						<ol class="breadcrumb">
 							<li>
-								<i class="fa fa-file"></i>  <a href="<?php echo 'index.php?site='.$site; ?>">Dashboard</a>
+								<i class="fa fa-file"></i>  <a href="javascript:void(0);" onclick="window.location.href='index.php?site='+get.site">Dashboard</a>
 							</li>
 							<li class="active">
 								<i class="fa fa-pencil-square-o"></i> Element Editor
@@ -183,11 +134,11 @@ foreach ($sql as $row) {
 												<textarea id="htmleditor" name="html" class="form-control" style="min-height: 310px;" autocomplete="off"></textarea>
 											</div>
 										</div>
-									<input id="nameInput" name="name" type="hidden" value="<?php echo $name; ?>" />
-									<input name="id" type="hidden" value="<?php echo $id; ?>" />
-									<input name="site" type="hidden" value="<?php echo $site; ?>" />
+									<input id="nameInput" name="name" type="hidden" />
+									<input name="id" type="hidden" />
+									<input name="site" type="hidden" />
 									<input type="submit" class="btn btn-success" style="margin-left: 10px; float: right;" value="Save" />
-									<a href="javascript:void(0);" class="btn btn-danger" style="float: right;" onclick="del(<?php echo "'".$name."'"; ?>);">Delete Element</a>
+									<a href="javascript:void(0);" class="btn btn-danger" style="float: right;" onclick="del($('#name').text());">Delete Element</a>
 									</div>
 								</form>
 							</div>
@@ -196,11 +147,7 @@ foreach ($sql as $row) {
 
 						<p><h3>How to add this element to your site:</h3>
 							<code>
-								<?php
-									echo htmlspecialchars('<?php');
-									echo ' $f->fancy(\'<span id="nameCode"></span>\');';
-									echo ' ?>';
-								?>
+								<?php $f->fancy(<span id="nameCode"></span>); ?>
 							</code>
 						</p>
 

@@ -59,7 +59,7 @@ class DashboardHandler extends FancyConnector {
 		$this->preparedStatements['getElements']->execute();
 		$this->preparedStatements['getElements']->bind_result($id, $name);
 		$elementList = array();
-		while ($this->preparedStatements['getElements']->fetch()) { $elementList[$id] = $name; }
+		while ($this->preparedStatements['getElements']->fetch()) { $elementList[] = array('id' => $id, 'name' => $name); }
 		return json_encode($elementList);
 	}
 
