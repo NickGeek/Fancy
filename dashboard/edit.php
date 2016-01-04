@@ -95,7 +95,7 @@ foreach ($sql as $row) {
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="<?php echo 'index.php?site='.$site ?>"><?php echo $site; ?> - Fancy Dashboard</a>
+				<a class="navbar-brand" href="javascript:void(0);" onclick="window.location.href='index.php?site='+get.site"><script>document.write(get.site);</script> - Fancy Dashboard</a>
 			</div>
 			<!-- Top Menu Items -->
 			<ul class="nav navbar-right top-nav">
