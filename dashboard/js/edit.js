@@ -109,7 +109,11 @@ $(document).ready(function() {
 function del(name) {
 	if (confirm('Are you sure you want to delete this?')) {
 		$.get("api/delete.php", {type: "element", site: get.site, name: name}).done(function(data) {
-			if (data != "done") {
+			if (data === "Authentication Error") {
+				window.location.href = "login.html";
+				return;
+			}
+			else if (data != "done") {
 				alert(data);
 				return;
 			}
@@ -183,7 +187,7 @@ function save() {
 function changeEditor() {
 	var raw = $('#name').text();
 	var formatted = $('<textarea />').html(raw).val();
-	$('<form action="simpleEditor.php?site='+get.site+'&id='+get.id+'" method="POST">' +
+	$('<form action="simpleEditor.html?site='+get.site+'&id='+get.id+'" method="POST">' +
 	  '<input type="hidden" name="html" value="'+encodeURIComponent($('#visualEditor').html())+'">' +
 	  '<input type="hidden" name="name" value="'+encodeURIComponent(formatted)+'">' +
 	  '</form>').appendTo("body").submit();
