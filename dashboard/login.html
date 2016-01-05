@@ -51,11 +51,8 @@
 						<!-- Page content -->
 						<div id="elementList" class="list-group">
 							<h1 class="page-header">Hello こんにちは Bonjour 您好 Ciao</h1>
-							<form action="handleLogin.php" method="post">
 								<input type="password" class="form-control" name="password" placeholder="Dashboard Password" required>
-
-								<br /><input type="submit" class="btn btn-success" style="margin-left: 10px; float: right;" value="Take me to my dashboard >>" />
-							</form>
+								<br /><a class="btn btn-success" style="margin-left: 10px; float: right;" onclick="login();">Take me to my dashboard >></a>
 							<p>Have you just installed Fancy? If so <a href="setup.html">click here</a>.</p>
 						</div>
 
@@ -74,6 +71,7 @@
 
 	<!-- jQuery -->
 	<script src="js/jquery.js"></script>
+	<script src="js/login.js"></script>
 
 	<!-- Bootstrap Core JavaScript -->
 	<script src="js/bootstrap.min.js"></script>
