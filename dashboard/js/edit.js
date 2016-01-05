@@ -1,4 +1,4 @@
-var formatted = '';
+var gName = '';
 String.prototype.addSlashes = function() {
 	return this.replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
 }
@@ -15,8 +15,6 @@ $(document).ready(function() {
 	}
 	else if (get.inStorage) {
 		var data = JSON.parse(localStorage.getItem(get.site+":"+get.id));
-		console.log(get.site+":"+get.id);
-		console.log(data);
 		displayResult(data);
 		updateHint();
 	}
@@ -87,9 +85,9 @@ $(document).ready(function() {
 
 	function updateHint() {
 		var raw = $('#name').text();
-		formatted = $('<textarea />').html(raw).val();
-		$('#nameCode').html("'"+formatted.addSlashes()+"'");
-		document.title = formatted+' - '+get.site+' - Fancy Dashboard';
+		gName = $('<textarea />').html(raw).val();
+		$('#nameCode').html("'"+gName.addSlashes()+"'");
+		document.title = gName+' - '+get.site+' - Fancy Dashboard';
 	}
 	
 	document.getElementById("name").addEventListener("input", function() {
@@ -180,7 +178,7 @@ function fullscreenMe(element) {
 }
 
 function save() {
-	$.post("api/update.php", {name: formatted, site: get.site, id: get.id, html: $('#htmleditor').val()}).done(function(data) {
+	$.post("api/update.php", {name: gName, site: get.site, id: get.id, html: $('#htmleditor').val()}).done(function(data) {
 	if (!httpCheck(data)) return;
 
 	if (data === "done") window.location.href="index.php?site="+get.site;
@@ -190,12 +188,12 @@ function save() {
 }
 
 function changeEditor() {
-	var raw = $('#name').text();
-	var formatted = $('<textarea />').html(raw).val();
-	$('<form action="simpleEditor.php?site='+get.site+'&id='+get.id+'" method="POST">' +
-	  '<input type="hidden" name="html" value="'+encodeURIComponent($('#visualEditor').html())+'">' +
-	  '<input type="hidden" name="name" value="'+encodeURIComponent(formatted)+'">' +
-	  '</form>').appendTo("body").submit();
+	var data = {
+		name: gName,
+		html: $('#visualEditor').html()
+	}
+	localStorage.setItem(get.site+":"+get.id, JSON.stringify(data));
+	window.location.href = "simpleEditor.html?inStorage=true&site="+get.site+"&id="+get.id;
 }
 
 function readFileInputEventAsArrayBuffer(event, callback) {
