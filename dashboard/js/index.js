@@ -55,7 +55,6 @@ function newsite() {
 	}).fail(function() {
 		alert("There was an error contacting the server. Please check your Internet connection.");
 	});
-	window.location.href="newsite.php?name="+name;
 }
 
 function del(name) {

@@ -13,6 +13,13 @@ $(document).ready(function() {
 		displayResult(data);
 		updateHint();
 	}
+	else if (get.inStorage) {
+		var data = JSON.parse(localStorage.getItem(get.site+":"+get.id));
+		console.log(get.site+":"+get.id);
+		console.log(data);
+		displayResult(data);
+		updateHint();
+	}
 	else {
 		$.get("api/getElement.php", {id: get.id, site: get.site}).done(function(data) {
 			if (!httpCheck(data)) return;
@@ -185,7 +192,7 @@ function save() {
 function changeEditor() {
 	var raw = $('#name').text();
 	var formatted = $('<textarea />').html(raw).val();
-	$('<form action="simpleEditor.html?site='+get.site+'&id='+get.id+'" method="POST">' +
+	$('<form action="simpleEditor.php?site='+get.site+'&id='+get.id+'" method="POST">' +
 	  '<input type="hidden" name="html" value="'+encodeURIComponent($('#visualEditor').html())+'">' +
 	  '<input type="hidden" name="name" value="'+encodeURIComponent(formatted)+'">' +
 	  '</form>').appendTo("body").submit();

@@ -1,41 +1,3 @@
-<?php
-session_start();
-if (!isset($_SESSION['authed'])) {
-	header("Location: login.html");
-	exit();
-}
-
-if (empty($_GET['id']) || empty($_GET['site'])) { header('Location: .'); exit(); }
-$id = $_GET['id'];
-$site = $_GET['site'];
-include_once('api/settings.php');
-$con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], $fancyVars['dbname']);
-mysqli_set_charset($con, "utf8");
-
-if ($id == 0) {
-	$html = '';
-	$name = 'Enter name here';
-}
-else {
-	$section = $con->query("SELECT * FROM `{$con->real_escape_string($site)}` WHERE `id` = '{$con->real_escape_string($id)}';");
-	$row = $section->fetch_array(MYSQLI_ASSOC);
-	$html = $row['html'];
-	$name = $row['name'];
-}
-
-if (!empty($_POST['html'])) { $html = urldecode($_POST['html']); }
-if (!empty($_POST['name'])) { $name = urldecode($_POST['name']); }
-
-$site = $_GET['site'];
-
-//Get elements
-$sql = $con->query("SELECT `id`, `name` FROM `{$con->real_escape_string($site)}` WHERE 1;");
-$elements = array();
-foreach ($sql as $row) {
-	$elements[] = $row;
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,7 +9,7 @@ foreach ($sql as $row) {
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title><?php echo $site; ?> - Fancy Dashboard</title>
+	<title>Fancy Dashboard</title>
 
 	<!-- Bootstrap Core CSS -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
@@ -67,65 +29,9 @@ foreach ($sql as $row) {
 	<script src="js/emmet.min.js"></script>
 	<script src="js/medium-editor.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-
-	<script>
-		$(document).ready(function() {
-			var result = {
-				value: <?php echo json_encode($html); ?>
-			}
-			displayResult(result);
-
-			var editor = new MediumEditor('#visualEditor', {
-				placeholder: {
-					<?php
-					if ($html == '') {
-						echo "text: 'Click here to start editing'";
-					}
-					else {
-						echo "text: ''";
-					}
-					?>
-				},
-				buttons: ["bold", "italic", "underline", "header1", "header2", "anchor", "image", "quote", "removeFormat"],
-				firstHeader: 'h1',
-				secondHeader: 'h2'
-			});
-
-			if (localStorage.getItem('defaultEditor') == 'simple') $('#defaulter').hide(); 
-		});
-
-
-		function noscript(strCode){
-			var html = $(strCode.bold()); 
-			html.find('script').remove();
-			return html.html();
-		}
-
-		function displayResult(result) {
-			$('#visualEditor').html(noscript(result.value));
-		}
-
-		function save(publish) {
-			var raw = $('#name').text();
-			var formatted = $('<textarea />').html(raw).val();
-			if (publish) {
-				$('<form action="<?php echo 'update.php?site='.$site.'&id='.$id; ?>" method="POST">' +
-				  '<input type="hidden" name="html" value="'+encodeURIComponent($('#visualEditor').html())+'">' +
-				  '<input type="hidden" name="name" value="'+encodeURIComponent(formatted)+'">' +
-				  '<input type="hidden" name="id" value="<?php echo $id; ?>">' +
-				  '<input type="hidden" name="site" value="<?php echo $site; ?>">' +
-				  '</form>').appendTo("body").submit();
-			}
-			else {
-				$('<form action="<?php echo 'edit.php?site='.$site.'&id='.$id; ?>" method="POST">' +
-				  '<input type="hidden" name="html" value="'+encodeURIComponent($('#visualEditor').html())+'">' +
-				  '<input type="hidden" name="name" value="'+encodeURIComponent(formatted)+'">' +
-				  '<input type="hidden" name="id" value="<?php echo $id; ?>">' +
-				  '<input type="hidden" name="site" value="<?php echo $site; ?>">' +
-				  '</form>').appendTo("body").submit();
-			}
-		}
-	</script>
+	<script src="js/get.js"></script>
+	<script src="js/misc.js"></script>
+	<script src="js/simpleEditor.js"></script>
 
 	<style>
 		.well, .navbar, .popover, .btn, .tooltip, input, select, textarea, pre, .progress, .modal, .add-on, .alert, .table-bordered, .nav>.active>a, .dropdown-menu, .tooltip-inner, .badge, .label, .img-polaroid {
@@ -175,7 +81,7 @@ foreach ($sql as $row) {
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<span id="name" class="navbar-brand" contenteditable="true"><?php echo $name; ?></span>
+			<span id="name" class="navbar-brand" contenteditable="true"></span>
 		</div>
 		<div class="navbar-collapse collapse navbar-responsive-collapse">
 			<ul class="nav navbar-nav">
