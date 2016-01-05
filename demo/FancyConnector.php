@@ -14,7 +14,7 @@ class FancyConnector {
 		//Connect to the database. In the future I might create a system to allow for this to work with custom connections
 		$this->con = new mysqli($this->fancyVars['dbaddr'], $this->fancyVars['dbuser'], $this->fancyVars['dbpass'], $this->fancyVars['dbname']);
 		if ($this->con->connect_errno) { echo "<script>alert('Error connecting to Fancy database');</script>"; }
-		mysqli_set_charset($this->con, "utf8");
+		mysqli_set_charset($this->con, "utf8mb4");
 
 		//Prepare common statements
 		if ($this->fancyVars['apiVersion'] >= 2000) {
