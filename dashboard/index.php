@@ -1,44 +1,4 @@
 <?php
-session_start();
-if (!isset($_SESSION['authed'])) {
-	header("Location: login.html");
-	exit();
-}
-
-include_once('api/settings.php');
-$con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], $fancyVars['dbname']);
-mysqli_set_charset($con, "utf8");
-
-//Get sites
-$sql = $con->query("show tables;");
-$res = array();
-$sites = array();
-foreach ($sql as $row) {
-	$res[] = $row;
-}
-foreach ($res as $x) {
-	$sites[] = $x['Tables_in_'.$fancyVars['dbname']];
-}
-
-foreach ($sites as $key => $value) {
-	$sites[$key] = stripslashes($value);
-}
-
-if (!empty($_GET['site'])) {
-	$site = $_GET['site'];
-
-	//Get elements
-	$sql = $con->query("SELECT `id`, `name` FROM `{$con->real_escape_string($site)}` WHERE 1;");
-	$elements = array();
-	foreach ($sql as $row) {
-		$elements[] = $row;
-	}
-}
-else {
-	header('Location: index.php?site='.$sites[0]);
-	exit();
-}
-
 if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 	echo "<script>alert('You need to delete createConfig.php');</script>";
 }
@@ -132,7 +92,7 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 				<!-- Page Heading -->
 				<div class="row">
 					<div class="col-lg-12">
-						<h1 class="page-header"><?php echo $site; ?> <a href="javascript:void(0);" class="btn btn-danger" onclick="del(<?php echo "'".addslashes($site)."'"; ?>);">Delete Site</a></h1>
+						<h1 class="page-header"><script>document.write(get.site);</script> <a href="javascript:void(0);" class="btn btn-danger" onclick="del(get.site);">Delete Site</a></h1>
 						
 						<!-- Page content -->
 						<div id="elementList" class="list-group">
@@ -149,7 +109,7 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 									<?php
 										echo htmlspecialchars('<?php');
 										echo ' require_once(\'FancyConnector.php\');';
-										echo ' $f = new FancyConnector(\''.addslashes($site).'\');';
+										echo ' $f = new FancyConnector(\'<script>document.write(get.site);</script>\');';
 										echo ' ?>';
 									?>
 								</code>

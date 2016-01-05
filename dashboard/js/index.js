@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	//Get elements and pages
 	$.get("api/getElements.php", {site: get.site}).done(function(data) {
+		if (!get.site) return;
 		if (!httpCheck(data)) return;
 
 		//Set to default editor
@@ -22,7 +23,7 @@ $(document).ready(function() {
 		alert("There was an error contacting the server. Please check your Internet connection.");
 	});
 
-	$.get("api/getSites.php", {site: get.site}).done(function(data) {
+	$.get("api/getSites.php").done(function(data) {
 		if (!httpCheck(data)) return;
 
 		var json = JSON.parse(data);
@@ -30,6 +31,7 @@ $(document).ready(function() {
 		//Redirect if no site is selected
 		if (!get.site) {
 			window.location.href = "index.php?site="+json[0];
+			return;
 		}
 
 		for (var i = 0; i <= json.length - 1; i++) {
