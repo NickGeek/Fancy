@@ -35,8 +35,6 @@ class DashboardHandler extends FancyConnector {
 			$this->preparedStatements['newElement'] = $this->con->prepare("INSERT INTO `{$this->con->real_escape_string($this->site)}` (`name`, `html`) VALUES (?, ?);");
 			$this->preparedStatements['updateElement'] = $this->con->prepare("UPDATE `{$this->con->real_escape_string($this->site)}` SET `name`=?, `html`=? WHERE `id` = ?;");
 		}
-
-		$this->preparedStatements['getSites'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ show tables;");
 		return;
 	}
 
@@ -92,8 +90,28 @@ class DashboardHandler extends FancyConnector {
 	}
 
 	public function getSites() {
-		$this->preparedStatements['getSites']->execute();
-		return;
+		if ($this->fancyVars['apiVersion'] >= 2000) {
+			$this->preparedStatements['getSites']->execute();
+			$this->preparedStatements['getSites']->bind_result($name);
+			$sites = array();
+			while ($this->preparedStatements['getSites']->fetch()) { $sites[] = $name; }
+			return json_encode($sites);
+		}
+		else {
+			$sql = $this->con->query("show tables;");
+			$res = array();
+			$sites = array();
+			foreach ($sql as $row) {
+				$res[] = $row;
+			}
+			foreach ($res as $x) {
+				$sites[] = $x['Tables_in_'.$this->fancyVars['dbname']];
+			}
+			foreach ($sites as $key => $value) {
+				$sites[$key] = stripslashes($value);
+			}
+			return json_encode($sites);
+		}
 	}
 
 	public function newSite($name) {

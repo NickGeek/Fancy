@@ -8,7 +8,7 @@ if (!isset($_SESSION['authed'])) {
 if (empty($_GET['id']) || empty($_GET['site'])) { header('Location: .'); exit(); }
 $id = $_GET['id'];
 $site = $_GET['site'];
-include_once('settings.php');
+include_once('api/settings.php');
 $con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], $fancyVars['dbname']);
 mysqli_set_charset($con, "utf8");
 

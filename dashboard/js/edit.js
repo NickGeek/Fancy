@@ -15,7 +15,7 @@ $(document).ready(function() {
 	}
 	else {
 		$.get("api/getElement.php", {id: get.id, site: get.site}).done(function(data) {
-			httpCheck(data);
+			if (!httpCheck(data)) return;
 
 			var json = JSON.parse(data);
 			displayResult(json);
@@ -26,12 +26,12 @@ $(document).ready(function() {
 	}
 
 	$.get("api/getElements.php", {site: get.site}).done(function(data) {
-		httpCheck(data);
+		if (!httpCheck(data)) return;
 
 		var json = JSON.parse(data);
 		for (var i = 0; i <= json.length - 1; i++) {
 			var code = '<li>';
-			if (json[i].name === $('#name').text()) code = '<li class="active">';
+			if (json[i].name.toLowerCase() === $('#name').text().toLowerCase()) code = '<li class="active">';
 			code += "<a href='edit.html?site="+get.site+"&id="+json[i].id+"'>"+json[i].name+"</a></li>";
 			$('#elementSidebar').append(code);
 		};
@@ -174,7 +174,7 @@ function fullscreenMe(element) {
 
 function save() {
 	$.post("api/update.php", {name: formatted, site: get.site, id: get.id, html: $('#htmleditor').val()}).done(function(data) {
-	httpCheck(data);
+	if (!httpCheck(data)) return;
 
 	if (data === "done") window.location.href="index.php?site="+get.site;
 	}).fail(function() {

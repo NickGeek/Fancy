@@ -1,10 +1,13 @@
 function httpCheck(data) {
 	if (data === "Not enough data has been sent") {
 		alert("Not enough data has been sent");
-		return;
+		return false;
 	}
 	else if (data === "Authentication Error") {
 		window.location.href = "login.html";
-		return;
+		return false;
+	}
+	else {
+		return true;
 	}
 }

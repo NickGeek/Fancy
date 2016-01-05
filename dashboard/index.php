@@ -71,6 +71,9 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script src="js/get.js"></script>
+	<script src="js/misc.js"></script>
+	<script src="js/index.js"></script>
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -80,34 +83,7 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 	<![endif]-->
 
 	<script>
-		$(document).ready(function() {
-			//Set to default editor
-			if (localStorage.getItem('defaultEditor') == 'simple') {
-				var url = 'simpleEditor.php';
-			}
-			else {
-				var url = 'edit.html';
-				localStorage.setItem('defaultEditor', 'power')
-			}
-			$('.editLinks').each(function() {
-				var oldHref = $(this).attr('href');
-				$(this).attr('href', url+oldHref);
-			});
-		});
-
-		function newsite() {
-			var name = prompt("Name of site:", "");
-			if (name.length == 0) return;
-			window.location.href="newsite.php?name="+name;
-		}
 		
-		function del(name) {
-			if (confirm('Are you sure you want to delete this?')) {
-				window.location.href="api/delete.php?type=site&name="+name;
-			} else {
-				return;
-			}
-		}
 	</script>
 </head>
 
@@ -140,20 +116,10 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 			</ul>
 			<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
-				<ul class="nav navbar-nav side-nav">
+				<ul id="siteSidebar" class="nav navbar-nav side-nav">
 					<li>
 						<a href="javascript:void(0);" onclick="newsite();"><i class="fa fa-fw fa-plus"></i> Add Site</a>
 					</li>
-					<?php
-					foreach ($sites as $x) {
-						$code = '<li>';
-						if ($site == $x) {
-							$code = '<li class="active">';
-						}
-						$code .= '<a href="index.php?site='.$x.'"><i class="fa fa-fw fa-file"></i> '.$x.'</a></li>';
-						echo $code;
-					}
-					?>
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
@@ -170,13 +136,7 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 						
 						<!-- Page content -->
 						<div id="elementList" class="list-group">
-							<?php
-							echo '<a href="?site='.$site.'&id=0" class="editLinks list-group-item"><i class="fa fa-fw fa-plus"></i> Add a new Fancy element</a>';
-
-							foreach ($elements as $element) {
-								echo '<a href="?site='.$site.'&id='.$element['id'].'" class="editLinks list-group-item">'.$element['name'].'</a>';
-							}
-							?>
+							<a id="newElement" class="list-group-item"><i class="fa fa-fw fa-plus"></i> Add a new Fancy element</a>
 						</div>
 						
 						<h3>How to enable Fancy on your webpages:</h3>
