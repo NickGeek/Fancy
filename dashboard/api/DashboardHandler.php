@@ -95,4 +95,18 @@ class DashboardHandler extends FancyConnector {
 		$this->preparedStatements['getSites']->execute();
 		return;
 	}
+
+	public function newSite($name) {
+		if ($this->fancyVars['apiVersion'] >= 2000) {
+			//TODO: New database layout
+			return;
+		}
+		else {
+			$this->con->query("SET SQL_MODE = \"NO_AUTO_VALUE_ON_ZERO\";");
+			$this->con->query("CREATE TABLE `{$this->con->real_escape_string($name)}` (`id` int(11) NOT NULL, `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL, `html` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+			$this->con->query("ALTER TABLE `{$this->con->real_escape_string($name)}` ADD PRIMARY KEY (`id`);");
+			$this->con->query("ALTER TABLE `{$this->con->real_escape_string($name)}` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;");
+		}
+		return;
+	}
 }
