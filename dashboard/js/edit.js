@@ -5,8 +5,6 @@ String.prototype.addSlashes = function() {
 
 
 $(document).ready(function() {
-
-	/* API Requests START */
 	if (get.id === '0') {
 		var data = {
 			name: "Enter name here",
@@ -27,7 +25,7 @@ $(document).ready(function() {
 		});
 	}
 
-	$.get("api/getElements.php", {id: get.id, site: get.site}).done(function(data) {
+	$.get("api/getElements.php", {site: get.site}).done(function(data) {
 		httpCheck(data);
 
 		var json = JSON.parse(data);
