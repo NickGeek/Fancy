@@ -3,17 +3,11 @@ include_once('FancyConnector.php');
 class DashboardHandler extends FancyConnector {
 	protected function init() {
 		if ($this->fancyVars['apiVersion'] >= 2000) {
-			//This is running on the old system
 			$this->prepareStatements();
 		}
 		else {
 			$this->oldPrepareStatements();
 		}
-	}
-
-	public function deleteSite($name) {
-		$this->con->query("DROP TABLE IF EXISTS `{$this->con->real_escape_string($name)}`;");
-		return;
 	}
 
 	public function prepareStatements() {
@@ -24,6 +18,8 @@ class DashboardHandler extends FancyConnector {
 		$this->preparedStatements['newElement'] = $this->con->prepare("INSERT INTO `elements` (`name`, `html`, `site`) VALUES (?, ?, ?);");
 		$this->preparedStatements['updateElement'] = $this->con->prepare("UPDATE `elements` SET `name`=?, `html`=? WHERE `id` = ?;");
 		$this->preparedStatements['getSites'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `name` FROM `sites` WHERE 1;");
+		$this->preparedStatements['newSite'] = $this->con->prepare("INSERT INTO `sites` (`name`) VALUES (?);");
+		$this->preparedStatements['deleteSite'] = $this->con->prepare("DELETE FROM `sites` WHERE `name` = ?;");
 		return;
 	}
 
@@ -115,15 +111,26 @@ class DashboardHandler extends FancyConnector {
 	}
 
 	public function newSite($name) {
+		$this->con->query("SET SQL_MODE = \"NO_AUTO_VALUE_ON_ZERO\";");
 		if ($this->fancyVars['apiVersion'] >= 2000) {
-			//TODO: New database layout
-			return;
+			$this->preparedStatements['newSite']->bind_param('s', $name);
+			$this->preparedStatements['newSite']->execute();
 		}
 		else {
-			$this->con->query("SET SQL_MODE = \"NO_AUTO_VALUE_ON_ZERO\";");
 			$this->con->query("CREATE TABLE `{$this->con->real_escape_string($name)}` (`id` int(11) NOT NULL, `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL, `html` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 			$this->con->query("ALTER TABLE `{$this->con->real_escape_string($name)}` ADD PRIMARY KEY (`id`);");
 			$this->con->query("ALTER TABLE `{$this->con->real_escape_string($name)}` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;");
+		}
+		return;
+	}
+
+	public function deleteSite($name) {
+		if ($this->fancyVars['apiVersion'] >= 2000) {
+			$this->preparedStatements['deleteSite']->bind_param('s', $name);
+			$this->preparedStatements['deleteSite']->execute();
+		}
+		else {
+			$this->con->query("DROP TABLE IF EXISTS `{$this->con->real_escape_string($name)}`;");
 		}
 		return;
 	}
