@@ -1,7 +1,11 @@
 <?php
+include_once('api/DashboardHandler.php');
 session_start();
+$handler = new DashboardHandler();
 function download($file) {
-	$file = "api/".$file;
+	if ($handler->fancyVars['apiVersion'] >= 2000) {
+		$file = "api/".$file;
+	}
 	header('Content-Description: File Transfer');
 	header('Content-Type: application/octet-stream');
 	header('Content-Disposition: attachment; filename="'.basename($file).'"');
