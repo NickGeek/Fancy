@@ -7,7 +7,12 @@ class FancyConnector {
 
 	public function __construct($site = false) {
 		//Get the user settings
-		include_once('settings.php');
+		if (file_exists(realpath(getcwd().'/settings.php'))) {
+			include_once('settings.php');
+		}
+		else {
+			include_once('../settings.php');
+		}
 		$this->fancyVars = $fancyVars;
 		$this->site = $site;
 
