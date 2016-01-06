@@ -1,5 +1,5 @@
 <?php
-if (file_exists(realpath(getcwd().'/createConfig.php'))) {
+if (file_exists(realpath(getcwd().'/createConfig.php')) && !empty($_GET['site'])) {
 	echo "<script>alert('You need to delete createConfig.php');</script>";
 }
 ?>
