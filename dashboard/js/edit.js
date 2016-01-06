@@ -5,7 +5,7 @@ String.prototype.addSlashes = function() {
 
 
 $(document).ready(function() {
-	if (get.id === '0') {
+	if (get.id === '0' && !get.inStorage) {
 		var data = {
 			name: "Enter name here",
 			html: ""
