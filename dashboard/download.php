@@ -3,7 +3,7 @@ include_once('api/DashboardHandler.php');
 session_start();
 $handler = new DashboardHandler();
 function download($file) {
-	if ($file="settings.php" && $handler->fancyVars['apiVersion'] >= 2000) {
+	if ($file == "settings.php" && $handler->fancyVars['apiVersion'] >= 2000) {
 		$file = "api/".$file;
 	}
 	header('Content-Description: File Transfer');
