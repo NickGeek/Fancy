@@ -3,7 +3,6 @@ String.prototype.addSlashes = function() {
 	return this.replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
 }
 
-
 $(document).ready(function() {
 	if (get.id === '0' && !get.inStorage) {
 		var data = {
@@ -103,11 +102,31 @@ $(document).ready(function() {
 	function handleFileSelect(event) {
 		readFileInputEventAsArrayBuffer(event, function(arrayBuffer) {
 			mammoth.convertToHtml({arrayBuffer: arrayBuffer})
-				.then(displayResult)
+				.then(displayDocx)
 				.done();
 		});
 	}
+
+	function displayDocx(result) {
+		var docxHTML = result.value.replace(/\\"/g, '"');
+		$('#htmleditor').val(docxHTML);
+		$('#visualEditor').html(noscript(docxHTML));
+		$('#md').val(toMarkdown(docxHTML, { gfm: true }));
+	}
 });
+
+function readFileInputEventAsArrayBuffer(event, callback) {
+	var file = event.target.files[0];
+
+	var reader = new FileReader();
+	
+	reader.onload = function(loadEvent) {
+		var arrayBuffer = loadEvent.target.result;
+		callback(arrayBuffer);
+	};
+	
+	reader.readAsArrayBuffer(file);
+}
 
 function del(name) {
 	if (confirm('Are you sure you want to delete this?')) {
@@ -194,17 +213,4 @@ function changeEditor() {
 	}
 	localStorage.setItem(get.site+":"+get.id, JSON.stringify(data));
 	window.location.href = "simpleEditor.html?inStorage=true&site="+get.site+"&id="+get.id;
-}
-
-function readFileInputEventAsArrayBuffer(event, callback) {
-	var file = event.target.files[0];
-
-	var reader = new FileReader();
-	
-	reader.onload = function(loadEvent) {
-		var arrayBuffer = loadEvent.target.result;
-		callback(arrayBuffer);
-	};
-	
-	reader.readAsArrayBuffer(file);
 }

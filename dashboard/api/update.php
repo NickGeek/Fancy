@@ -8,8 +8,8 @@ if (!isset($_SESSION['authed'])) {
 else {
 	if (empty($_POST['name']) || !isset($_POST['id']) || empty($_POST['site']) || empty($_POST['html'])) { echo "Not enough data has been sent"; exit(); }
 
-	$name = urldecode($_POST['name']);
-	$html = urldecode($_POST['html']);
+	$name = $_POST['name'];
+	$html = $_POST['html'];
 	$site = $_POST['site'];
 	$id = $_POST['id'];
 
