@@ -4,12 +4,23 @@ class FancyConnector {
 	protected $fancyVars;
 	public $preparedStatements = array();
 	public $site;
+	public $version;
 
 	public function __construct($site = false) {
 		//Get the user settings
-		include_once('settings.php');
+		if (file_exists(realpath(realpath(__DIR__).'/settings.php'))) {
+			include_once('settings.php');
+		}
+		else if (file_exists(realpath(realpath(__DIR__).'/../settings.php'))) {
+			include_once('../settings.php');
+		}
+		else {
+			echo "Fancy has not been setup";
+			exit();
+		}
 		$this->fancyVars = $fancyVars;
 		$this->site = $site;
+		$this->apiVersion = $fancyVars['apiVersion'];
 
 		//Connect to the database. In the future I might create a system to allow for this to work with custom connections
 		$this->con = new mysqli($this->fancyVars['dbaddr'], $this->fancyVars['dbuser'], $this->fancyVars['dbpass'], $this->fancyVars['dbname']);

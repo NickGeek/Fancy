@@ -7,6 +7,9 @@ function httpCheck(data) {
 		window.location.href = "login.html";
 		return false;
 	}
+	else if (data === "Fancy has not been setup") {
+		alert("Fancy has not been setup");
+	}
 	else {
 		return true;
 	}

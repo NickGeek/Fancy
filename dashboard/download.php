@@ -1,10 +1,13 @@
 <?php
 include_once('api/DashboardHandler.php');
 session_start();
-$handler = new DashboardHandler();
 function download($file) {
-	if ($file == "settings.php" && $handler->fancyVars['apiVersion'] >= 2000) {
-		$file = "api/".$file;
+	$handler = new DashboardHandler();
+	if ($file === "settings.php" && $handler->apiVersion >= 2000) {
+		$file = realpath(realpath(__DIR__).'/api/settings.php');
+	}
+	else if ($file === "settings.php") {
+		$file = realpath(realpath(__DIR__).'/settings.php');
 	}
 	header('Content-Description: File Transfer');
 	header('Content-Type: application/octet-stream');
@@ -26,7 +29,7 @@ else {
 		download('settings.php');
 	}
 	elseif ($_GET['id'] == "connector") {
-		download('api/FancyConnector.php');
+		download(realpath(realpath(__DIR__).'/api/FancyConnector.php'));
 	}
 }
 

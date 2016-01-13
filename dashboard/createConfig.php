@@ -1,5 +1,4 @@
 <?php
-include_once('api/DashboardHandler.php');
 if (empty($_POST['site']) || empty($_POST['password']) || empty($_POST['dbname']) || empty($_POST['address']) || empty($_POST['dbuser']) || empty($_POST['dbpass'])) {
 	echo "You must fill out all the text boxes.";
 	exit();
@@ -31,6 +30,7 @@ $con->query("ALTER TABLE `sites` ADD PRIMARY KEY (`id`);");
 $con->query("ALTER TABLE `elements` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;");
 $con->query("ALTER TABLE `sites` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;");
 
+include_once('api/DashboardHandler.php');
 $handler = new DashboardHandler();
 $handler->newSite($name);
 
