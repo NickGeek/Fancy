@@ -4,7 +4,7 @@ class FancyConnector {
 	protected $fancyVars;
 	public $preparedStatements = array();
 	public $site;
-	public $version;
+	public $apiVersion;
 
 	public function __construct($site = false) {
 		//Get the user settings
