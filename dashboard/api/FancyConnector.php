@@ -9,10 +9,10 @@ class FancyConnector {
 	public function __construct($site = false) {
 		//Get the user settings
 		if (file_exists(realpath(realpath(__DIR__).'/settings.php'))) {
-			include_once('settings.php');
+			include_once(realpath(realpath(__DIR__).'/settings.php'));
 		}
 		else if (file_exists(realpath(realpath(__DIR__).'/../settings.php'))) {
-			include_once('../settings.php');
+			include_once(realpath(realpath(__DIR__).'/../settings.php'));
 		}
 		else {
 			echo "Fancy has not been setup";
