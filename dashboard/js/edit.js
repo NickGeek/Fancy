@@ -67,19 +67,43 @@ $(document).ready(function() {
 		secondHeader: 'h2'
 	});
 
+	var simpleEditing = false;
+
 	$('#md').bind('input propertychange', function() {
+		simpleEditing = false;
 		$('#visualEditor').html(markdown.toHTML(this.value));
 		$('#htmleditor').val(markdown.toHTML(this.value));
 	});
 
 	$('#htmleditor').bind('input propertychange', function() {
+		simpleEditing = false;
 		$('#visualEditor').html(noscript(this.value));
 		$('#md').val(toMarkdown(this.value, { gfm: true }));
 	});
 
 	$('#visualEditor').bind('input propertychange', function() {
+		simpleEditing = true;
 		$('#htmleditor').val($(this).html());
 		$('#md').val(toMarkdown($(this).html(), { gfm: true }));
+	});
+
+	$('#visualEditor').on('DOMNodeInserted', function(node) {
+		if ($(node.target).is('img') && !$(node.target).hasClass('fancyResizeAsked') && simpleEditing) {
+			//Ask the user what size they want it to be
+			if (confirm('Do you want to resize '+$(node.target).attr('src')+'?')) {
+				var size = parseInt(prompt("Enter the desired width of the image (in a percantage of the section that it's in)", "90"), 10);
+				if (!isNaN(size)) {
+					$(node.target).css('height', 'auto');
+					$(node.target).css('width', size+'%');
+				}
+				else if (isNaN(size)) {
+					alert("You need to enter a number");
+				}
+			}
+
+			//Add .fancyResizeAsked to avoid dupes
+			$(node.target).addClass('fancyResizeAsked');
+		}
 	});
 
 	function updateHint() {

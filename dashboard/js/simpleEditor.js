@@ -39,6 +39,25 @@ $(document).ready(function() {
 		gName = $('<textarea />').html(raw).val();
 		document.title = gName+' - '+get.site+' - Fancy Dashboard';
 	}, false);
+
+	$('#visualEditor').on('DOMNodeInserted', function(node) {
+		if ($(node.target).is('img') && !$(node.target).hasClass('fancyResizeAsked')) {
+			//Ask the user what size they want it to be
+			if (confirm('Do you want to resize '+$(node.target).attr('src')+'?')) {
+				var size = parseInt(prompt("Enter the desired width of the image (in a percantage of the section that it's in)", "90"), 10);
+				if (!isNaN(size)) {
+					$(node.target).css('height', 'auto');
+					$(node.target).css('width', size+'%');
+				}
+				else if (isNaN(size)) {
+					alert("You need to enter a number");
+				}
+			}
+
+			//Add .fancyResizeAsked to avoid dupes
+			$(node.target).addClass('fancyResizeAsked');
+		}
+	});
 });
 
 
