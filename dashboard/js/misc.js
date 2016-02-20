@@ -9,6 +9,7 @@ function httpCheck(data) {
 	}
 	else if (data === "Fancy has not been setup") {
 		alert("Fancy has not been setup");
+		window.location.href = "setup.html";
 	}
 	else {
 		return true;
