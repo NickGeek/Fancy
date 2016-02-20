@@ -69,6 +69,9 @@ if (file_exists(realpath(getcwd().'/createConfig.php')) && !empty($_GET['site'])
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Logged In <b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li>
+							<a href="javascript:void(0);" onclick="changePassword()"><i class="fa fa-fw fa-key"></i> Change Password</a>
+						</li>
+						<li>
 							<a href="logout.php"><i class="fa fa-fw fa-power-off"></i> Logout</a>
 						</li>
 					</ul>
@@ -115,6 +118,22 @@ if (file_exists(realpath(getcwd().'/createConfig.php')) && !empty($_GET['site'])
 								</code>
 							</li>
 						</ol>
+
+						<div id="modal" class="modal fade" tabindex="-1">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title">Password Change</h4>
+									</div>
+									<div class="modal-body">
+										<p id="modal-text"></p>
+									</div>
+									<div class="modal-footer">
+										<button class="btn btn-primary" data-dismiss="modal">Dismiss</button>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<!-- /.row -->

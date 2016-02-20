@@ -1,72 +1,55 @@
-$(document).ready(function() {
-	//Get elements and pages
-	$.get("api/getElements.php", {site: get.site}).done(function(data) {
-		if (!get.site) return;
-		if (!httpCheck(data)) return;
-
-		//Set to default editor
-		if (localStorage.getItem('defaultEditor') == 'simple') {
-			var url = 'simpleEditor.html';
-		}
-		else {
-			var url = 'edit.html';
-			localStorage.setItem('defaultEditor', 'power')
-		}
-
-		var json = JSON.parse(data);
-		$('#newElement').attr('href', url+"?site="+get.site+"&id=0");
-		for (var i = 0; i <= json.length - 1; i++) {
-			var code = "<a class='list-group-item' href='"+url+"?site="+get.site+"&id="+json[i].id+"'>"+json[i].name+"</a>";
-			$('#elementList').append(code);
-		};
-	}).fail(function() {
-		alert("There was an error contacting the server. Please check your Internet connection.");
-	});
-
-	$.get("api/getSites.php").done(function(data) {
-		if (!httpCheck(data)) return;
-
-		var json = JSON.parse(data);
-
-		//Redirect if no site is selected
-		if (!get.site) {
-			window.location.href = "index.php?site="+json[0];
-			return;
-		}
-
-		for (var i = 0; i <= json.length - 1; i++) {
-			var code = '<li>';
-			if (json[i].toLowerCase() === get.site.toLowerCase()) code = '<li class="active">';
-			code += "<a href='index.php?site="+json[i]+"'><i class='fa fa-fw fa-file'></i> "+json[i]+"</a></li>";
-			$('#siteSidebar').append(code);
-		};
-	}).fail(function() {
-		alert("There was an error contacting the server. Please check your Internet connection.");
-	});
-});
-
-function newsite() {
-	var name = prompt("Name of site:", "");
-	if (name.length == 0) return;
-	$.get("api/newsite.php", {name: name}).done(function(data) {
-		if (!httpCheck(data)) return;
-
-		window.location.href="index.php?site="+name;
-	}).fail(function() {
-		alert("There was an error contacting the server. Please check your Internet connection.");
-	});
+<?php
+if (empty($_POST['site']) || empty($_POST['password']) || empty($_POST['dbname']) || empty($_POST['address']) || empty($_POST['dbuser']) || empty($_POST['dbpass'])) {
+	echo "You must fill out all the text boxes.";
+	exit();
 }
 
-function del(name) {
-	if (confirm('Are you sure you want to delete this?')) {
-		$.get("api/delete.php", {type: "site", name: name}).done(function(data) {
-			if (!httpCheck(data)) return;
+$fancyVarsStr = htmlspecialchars('<?php').' $fancyVars = array("fancy_password" => \''.password_hash($_POST["password"], PASSWORD_BCRYPT).'\',"dbaddr" => \''.addslashes($_POST["address"]).'\',"dbuser" => \''.addslashes($_POST["dbuser"]).'\',"dbpass" => \''.addslashes($_POST["dbpass"]).'\', "dbname" => \''.addslashes($_POST['dbname']).'\', "apiVersion" => 2000); '.htmlspecialchars('?>');
 
-			window.location.href="index.php";
-		}).fail(function() {
-			alert("There was an error contacting the server. Please check your Internet connection.");
-		});
-	} else {
-		return;
-	}
+$name = $_POST['site'];
+
+// Create an settings file
+$file = fopen("api/settings.php", "w");
+if (!is_resource($file)) {
+	echo "Error creating settings.php. Does PHP have filesystem access?";
+	echo "<p>If you can't give filesystem access to Fancy; make a file called settings.php in ".realpath(__DIR__)."/api and copy/paste this into it:<br />";
+	echo "<code>$fancyVarsStr</code></p><br /><br />";
+	echo "<p>After pasting the code into settings.php <a href='javascript:void(0);' href='newsite($name)'>click here</a> to finish.";
+	?>
+	<script src="js/jquery.js"></script>
+	<script>
+		function newsite(name) {
+			$.get("api/newsite.php", {name: name}).done(function(data) {
+				window.location.href="index.php?site="+name;
+			}).fail(function() {
+				alert("There was an error contacting the server. Please check your Internet connection.");
+			});
+		}
+	</script>
+	<?php
 }
+else {
+	fwrite($file, htmlspecialchars_decode($fancyVarsStr));
+}
+
+session_start();
+$_SESSION['authed'] = true;
+
+//Add the site
+$con = new mysqli($_POST['address'], $_POST['dbuser'], $_POST['dbpass'], $_POST['dbname']);
+
+$con->query("CREATE TABLE IF NOT EXISTS `elements` ( `id` int(11) NOT NULL, `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL, `html` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL, `site` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+$con->query("CREATE TABLE IF NOT EXISTS `sites` ( `id` int(11) NOT NULL, `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+$con->query("ALTER TABLE `elements` ADD PRIMARY KEY (`id`);");
+$con->query("ALTER TABLE `sites` ADD PRIMARY KEY (`id`);");
+$con->query("ALTER TABLE `elements` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;");
+$con->query("ALTER TABLE `sites` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;");
+
+if (is_resource($file)) {
+	include_once('api/DashboardHandler.php');
+	$handler = new DashboardHandler();
+	$handler->newSite($name);
+
+	header('Location: index.php?site='.$name);
+}
+?>
