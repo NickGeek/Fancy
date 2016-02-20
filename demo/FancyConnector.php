@@ -9,10 +9,10 @@ class FancyConnector {
 	public function __construct($site = false) {
 		//Get the user settings
 		if (file_exists(realpath(realpath(__DIR__).'/settings.php'))) {
-			include_once('settings.php');
+			include_once(realpath(realpath(__DIR__).'/settings.php'));
 		}
 		else if (file_exists(realpath(realpath(__DIR__).'/../settings.php'))) {
-			include_once('../settings.php');
+			include_once(realpath(realpath(__DIR__).'/../settings.php'));
 		}
 		else {
 			echo "Fancy has not been setup";
@@ -27,6 +27,10 @@ class FancyConnector {
 		if ($this->con->connect_errno) { echo "<script>alert('Error connecting to Fancy database');</script>"; }
 		mysqli_set_charset($this->con, "utf8mb4");
 
+		$this->init();
+	}
+
+	protected function init() {
 		//Prepare common statements
 		if ($this->fancyVars['apiVersion'] >= 2000) {
 			$this->preparedStatements['getElement'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `id`, `html` FROM `elements` WHERE `site` = ? AND `name` = ?;");
@@ -35,11 +39,6 @@ class FancyConnector {
 			//This is running on the old system
 			if ($this->site) $this->preparedStatements['getElement'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `id`, `html` FROM `{$this->con->real_escape_string($this->site)}` WHERE `name` = ?;");
 		}
-
-		$this->init();
-	}
-
-	protected function init() {
 		return;
 	}
 
