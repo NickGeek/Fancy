@@ -59,10 +59,10 @@ function newsite() {
 
 function del(name) {
 	if (confirm('Are you sure you want to delete this?')) {
-		$.post("api/changePassword.php", {password: password, newPassword: newPassword}).done(function(data) {
+		$.get("api/delete.php", {type: "site", name: name}).done(function(data) {
 			if (!httpCheck(data)) return;
 
-			window.location.href="login.html";
+			window.location.href="index.php";
 		}).fail(function() {
 			alert("There was an error contacting the server. Please check your Internet connection.");
 		});
