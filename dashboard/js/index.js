@@ -43,6 +43,16 @@ $(document).ready(function() {
 	}).fail(function() {
 		alert("There was an error contacting the server. Please check your Internet connection.");
 	});
+
+	$(document).ready(function() {
+	$.get("api/getAPIVersion.php").done(function(data) {
+		if (!httpCheck(data)) return;
+
+		$('#apiVersion').html('Fancy API v{0}'.format(data))
+	}).fail(function() {
+		alert("There was an error contacting the server. Please check your Internet connection.");
+	});
+});
 });
 
 function newsite() {

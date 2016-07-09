@@ -33,6 +33,7 @@ if (file_exists(realpath(getcwd().'/createConfig.php')) && !empty($_GET['site'])
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/get.js"></script>
 	<script src="js/misc.js"></script>
+	<script src="js/sharedDashboard.js"></script>
 	<script src="js/index.js"></script>
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -74,6 +75,8 @@ if (file_exists(realpath(getcwd().'/createConfig.php')) && !empty($_GET['site'])
 						<li>
 							<a href="logout.php"><i class="fa fa-fw fa-power-off"></i> Logout</a>
 						</li>
+						<li id="menu-dropdown-divider" class="divider"></li>
+						<li><span id="apiVersion" class="dropdown-hint">Loading...</span></li>
 					</ul>
 				</li>
 			</ul>
