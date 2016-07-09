@@ -1,11 +1,11 @@
 <?php
-include_once('DashboardHandler.php');
+include_once('FancyConnector.php');
 session_start();
 if (!isset($_SESSION['authed'])) {
 	echo "Authentication Error";
 	exit();
 }
-$connector = new DashboardHandler($_GET['site']);
+$connector = new FancyConnector();
 $apiVersion = "1000";
 if (!empty($connector->apiVersion)) {
 	$apiVersion = $connector->apiVersion;
