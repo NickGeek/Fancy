@@ -1,43 +1,3 @@
-<?php
-include_once('settings.php');
-$con = new mysqli($fancyVars['dbaddr'], $fancyVars['dbuser'], $fancyVars['dbpass'], $fancyVars['dbname']);
-mysqli_set_charset($con, "utf8");
-
-//Get sites
-$sql = $con->query("show tables;");
-$res = array();
-$sites = array();
-foreach ($sql as $row) {
-	$res[] = $row;
-}
-foreach ($res as $x) {
-	$sites[] = $x['Tables_in_'.$fancyVars['dbname']];
-}
-
-foreach ($sites as $key => $value) {
-	$sites[$key] = stripslashes($value);
-}
-
-if (isset($_GET['site'])) {
-	$site = $_GET['site'];
-
-	//Get elements
-	$sql = $con->query("SELECT `id`, `name` FROM `{$con->real_escape_string($site)}` WHERE 1;");
-	$elements = array();
-	foreach ($sql as $row) {
-		$elements[] = $row;
-	}
-}
-else {
-	header('Location: index.php?site='.$sites[0]);
-	exit();
-}
-
-if (file_exists(realpath(getcwd().'/createConfig.php'))) {
-	echo "<script>alert('You need to delete createConfig.php');</script>";
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,6 +25,10 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script src="js/get.js"></script>
+	<script src="js/misc.js"></script>
+	<script src="js/sharedDashboard.js"></script>
+	<script src="js/index.js"></script>
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -74,34 +38,7 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 	<![endif]-->
 
 	<script>
-		$(document).ready(function() {
-			//Set to default editor
-			if (localStorage.getItem('defaultEditor') == 'simple') {
-				var url = 'simpleEditor.php';
-			}
-			else {
-				var url = 'edit.php';
-				localStorage.setItem('defaultEditor', 'power')
-			}
-			$('.editLinks').each(function() {
-				var oldHref = $(this).attr('href');
-				$(this).attr('href', url+oldHref);
-			});
-		});
-
-		function newsite() {
-			var name = prompt("Name of site:", "");
-			if (name.length == 0) return;
-			window.location.href="newsite.php?name="+name;
-		}
 		
-		function del(name) {
-			if (confirm('Are you sure you want to delete this?')) {
-				window.location.href="delete.php?type=site&name="+name;
-			} else {
-				return;
-			}
-		}
 	</script>
 </head>
 
@@ -127,27 +64,23 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Logged In <b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="logout.php"><i class="fa fa-fw fa-power-off"></i> Logout</a>
+							<a href="javascript:void(0);" onclick="changePassword()"><i class="fa fa-fw fa-key"></i> Change Password</a>
 						</li>
+						<li>
+							<a href="#"><i class="fa fa-fw fa-power-off"></i> Logout</a>
+						</li>
+						<li id="menu-dropdown-divider" class="divider"></li>
+						<li><span id="fancyVersion" class="dropdown-hint">Loading...</span></li>
+						<li><span id="apiVersion" class="dropdown-hint">Loading...</span></li>
 					</ul>
 				</li>
 			</ul>
 			<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
-				<ul class="nav navbar-nav side-nav">
+				<ul id="siteSidebar" class="nav navbar-nav side-nav">
 					<li>
 						<a href="javascript:void(0);" onclick="newsite();"><i class="fa fa-fw fa-plus"></i> Add Site</a>
 					</li>
-					<?php
-					foreach ($sites as $x) {
-						$code = '<li>';
-						if ($site == $x) {
-							$code = '<li class="active">';
-						}
-						$code .= '<a href="index.php?site='.$x.'"><i class="fa fa-fw fa-file"></i> '.$x.'</a></li>';
-						echo $code;
-					}
-					?>
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
@@ -160,22 +93,16 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 				<!-- Page Heading -->
 				<div class="row">
 					<div class="col-lg-12">
-						<h1 class="page-header"><?php echo $site; ?> <a href="javascript:void(0);" class="btn btn-danger" onclick="del(<?php echo "'".addslashes($site)."'"; ?>);">Delete Site</a></h1>
+						<h1 class="page-header"><script>document.write(get.site);</script> <a href="javascript:void(0);" class="btn btn-danger" onclick="del(get.site);">Delete Site</a></h1>
 						
 						<!-- Page content -->
 						<div id="elementList" class="list-group">
-							<?php
-							echo '<a href="?site='.$site.'&id=0" class="editLinks list-group-item"><i class="fa fa-fw fa-plus"></i> Add a new Fancy element</a>';
-
-							foreach ($elements as $element) {
-								echo '<a href="?site='.$site.'&id='.$element['id'].'" class="editLinks list-group-item">'.$element['name'].'</a>';
-							}
-							?>
+							<a id="newElement" class="list-group-item"><i class="fa fa-fw fa-plus"></i> Add a new Fancy element</a>
 						</div>
 						
 						<h3>How to enable Fancy on your webpages:</h3>
 						<ol>
-							<li>Download these two files (<a href="download.php?id=settings" target="_blank">settings.php</a> and <a href="download.php?id=connector" target="_blank">FancyConnector.php</a>)</li>
+							<li>Download these two files (<a href="#">settings.php</a> and <a href="#">FancyConnector.php</a>)</li>
 							<li>Put the files in the folder of the site.</li>
 							<li>
 								Paste the following code at the very top of any page you wish to add Fancy elements to:<br />
@@ -183,12 +110,28 @@ if (file_exists(realpath(getcwd().'/createConfig.php'))) {
 									<?php
 										echo htmlspecialchars('<?php');
 										echo ' require_once(\'FancyConnector.php\');';
-										echo ' $f = new FancyConnector(\''.addslashes($site).'\');';
+										echo ' $f = new FancyConnector(\'<script>document.write(get.site);</script>\');';
 										echo ' ?>';
 									?>
 								</code>
 							</li>
 						</ol>
+
+						<div id="modal" class="modal fade" tabindex="-1">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title"></h4>
+									</div>
+									<div class="modal-body">
+										<p id="modal-text"></p>
+									</div>
+									<div class="modal-footer">
+										<button class="btn btn-primary" data-dismiss="modal">Dismiss</button>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<!-- /.row -->
