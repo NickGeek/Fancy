@@ -4,8 +4,26 @@ Unlike other CMSs (like WordPress) you don't have to design your website around 
 
 Go to http://fancyxht.ml for more information.
 
-#Demo
+# Demo
 You can view a live demo at [http://fancyxht.ml/demo](http://fancyxht.ml/demo) and view its dashboard at [http://fancyxht.ml/demodash](http://fancyxht.ml/demodash).
 
-#Install
-Put the dashboard folder somewhere that can run PHP, go to the dashboard folder on a web browser and follow the instructions.
+# Install
+1. Extract the 'dashboard' folder from 'fancy-master.zip'
+	a. If you used `git clone` to download, just copy the 'dashboard' directory
+2. Upload your dashboard folder onto a webserver that can run PHP and MySQL
+3. Create a MySQL database for Fancy to use
+4. Go to the dashboard folder in a web browser
+5. Follow the steps on screen
+
+# Updating
+1. Extract the 'dashboard' folder from 'fancy-master.zip'
+	a. If you used `git clone` to download, just copy the 'dashboard' directory
+2. Paste the 'dashboard' folder you extracted and put it on your webserver
+	a. If you get asked you want to overwrite old files
+3. Delete the createConfig.php file
+4. You are now running a newer version of Fancy!
+
+## Updating the API
+While the Fancy dashboard is backwards compatible to Fancy API v1000, for access to newer features you might need to update the version of the API you are accessing.
+
+If an update script exists for the update you wish to do, just click on the "Logged In" menu and underneath the Fancy API version number there should be an update button.
