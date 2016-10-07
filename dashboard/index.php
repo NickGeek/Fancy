@@ -76,6 +76,7 @@ if (file_exists(realpath(getcwd().'/createConfig.php')) && !empty($_GET['site'])
 							<a href="logout.php"><i class="fa fa-fw fa-power-off"></i> Logout</a>
 						</li>
 						<li id="menu-dropdown-divider" class="divider"></li>
+						<li><span id="fancyVersion" class="dropdown-hint">Loading...</span></li>
 						<li><span id="apiVersion" class="dropdown-hint">Loading...</span></li>
 					</ul>
 				</li>

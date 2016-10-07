@@ -45,7 +45,7 @@ $(document).ready(function() {
 	});
 
 	$(document).ready(function() {
-	$.get("api/getAPIVersion.php").done(function(data) {
+	$.get("api/getVersions.php").done(function(data) {
 		if (!httpCheck(data)) return;
 
 		var updateMsg = "";
@@ -53,7 +53,9 @@ $(document).ready(function() {
 			if (!httpCheck(data) || data === "0") return;
 			updateMsg = "<br /><a href='javascript:void(0);' onclick='update(\"{0}\");'>Update</a>".format(data);
 		}).always(function() {
-			$('#apiVersion').html('Fancy API v{0}{1}'.format(data, updateMsg))
+			var json = JSON.parse(data);
+			$('#fancyVersion').html('Supports Fancy v{0}'.format(json.fancy))
+			$('#apiVersion').html('Fancy API v{0}{1}'.format(json.api, updateMsg))
 		});
 	}).fail(function() {
 		alert("There was an error contacting the server. Please check your Internet connection.");
