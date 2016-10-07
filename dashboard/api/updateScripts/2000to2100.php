@@ -57,4 +57,5 @@ class UpdateScript extends FancyConnector {
 }
 
 $us = new UpdateScript();
+$us->UpdateDatabase();
 $us->UpdateSettings();

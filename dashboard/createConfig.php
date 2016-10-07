@@ -5,7 +5,7 @@ if (empty($_POST['site']) || empty($_POST['password']) || empty($_POST['dbname']
 }
 
 include_once('api/VersionNumberHolder.php');
-$fancyVarsStr = htmlspecialchars('<?php').' $fancyVars = array("fancy_password" => \''.password_hash($_POST["password"], PASSWORD_BCRYPT).'\',"dbaddr" => \''.addslashes($_POST["address"]).'\',"dbuser" => \''.addslashes($_POST["dbuser"]).'\',"dbpass" => \''.addslashes($_POST["dbpass"]).'\', "dbname" => \''.addslashes($_POST['dbname']).'\', "apiVersion" => \''+VersionNumberHolder::$version+'\'); '.htmlspecialchars('?>');
+$fancyVarsStr = htmlspecialchars('<?php').' $fancyVars = array("fancy_password" => \''.password_hash($_POST["password"], PASSWORD_BCRYPT).'\',"dbaddr" => \''.addslashes($_POST["address"]).'\',"dbuser" => \''.addslashes($_POST["dbuser"]).'\',"dbpass" => \''.addslashes($_POST["dbpass"]).'\', "dbname" => \''.addslashes($_POST['dbname']).'\', "apiVersion" => \''.VersionNumberHolder::$version.'\'); '.htmlspecialchars('?>');
 
 $name = $_POST['site'];
 

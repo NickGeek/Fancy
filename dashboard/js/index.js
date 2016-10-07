@@ -48,7 +48,13 @@ $(document).ready(function() {
 	$.get("api/getAPIVersion.php").done(function(data) {
 		if (!httpCheck(data)) return;
 
-		$('#apiVersion').html('Fancy API v{0}'.format(data))
+		var updateMsg = "";
+		$.get("api/updateScripts/canUpdate.php").done(function(data) {
+			if (!httpCheck(data) || data === "0") return;
+			updateMsg = "<br /><a href='javascript:void(0);' onclick='update({0});'>Update</a>".format(data);
+		});
+
+		$('#apiVersion').html('Fancy API v{0}{1}'.format(data, updateMsg))
 	}).fail(function() {
 		alert("There was an error contacting the server. Please check your Internet connection.");
 	});
@@ -90,6 +96,7 @@ function changePassword() {
 	$.post("api/changePassword.php", {password: password, newPassword: newPassword}).done(function(data) {
 		if (!httpCheck(data)) return;
 		
+		$('.modal-title').html("Password Change")
 		$("#modal-text").html(data);
 		$("#modal").modal({show: true});
 

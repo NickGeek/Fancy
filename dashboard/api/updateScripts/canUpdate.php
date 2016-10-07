@@ -11,8 +11,10 @@ ob_start();
 include_once(realpath(realpath(__DIR__).'/../getAPIVersion.php'));
 $currVersion = ob_get_clean();
 
-if ($currVersion < VersionNumberHolder::$version && file_exists(realpath(realpath(__DIR__).'/'+$currVersion+'to'+VersionNumberHolder::$version+'.php'))) {
-	echo "1";
+$updateScriptName = $currVersion.'to'.VersionNumberHolder::$version+'.php';
+
+if ($currVersion < VersionNumberHolder::$version && file_exists(realpath(realpath(__DIR__).'/'.$updateScriptName))) {
+	echo "api/UpdateScripts/".$updateScriptName;
 }
 echo {
 	echo "0"

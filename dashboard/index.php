@@ -126,7 +126,7 @@ if (file_exists(realpath(getcwd().'/createConfig.php')) && !empty($_GET['site'])
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h4 class="modal-title">Password Change</h4>
+										<h4 class="modal-title"></h4>
 									</div>
 									<div class="modal-body">
 										<p id="modal-text"></p>
