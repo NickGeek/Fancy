@@ -42,6 +42,14 @@ body {
 	margin: auto;
 }
 
+.dropdown-hint {
+	color: #808080;
+	font-style: italic;
+	font-size:  0.9em;
+	padding: 4px;
+
+}
+
 /* Mobile Devices */
 @media (max-width: 900px) {
 	#elementList {
