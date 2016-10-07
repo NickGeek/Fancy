@@ -4,7 +4,7 @@ if (empty($_POST['site']) || empty($_POST['password']) || empty($_POST['dbname']
 	exit();
 }
 
-$fancyVarsStr = htmlspecialchars('<?php').' $fancyVars = array("fancy_password" => \''.password_hash($_POST["password"], PASSWORD_BCRYPT).'\',"dbaddr" => \''.addslashes($_POST["address"]).'\',"dbuser" => \''.addslashes($_POST["dbuser"]).'\',"dbpass" => \''.addslashes($_POST["dbpass"]).'\', "dbname" => \''.addslashes($_POST['dbname']).'\', "apiVersion" => 2000); '.htmlspecialchars('?>');
+$fancyVarsStr = htmlspecialchars('<?php').' $fancyVars = array("fancy_password" => \''.password_hash($_POST["password"], PASSWORD_BCRYPT).'\',"dbaddr" => \''.addslashes($_POST["address"]).'\',"dbuser" => \''.addslashes($_POST["dbuser"]).'\',"dbpass" => \''.addslashes($_POST["dbpass"]).'\', "dbname" => \''.addslashes($_POST['dbname']).'\', "apiVersion" => 2100); '.htmlspecialchars('?>');
 
 $name = $_POST['site'];
 
@@ -52,4 +52,3 @@ if (is_resource($file)) {
 
 	header('Location: index.php?site='.$name);
 }
-?>
