@@ -51,10 +51,10 @@ $(document).ready(function() {
 		var updateMsg = "";
 		$.get("api/updateScripts/canUpdate.php").done(function(data) {
 			if (!httpCheck(data) || data === "0") return;
-			updateMsg = "<br /><a href='javascript:void(0);' onclick='update({0});'>Update</a>".format(data);
+			updateMsg = "<br /><a href='javascript:void(0);' onclick='update(\"{0}\");'>Update</a>".format(data);
+		}).always(function() {
+			$('#apiVersion').html('Fancy API v{0}{1}'.format(data, updateMsg))
 		});
-
-		$('#apiVersion').html('Fancy API v{0}{1}'.format(data, updateMsg))
 	}).fail(function() {
 		alert("There was an error contacting the server. Please check your Internet connection.");
 	});
@@ -100,6 +100,18 @@ function changePassword() {
 		$("#modal-text").html(data);
 		$("#modal").modal({show: true});
 
+	}).fail(function() {
+		alert("There was an error contacting the server. Please check your Internet connection.");
+	});
+}
+
+function update(url) {
+	$.get(url).done(function(data) {
+		if (!httpCheck(data)) return;
+		
+		$('.modal-title').html("Fancy Update")
+		$("#modal-text").html(data);
+		$("#modal").modal({show: true});
 	}).fail(function() {
 		alert("There was an error contacting the server. Please check your Internet connection.");
 	});

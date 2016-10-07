@@ -7,15 +7,16 @@ if (!isset($_SESSION['authed'])) {
 }
 
 class UpdateScript extends FancyConnector {
-	public function __construct() {
+	public function init() {
 		if (empty($this->apiVersion)) {
-			$this->apiVersion = 1000;
+			$this->apiVersion = "1000";
 		}
 
-		if ($this->apiVersion != 2000) {
+		if ($this->apiVersion != "2000") {
 			echo "This update script is only for API v2000";
+			exit();
 		}
-		$this->apiVersion = 2100;
+		$this->apiVersion = "2100";
 	}
 
 	public function UpdateSettings() {
@@ -52,7 +53,9 @@ class UpdateScript extends FancyConnector {
 		$this->con->query("ALTER TABLE `blogs` ADD PRIMARY KEY (`id`);");
 		$this->con->query("ALTER TABLE `blogs` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;");
 
-		$con->query("CREATE TABLE IF NOT EXISTS `blog_posts` ( `id` int(11) NOT NULL, `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL, `html` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL, `site` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+		$this->con->query("CREATE TABLE IF NOT EXISTS `blog_posts` ( `id` int(11) NOT NULL, `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL, `html` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL, `site` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+
+		echo "<p>The database has been updated</p>";
 	}
 }
 
