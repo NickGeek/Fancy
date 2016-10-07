@@ -30,4 +30,4 @@ While the Fancy dashboard is backwards compatible to Fancy API v1000, for access
 
 If an update script exists for the update you wish to do, just click on the "Logged In" menu and underneath the Fancy API version number there should be an update button.
 
-**REMEMBER TO UPLOAD THE NEW `FancyConnector.php` AND `SETTINGS.PHP` FILES TO YOUR SITES AFTER AN UPDATE**
+**REMEMBER TO UPLOAD THE NEW `FancyConnector.php` AND `settings.php` FILES TO YOUR SITES AFTER AN UPDATE**
