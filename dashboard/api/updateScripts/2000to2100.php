@@ -1,5 +1,5 @@
 <?php
-include_once('FancyConnector.php');
+include_once(realpath(realpath(__DIR__).'/../FancyConnector.php'));
 session_start();
 if (!isset($_SESSION['authed'])) {
 	echo "Authentication Error";
