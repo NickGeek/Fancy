@@ -29,3 +29,5 @@ You can view a live demo at [http://fancyxht.ml/demo](http://fancyxht.ml/demo) a
 While the Fancy dashboard is backwards compatible to Fancy API v1000, for access to newer features you might need to update the version of the API you are accessing.
 
 If an update script exists for the update you wish to do, just click on the "Logged In" menu and underneath the Fancy API version number there should be an update button.
+
+**REMEMBER TO UPLOAD NEW `FancyConnector.php` FILES AND SETTINGS.PHP FILES TO YOUR SITES AFTER AN UPDATE**
