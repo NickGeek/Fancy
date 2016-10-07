@@ -1,5 +1,5 @@
 # Fancy
-####Fancy is a drop-in system that lets you take your static HTML code and add dynamically editable code.
+#### Fancy is a drop-in system that lets you take your static HTML code and add dynamically editable code.
 Unlike other CMSs (like WordPress) you don't have to design your website around Fancy. You can design the website as if it was only ever going to be updated by manually editing the code. Fancy will then do all of the heavy lifting. Giving your clients a powerful editor to update their website. Hassle free. Not only is the editor super easy to use; it gets out of your way when you want to do more advanced work.
 
 Go to http://fancyxht.ml for more information.
@@ -9,6 +9,7 @@ You can view a live demo at [http://fancyxht.ml/demo](http://fancyxht.ml/demo) a
 
 # Install
 1. Extract the 'dashboard' folder from 'fancy-master.zip'
+
 	a. If you used `git clone` to download, just copy the 'dashboard' directory
 2. Upload your dashboard folder onto a webserver that can run PHP and MySQL
 3. Create a MySQL database for Fancy to use
@@ -17,7 +18,8 @@ You can view a live demo at [http://fancyxht.ml/demo](http://fancyxht.ml/demo) a
 
 # Updating
 1. Extract the 'dashboard' folder from 'fancy-master.zip'
-	a. If you used `git clone` to download, just copy the 'dashboard' directory
+	
+    a. If you used `git clone` to download, just copy the 'dashboard' directory
 2. Paste the 'dashboard' folder you extracted and put it on your webserver
 	a. If you get asked you want to overwrite old files
 3. Delete the createConfig.php file
