@@ -14,7 +14,8 @@ $(document).ready(function() {
 		updateHint();
 	}
 	else if (get.inStorage) {
-		var data = JSON.parse(localStorage.getItem(get.site+":"+get.id));
+		var data = JSON.parse(localStorage.getItem(getType()+":"+getTitle()+":"+get.id));
+		console.log(data);
 		displayResult(data);
 		updateHint();
 	}
@@ -300,6 +301,6 @@ function changeEditor() {
 		name: gName,
 		html: $('#visualEditor').html()
 	}
-	localStorage.setItem(getTitle()+":"+get.id, JSON.stringify(data));
-	window.location.href = "simpleEditor.html?inStorage=true&site="+getTitle()+"&id="+get.id;
+	localStorage.setItem(getType()+":"+getTitle()+":"+get.id, JSON.stringify(data));
+	window.location.href = "simpleEditor.html?inStorage=true&"+getType()+"="+getTitle()+"&id="+get.id;
 }
