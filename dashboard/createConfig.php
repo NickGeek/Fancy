@@ -50,6 +50,8 @@ $con->query("ALTER TABLE `elements` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 $con->query("ALTER TABLE `sites` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;");
 $con->query("ALTER TABLE `blogs` ADD PRIMARY KEY (`id`);");
 $con->query("ALTER TABLE `blogs` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;");
+$con->query("ALTER TABLE `blog_posts` ADD PRIMARY KEY (`id`);");
+$con->query("ALTER TABLE `blog_posts` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;");
 
 
 if (is_resource($file)) {
