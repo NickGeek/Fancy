@@ -20,9 +20,9 @@ else {
 		$handler = new DashboardHandler($_GET['site']);
 		$handler->deleteElement($_GET['name']);
 	}
-	elseif ($type == 'post' && !empty($_GET['title']) && !empty($_GET['blog'])) {
+	elseif ($type == 'post' && !empty($_GET['name']) && !empty($_GET['blog'])) {
 		$handler = new DashboardHandler();
-		$handler->deletePost($_GET['title'], $_GET['blog']);
+		$handler->deletePost($_GET['name'], $_GET['blog']);
 	}
 	else {
 		echo "Not enough data has been sent";

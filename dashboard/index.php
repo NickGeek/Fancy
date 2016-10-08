@@ -1,12 +1,11 @@
-<?php
-if (file_exists(realpath(getcwd().'/createConfig.php')) && !empty($_GET['site'])) {
-	echo "<script>alert('You need to delete createConfig.php');</script>";
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<?php
+	if (file_exists(realpath(getcwd().'/createConfig.php')) && !(empty($_GET['site']) && empty($_GET['blog']))) {
+		echo "<script>alert('You need to delete createConfig.php');</script>";
+	}
+	?>
 
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -102,14 +101,14 @@ if (file_exists(realpath(getcwd().'/createConfig.php')) && !empty($_GET['site'])
 				<!-- Page Heading -->
 				<div class="row">
 					<div class="col-lg-12">
-						<h1 class="page-header"><script>document.write(get.site);</script> <a href="javascript:void(0);" class="btn btn-danger" onclick="del(get.site);">Delete Site</a></h1>
+						<h1 id="pageTitle" class="page-header"></h1>
 						
 						<!-- Page content -->
 						<div id="elementList" class="list-group index-list">
 							<a id="newElement" class="list-group-item"><i class="fa fa-fw fa-plus"></i> Add a new Fancy element</a>
 						</div>
 
-						<div id="blogList" class="list-group index-list" style="display: none;">
+						<div id="postList" class="list-group index-list" style="display: none;">
 							<a id="newPost" class="list-group-item"><i class="fa fa-fw fa-pencil"></i> Write a new post</a>
 						</div>
 						
@@ -123,7 +122,7 @@ if (file_exists(realpath(getcwd().'/createConfig.php')) && !empty($_GET['site'])
 									<?php
 										echo htmlspecialchars('<?php');
 										echo ' require_once(\'FancyConnector.php\');';
-										echo ' $f = new FancyConnector(\'<script>document.write(get.site);</script>\');';
+										echo ' $f = new FancyConnector(\'<script>document.write(getTitle());</script>\');';
 										echo ' ?>';
 									?>
 								</code>

@@ -26,10 +26,10 @@ class DashboardHandler extends FancyConnector {
 		$this->preparedStatements['newBlog'] = $this->con->prepare("INSERT INTO `blogs` (`name`) VALUES (?);");
 		$this->preparedStatements['deleteBlog'] = $this->con->prepare("DELETE FROM `blogs` WHERE `name` = ?;");
 
-		$this->preparedStatements['getPostByID'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `title`, `html` FROM `blog_posts` WHERE `site` = ? AND `id` = ?;");
-		$this->preparedStatements['getPosts'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `id`, `title` FROM `blog_posts` WHERE `site` = ?;");
-		$this->preparedStatements['deletePost'] = $this->con->prepare("DELETE FROM `blog_posts` WHERE `title` = ? AND `site` = ?;");
-		$this->preparedStatements['newPost'] = $this->con->prepare("INSERT INTO `blog_posts` (`title`, `html`, `site`) VALUES (?, ?, ?);");
+		$this->preparedStatements['getPostByID'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `title`, `html` FROM `blog_posts` WHERE `blog` = ? AND `id` = ?;");
+		$this->preparedStatements['getPosts'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `id`, `title` FROM `blog_posts` WHERE `blog` = ?;");
+		$this->preparedStatements['deletePost'] = $this->con->prepare("DELETE FROM `blog_posts` WHERE `title` = ? AND `blog` = ?;");
+		$this->preparedStatements['newPost'] = $this->con->prepare("INSERT INTO `blog_posts` (`title`, `html`, `blog`) VALUES (?, ?, ?);");
 		$this->preparedStatements['updatePost'] = $this->con->prepare("UPDATE `blog_posts` SET `title`=?, `html`=? WHERE `id` = ?;");
 		return;
 	}
@@ -223,8 +223,8 @@ class DashboardHandler extends FancyConnector {
 	public function newBlog($name) {
 		$this->con->query("SET SQL_MODE = \"NO_AUTO_VALUE_ON_ZERO\";");
 		if ($this->fancyVars['apiVersion'] >= 2100) {
-			$this->preparedStatements['newSite']->bind_param('s', $name);
-			$this->preparedStatements['newSite']->execute();
+			$this->preparedStatements['newBlog']->bind_param('s', $name);
+			$this->preparedStatements['newBlog']->execute();
 		}
 		else {
 			return "Feature not in API";
@@ -234,8 +234,8 @@ class DashboardHandler extends FancyConnector {
 
 	public function deleteBlog($name) {
 		if ($this->fancyVars['apiVersion'] >= 2100) {
-			$this->preparedStatements['deleteSite']->bind_param('s', $name);
-			$this->preparedStatements['deleteSite']->execute();
+			$this->preparedStatements['deleteBlog']->bind_param('s', $name);
+			$this->preparedStatements['deleteBlog']->execute();
 		}
 		else {
 			return "Feature not in API";

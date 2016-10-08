@@ -6,7 +6,7 @@ class FancyConnector {
 	public $site;
 	public $apiVersion;
 
-	public function __construct($site = false) {
+	public function __construct($site = false, $blog = false) {
 		//Get the user settings
 		if (file_exists(realpath(realpath(__DIR__).'/settings.php'))) {
 			include_once(realpath(realpath(__DIR__).'/settings.php'));
