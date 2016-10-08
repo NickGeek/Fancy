@@ -100,6 +100,13 @@ body{
 	cursor:pointer;
 	outline:none;
 }
+.body h1 {
+	color:#f78117;
+	font-size:64px;
+	font-family: 'RokkittRegular';
+	margin:0 0 10px;
+	font-weight:normal;
+}
 .body ul.featuredItems{
 	list-style:none;
 	margin:40px 0 0;

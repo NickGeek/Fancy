@@ -12,6 +12,8 @@ class DashboardHandler extends FancyConnector {
 
 	public function prepareStatements() {
 		//Prepare Statements using the new system
+		parent::prepareStatements();
+
 		$this->preparedStatements['getElementByID'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `name`, `html` FROM `elements` WHERE `site` = ? AND `id` = ?;");
 		$this->preparedStatements['getElements'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `id`, `name` FROM `elements` WHERE `site` = ?;");
 		$this->preparedStatements['deleteElement'] = $this->con->prepare("DELETE FROM `elements` WHERE `name` = ? AND `site` = ?;");
@@ -25,9 +27,7 @@ class DashboardHandler extends FancyConnector {
 		$this->preparedStatements['getBlogs'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `name` FROM `blogs` WHERE 1;");
 		$this->preparedStatements['newBlog'] = $this->con->prepare("INSERT INTO `blogs` (`name`) VALUES (?);");
 		$this->preparedStatements['deleteBlog'] = $this->con->prepare("DELETE FROM `blogs` WHERE `name` = ?;");
-
-		$this->preparedStatements['getPostByID'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `title`, `html` FROM `blog_posts` WHERE `blog` = ? AND `id` = ?;");
-		$this->preparedStatements['getPosts'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `id`, `title` FROM `blog_posts` WHERE `blog` = ?;");
+		
 		$this->preparedStatements['deletePost'] = $this->con->prepare("DELETE FROM `blog_posts` WHERE `title` = ? AND `blog` = ?;");
 		$this->preparedStatements['newPost'] = $this->con->prepare("INSERT INTO `blog_posts` (`title`, `html`, `blog`) VALUES (?, ?, ?);");
 		$this->preparedStatements['updatePost'] = $this->con->prepare("UPDATE `blog_posts` SET `title`=?, `html`=? WHERE `id` = ?;");
@@ -153,7 +153,7 @@ class DashboardHandler extends FancyConnector {
 		if ($this->fancyVars['apiVersion'] >= 2100) {
 			$this->preparedStatements['getPostByID']->bind_param('ss', $blog, $id);
 			$this->preparedStatements['getPostByID']->execute();
-			$this->preparedStatements['getPostByID']->bind_result($title, $post);
+			$this->preparedStatements['getPostByID']->bind_result($id, $title, $timestamp, $post);
 			while ($this->preparedStatements['getPostByID']->fetch()) { return json_encode(array('name' => $title, 'html' => $post)); }
 		}
 		else {
@@ -165,7 +165,7 @@ class DashboardHandler extends FancyConnector {
 		if ($this->fancyVars['apiVersion'] >= 2100) {
 			$this->preparedStatements['getPosts']->bind_param('s', $blog);
 			$this->preparedStatements['getPosts']->execute();
-			$this->preparedStatements['getPosts']->bind_result($id, $title);
+			$this->preparedStatements['getPosts']->bind_result($id, $title, $timestamp, $html);
 			$postList = array();
 			while ($this->preparedStatements['getPosts']->fetch()) { $postList[] = array('id' => $id, 'title' => $title); }
 			return json_encode($postList);

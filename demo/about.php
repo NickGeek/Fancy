@@ -17,7 +17,7 @@
 				<ul>
 					<li><a href=".">Home</a></li>
 					<li class="selected"><a href="about.php">About</a></li>
-					<li><a href="javascript:void(0);">Blog</a></li>
+					<li><a href="blog.php">Blog</a></li>
 				</ul>
 			</div>
 			<div class="body">
@@ -60,7 +60,7 @@
 				<ul>
 					<li><a href=".">Home</a></li>
 					<li><a href="about.php">About</a></li>
-					<li><a href="javascript:void(0);">Blog</a></li>
+					<li><a href="blog.php">Blog</a></li>
 				</ul>
 				<p class="fancya" style="text-align: center;">
 					Copyright info could go here.
