@@ -56,6 +56,7 @@ class UpdateScript extends FancyConnector {
 		$this->con->query("CREATE TABLE IF NOT EXISTS `blog_posts` ( `id` int(11) NOT NULL, `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL, `html` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL, `blog` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 		$this->con->query("ALTER TABLE `blog_posts` ADD PRIMARY KEY (`id`);");
 		$this->con->query("ALTER TABLE `blog_posts` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;");
+		$this->con->query("ALTER TABLE `blog_posts` ADD `timestamp` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `title`;");
 
 		echo "<p>The database has been updated</p>";
 	}
