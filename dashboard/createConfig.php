@@ -42,7 +42,7 @@ $con = new mysqli($_POST['address'], $_POST['dbuser'], $_POST['dbpass'], $_POST[
 $con->query("CREATE TABLE IF NOT EXISTS `elements` ( `id` int(11) NOT NULL, `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL, `html` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL, `site` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 $con->query("CREATE TABLE IF NOT EXISTS `sites` ( `id` int(11) NOT NULL, `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 $con->query("CREATE TABLE IF NOT EXISTS `blogs` ( `id` int(11) NOT NULL, `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
-$con->query("CREATE TABLE IF NOT EXISTS `blog_posts` ( `id` int(11) NOT NULL, `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL, `html` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL, `site` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+$con->query("CREATE TABLE IF NOT EXISTS `blog_posts` ( `id` int(11) NOT NULL, `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL, `html` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL, `blog` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 
 $con->query("ALTER TABLE `elements` ADD PRIMARY KEY (`id`);");
 $con->query("ALTER TABLE `sites` ADD PRIMARY KEY (`id`);");
