@@ -6,7 +6,6 @@ if (file_exists(realpath(getcwd().'/createConfig.php')) && !empty($_GET['site'])
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 	<meta charset="utf-8">
@@ -87,6 +86,10 @@ if (file_exists(realpath(getcwd().'/createConfig.php')) && !empty($_GET['site'])
 					<li>
 						<a href="javascript:void(0);" onclick="newsite();"><i class="fa fa-fw fa-plus"></i> Add Site</a>
 					</li>
+					
+					<li id="addBlogButton">
+						<a href="javascript:void(0);" onclick="newblog();"><i class="fa fa-fw fa-plus"></i> Add Blog</a>
+					</li>
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
@@ -102,8 +105,12 @@ if (file_exists(realpath(getcwd().'/createConfig.php')) && !empty($_GET['site'])
 						<h1 class="page-header"><script>document.write(get.site);</script> <a href="javascript:void(0);" class="btn btn-danger" onclick="del(get.site);">Delete Site</a></h1>
 						
 						<!-- Page content -->
-						<div id="elementList" class="list-group">
+						<div id="elementList" class="list-group index-list">
 							<a id="newElement" class="list-group-item"><i class="fa fa-fw fa-plus"></i> Add a new Fancy element</a>
+						</div>
+
+						<div id="blogList" class="list-group index-list" style="display: none;">
+							<a id="newPost" class="list-group-item"><i class="fa fa-fw fa-pencil"></i> Write a new post</a>
 						</div>
 						
 						<h3>How to enable Fancy on your webpages:</h3>

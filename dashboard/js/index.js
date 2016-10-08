@@ -38,7 +38,7 @@ $(document).ready(function() {
 			var code = '<li>';
 			if (json[i].toLowerCase() === get.site.toLowerCase()) code = '<li class="active">';
 			code += "<a href='index.php?site="+json[i]+"'><i class='fa fa-fw fa-file'></i> "+json[i]+"</a></li>";
-			$('#siteSidebar').append(code);
+			$('#addBlogButton').before(code);
 		};
 	}).fail(function() {
 		alert("There was an error contacting the server. Please check your Internet connection.");
