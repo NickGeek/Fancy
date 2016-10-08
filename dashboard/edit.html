@@ -35,7 +35,6 @@
 	<script src="js/misc.js"></script>
 	<script src="js/sharedDashboard.js"></script>
 	<script src="js/edit.js"></script>
-
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -59,12 +58,12 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="javascript:void(0);" onclick="window.location.href='index.php?site='+get.site"><script>document.write(get.site);</script> - Fancy Dashboard</a>
+				<a class="navbar-brand" href="javascript:void(0);" onclick="window.location.href='index.php?'+getType()+'='+getTitle()"><script>document.write(getTitle());</script> - Fancy Dashboard</a>
 			</div>
 			<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul id="elementSidebar" class="nav navbar-nav side-nav">
-					<li><a href="javascript:void(0);" onclick="window.location.href='edit.html?site='+get.site+'&id=0'"><i class="fa fa-fw fa-plus"></i> New Element</a></li>
+					<li><a href="javascript:void(0);" onclick="window.location.href='edit.html?'+getType()+'='+getTitle()+'&id=0'"><i class="fa fa-fw fa-plus"></i> New Element</a></li>
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
@@ -81,10 +80,10 @@
 
 						<ol class="breadcrumb">
 							<li>
-								<i class="fa fa-file"></i>  <a href="javascript:void(0);" onclick="window.location.href='index.php?site='+get.site">Dashboard</a>
+								<i class="fa fa-file"></i>  <a href="javascript:void(0);" onclick="window.location.href='index.php?'+getType()+'='+getTitle()">Dashboard</a>
 							</li>
 							<li class="active">
-								<i class="fa fa-pencil-square-o"></i> Element Editor
+								<i class="fa fa-pencil-square-o"></i> Fancy Editor
 							</li>
 						</ol>
 						
@@ -104,7 +103,7 @@
 								</div>
 							</div>
 							
-							<div id="preview"  class="col-sm-4">
+							<div id="preview" class="col-sm-4">
 								<div class="panel panel-yellow" style="height: auto; min-height: 400px;">
 									<div class="panel-heading">
 										<h3 class="panel-title">Preview (with Simple Editor)</h3>
@@ -115,7 +114,7 @@
 								</div>
 							</div>
 							
-								<div id="html"     class="col-sm-4">
+								<div id="html" class="col-sm-4">
 										<div class="panel panel-yellow">
 											<div class="panel-heading">
 												<h3 class="panel-title" seamless='seamless'>HTML (with <a href="http://emmet.io/" target="_blank"><u>emmet</u></a>)  <span style="float: right;"><i class="fa fa-arrows-alt" onclick="fullscreenMe('htmleditor');"></i></span></h3>

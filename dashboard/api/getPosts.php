@@ -8,4 +8,4 @@ if (!isset($_SESSION['authed'])) {
 if (empty($_GET['blog'])) { echo "Not enough data has been sent"; exit(); }
 $handler = new DashboardHandler();
 
-echo $handler->getElements($_GET['blog']);
+echo $handler->getPosts($_GET['blog']);

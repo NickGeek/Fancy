@@ -42,7 +42,7 @@ $(document).ready(function() {
 			var json = JSON.parse(data);
 			$('#newPost').attr('href', url+"?blog="+get.blog+"&id=0");
 			for (var i = 0; i <= json.length - 1; i++) {
-				var code = "<a class='list-group-item' href='"+url+"?blog="+get.blog+"&id="+json[i].id+"'>"+json[i].name+"</a>";
+				var code = "<a class='list-group-item' href='"+url+"?blog="+get.blog+"&id="+json[i].id+"'>"+json[i].title+"</a>";
 				$('#postList').append(code);
 			};
 		}).fail(function() {
@@ -188,10 +188,4 @@ function update(url) {
 	}).fail(function() {
 		alert("There was an error contacting the server. Please check your Internet connection.");
 	});
-}
-
-function getTitle() {
-	if (get.site) return get.site;
-	if (get.blog) return get.blog;
-	return "";
 }

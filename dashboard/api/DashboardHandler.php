@@ -166,9 +166,9 @@ class DashboardHandler extends FancyConnector {
 			$this->preparedStatements['getPosts']->bind_param('s', $blog);
 			$this->preparedStatements['getPosts']->execute();
 			$this->preparedStatements['getPosts']->bind_result($id, $title);
-			$psotList = array();
+			$postList = array();
 			while ($this->preparedStatements['getPosts']->fetch()) { $postList[] = array('id' => $id, 'title' => $title); }
-			return json_encode($elementList);
+			return json_encode($postList);
 		}
 		else {
 			return "Feature not in API";
