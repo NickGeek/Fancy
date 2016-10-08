@@ -9,6 +9,7 @@ $(document).ready(function() {
 			name: "Enter name here",
 			html: ""
 		}
+		if (get.blog) data.name = "Enter title here";
 		displayResult(data);
 		updateHint();
 	}
@@ -61,6 +62,7 @@ $(document).ready(function() {
 	}
 	else if (get.blog) {
 		$('#newButton').html('<i class="fa fa-fw fa-pencil"></i> Write a new post');
+		$('#instructions').hide();
 
 		$.get("api/getPosts.php", {blog: get.blog}).done(function(data) {
 			if (!httpCheck(data)) return;
@@ -81,7 +83,7 @@ $(document).ready(function() {
 
 	function displayResult(result) {
 		$('#name').text(result.name);
-		document.title = result.name+' - '+get.site+' - Fancy Dashboard';
+		document.title = result.name+' - '+getTitle()+' - Fancy Dashboard';
 		$('#htmleditor').val(result.html);
 		$('#visualEditor').html(noscript(result.html));
 		$('#md').val(toMarkdown(result.html, { gfm: true }));
@@ -144,7 +146,7 @@ $(document).ready(function() {
 		var raw = $('#name').text();
 		gName = $('<textarea />').html(raw).val();
 		$('#nameCode').html("'"+gName.addSlashes()+"'");
-		document.title = gName+' - '+get.site+' - Fancy Dashboard';
+		document.title = gName+' - '+getTitle()+' - Fancy Dashboard';
 	}
 	
 	document.getElementById("name").addEventListener("input", function() {
@@ -153,7 +155,7 @@ $(document).ready(function() {
 
 	//Form prefilling
 	$('input[name="id"]').val(get.id);
-	$('input[name="site"]').val(get.site);
+	$('input[name="site"]').val(getTitle());
 
 	//Handle DOCX stuff
 	document.getElementById("docxUpload").addEventListener("change", handleFileSelect, false);
@@ -188,20 +190,38 @@ function readFileInputEventAsArrayBuffer(event, callback) {
 
 function del(name) {
 	if (confirm('Are you sure you want to delete this?')) {
-		$.get("api/delete.php", {type: "element", site: get.site, name: name}).done(function(data) {
-			if (data === "Authentication Error") {
-				window.location.href = "login.html";
-				return;
-			}
-			else if (data != "done") {
-				alert(data);
-				return;
-			}
+		if (get.site) {
+			$.get("api/delete.php", {type: "element", site: getTitle(), name: name}).done(function(data) {
+				if (data === "Authentication Error") {
+					window.location.href = "login.html";
+					return;
+				}
+				else if (data != "done") {
+					alert(data);
+					return;
+				}
 
-			window.location.href="index.php?site="+get.site;
-		}).fail(function() {
-			alert("There was an error contacting the server. Please check your Internet connection.");
-		});
+				window.location.href="index.php?site="+getTitle();
+			}).fail(function() {
+				alert("There was an error contacting the server. Please check your Internet connection.");
+			});
+		}
+		else if (get.blog) {
+			$.get("api/delete.php", {type: "post", blog: getTitle(), name: name}).done(function(data) {
+				if (data === "Authentication Error") {
+					window.location.href = "login.html";
+					return;
+				}
+				else if (data != "done") {
+					alert(data);
+					return;
+				}
+
+				window.location.href="index.php?blog="+getTitle();
+			}).fail(function() {
+				alert("There was an error contacting the server. Please check your Internet connection.");
+			});
+		}
 	} else {
 		return;
 	}
@@ -255,13 +275,24 @@ function fullscreenMe(element) {
 }
 
 function save() {
-	$.post("api/update.php", {name: gName, site: get.site, id: get.id, html: $('#htmleditor').val()}).done(function(data) {
-	if (!httpCheck(data)) return;
+	if (get.site) {
+		$.post("api/update.php", {name: gName, site: getTitle(), id: get.id, html: $('#htmleditor').val()}).done(function(data) {
+			if (!httpCheck(data)) return;
 
-	if (data === "done") window.location.href="index.php?site="+get.site;
-	}).fail(function() {
-		alert("There was an error contacting the server. Please check your Internet connection.");
-	});
+			if (data === "done") window.location.href="index.php?site="+getTitle();
+		}).fail(function() {
+			alert("There was an error contacting the server. Please check your Internet connection.");
+		});
+	}
+	else if (get.blog) {
+		$.post("api/updateBlog.php", {title: gName, blog: getTitle(), id: get.id, html: $('#htmleditor').val()}).done(function(data) {
+			if (!httpCheck(data)) return;
+
+			if (data === "done") window.location.href="index.php?blog="+getTitle();
+		}).fail(function() {
+			alert("There was an error contacting the server. Please check your Internet connection.");
+		});
+	}
 }
 
 function changeEditor() {
@@ -269,6 +300,6 @@ function changeEditor() {
 		name: gName,
 		html: $('#visualEditor').html()
 	}
-	localStorage.setItem(get.site+":"+get.id, JSON.stringify(data));
-	window.location.href = "simpleEditor.html?inStorage=true&site="+get.site+"&id="+get.id;
+	localStorage.setItem(getTitle()+":"+get.id, JSON.stringify(data));
+	window.location.href = "simpleEditor.html?inStorage=true&site="+getTitle()+"&id="+get.id;
 }

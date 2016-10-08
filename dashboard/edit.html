@@ -124,18 +124,19 @@
 											</div>
 										</div>
 									<a class="btn btn-success" style="margin-left: 10px; float: right;" onclick="save();">Save</a>
-									<a href="javascript:void(0);" class="btn btn-danger" style="float: right;" onclick="del($('#name').text());">Delete Element</a>
+									<a href="javascript:void(0);" class="btn btn-danger" style="float: right;" onclick="del($('#name').text());">Delete</a>
 									</div>
 								</form>
 							</div>
 						<p><em>Note: &lt;script&gt; tags are not ran in the preview but will remain live in the actual page<br />
 						If you want to use advanced HTML it is advised you only use the HTML editor as the other editors can break advanced HTML.</em></p>
 
-						<p><h3>How to add this element to your site:</h3>
+						<div id="instructions"><h3>How to add this element to your site:</h3>
+							Put this line of code where you want the element to appear:<br />
 							<code>
 								&lt;?php $f->fancy(<span id="nameCode"></span>); ?>
 							</code>
-						</p>
+						</div>
 
 					</div>
 				</div>
