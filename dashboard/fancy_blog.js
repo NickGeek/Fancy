@@ -9,6 +9,8 @@ String.prototype.format||(String.prototype.format=function(){var a=arguments;ret
 //Thanks to http://stackoverflow.com/a/32002858/998467
 var get=function(){function a(a){return decodeURIComponent((a+"").replace(/\+/g,"%20"))}function b(b){for(var c={},d=b.split("&"),e=0;e<d.length;e++){var f=d[e].split("=");c[f[0]]=a(f[1])}return c}var c=window.location.search.substr(1);return null!=c&&""!=c?b(c):{}}();
 
+function httpCheck(a){return"Not enough data has been sent"===a?(alert("Not enough data has been sent"),!1):"Authentication Error"===a?(window.location.href="login.html",!1):"Fancy has not been setup"!==a?"Feature not in API"!==a||(alert("The version of the Fancy API that you are using does not support this feature"),!1):(alert("Fancy has not been setup"),void(window.location.href="setup.html"))}
+
 /*! Fancy Bloggifier */
 $(document).ready(function() {
 	$('[ftemplate="post"]').hide();
@@ -17,6 +19,7 @@ $(document).ready(function() {
 	if (get.view) {
 		$('[ftemplate="comments"]').show();
 		$.get("{0}{1}?fancy_getPost={2}".format(document.location.origin, document.location.pathname, get.view)).done(function(data) {
+				if (!httpCheck(data)) return;
 				var post = JSON.parse(data);
 
 				$('[ftemplate="container"]').append('<article id={0} class="fancy-post"></article>'.format(post.id));
@@ -30,6 +33,7 @@ $(document).ready(function() {
 	}
 	else {
 		$.get("{0}{1}?fancy_getPosts=1".format(document.location.origin, document.location.pathname)).done(function(data) {
+			if (!httpCheck(data)) return;
 			var json = JSON.parse(data);
 
 			for (var i = json.length-1; i >= 0; i--) {
