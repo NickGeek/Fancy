@@ -11,6 +11,10 @@ function httpCheck(data) {
 		alert("Fancy has not been setup");
 		window.location.href = "setup.html";
 	}
+	else if (data === "Feature not in API") {
+		alert("The version of the Fancy API that you are using does not support this feature");
+		return false;
+	}
 	else {
 		return true;
 	}
