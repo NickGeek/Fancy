@@ -9,18 +9,30 @@ $(document).ready(function() {
 		displayResult(data);
 	}
 	else if (get.inStorage) {
-		var data = JSON.parse(localStorage.getItem(get.site+":"+get.id));
+		var data = JSON.parse(localStorage.getItem(getType()+":"+getTitle()+":"+get.id));
 		displayResult(data);
 	}
 	else {
-		$.get("api/getElement.php", {id: get.id, site: get.site}).done(function(data) {
-			if (!httpCheck(data)) return;
+		if (get.site) {
+			$.get("api/getElement.php", {id: get.id, site: get.site}).done(function(data) {
+				if (!httpCheck(data)) return;
 
-			var json = JSON.parse(data);
-			displayResult(json);
-		}).fail(function() {
-			alert("There was an error contacting the server. Please check your Internet connection.");
-		});
+				var json = JSON.parse(data);
+				displayResult(json);
+			}).fail(function() {
+				alert("There was an error contacting the server. Please check your Internet connection.");
+			});
+		}
+		else if (get.blog) {
+			$.get("api/getPost.php", {id: get.id, blog: get.blog}).done(function(data) {
+				if (!httpCheck(data)) return;
+
+				var json = JSON.parse(data);
+				displayResult(json);
+			}).fail(function() {
+				alert("There was an error contacting the server. Please check your Internet connection.");
+			});
+		}
 	}
 
 	var editor = new MediumEditor('#visualEditor', {
@@ -37,7 +49,7 @@ $(document).ready(function() {
 	document.getElementById("name").addEventListener("input", function() {
 		var raw = $('#name').text();
 		gName = $('<textarea />').html(raw).val();
-		document.title = gName+' - '+get.site+' - Fancy Dashboard';
+		document.title = gName+' - '+getTitle()+' - Fancy Dashboard';
 	}, false);
 
 	$('#visualEditor').on('DOMNodeInserted', function(node) {
@@ -68,7 +80,7 @@ function noscript(strCode){
 }
 
 function displayResult(result) {
-	document.title = result.name+' - '+get.site+' - Fancy Dashboard';
+	document.title = result.name+' - '+getTitle()+' - Fancy Dashboard';
 	$('#name').text(result.name);
 	gName = result.name;
 	$('#visualEditor').html(noscript(result.html));
@@ -80,20 +92,31 @@ function displayResult(result) {
 
 function save(publish) {
 	if (publish) {
-		$.post("api/update.php", {name: gName, site: get.site, id: get.id, html: $('#visualEditor').html()}).done(function(data) {
-		if (!httpCheck(data)) return;
+		if (get.site) {
+			$.post("api/update.php", {name: gName, site: getTitle(), id: get.id, html: $('#visualEditor').html()}).done(function(data) {
+			if (!httpCheck(data)) return;
 
-		if (data === "done") window.location.href="index.php?site="+get.site;
-		}).fail(function() {
-			alert("There was an error contacting the server. Please check your Internet connection.");
-		});
+			if (data === "done") window.location.href="index.php?site="+getTitle();
+			}).fail(function() {
+				alert("There was an error contacting the server. Please check your Internet connection.");
+			});
+		}
+		else if (get.blog) {
+			$.post("api/updateBlog.php", {title: gName, blog: getTitle(), id: get.id, html: $('#visualEditor').html()}).done(function(data) {
+				if (!httpCheck(data)) return;
+
+				if (data === "done") window.location.href="index.php?blog="+getTitle();
+			}).fail(function() {
+				alert("There was an error contacting the server. Please check your Internet connection.");
+			});
+		}
 	}
 	else {
 		var data = {
 			name: gName,
 			html: $('#visualEditor').html()
 		}
-		localStorage.setItem(get.site+":"+get.id, JSON.stringify(data));
-		window.location.href = "edit.html?inStorage=true&site="+get.site+"&id="+get.id;
+		localStorage.setItem(getType()+":"+getTitle()+":"+get.id, JSON.stringify(data));
+		window.location.href = "edit.html?inStorage=true&"+getType()+"="+getTitle()+"&id="+get.id;
 	}
 }
