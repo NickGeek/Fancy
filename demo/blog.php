@@ -9,8 +9,6 @@
 		<!--[if IE 7]>
 			<link rel="stylesheet" href="css/ie7.css" type="text/css" />
 		<![endif]-->
-
-		<script src="fancy_blog.min.js"></script>
 	</head>
 	<body>
 		<div class="page">
@@ -23,14 +21,11 @@
 				</ul>
 			</div>
 			<div ftemplate="container" class="body">
-				<article ftemplate="post" style="display: none;">
-					<h1 ftemplate="title">Title</h1>
-					<em ftemplate="timestamp">timestamp</em>
-					<p ftemplate="content">
-						Content
-					</p>
+				<article ftemplate="post">
+					<h1 ftemplate="title"></h1>
+					<em ftemplate="timestamp"></em>
+					<p ftemplate="content"></p>
 				</article>
-
 			</div>
 			<div ftemplate="comments" id="disqus_thread" class="body"></div>
 			<script>				
@@ -57,5 +52,6 @@
 				</div>
 			</div>
 		</div>
+		<script src="fancy_blog.min.js"></script>
 	</body>
 </html>  

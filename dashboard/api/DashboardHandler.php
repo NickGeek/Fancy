@@ -167,7 +167,7 @@ class DashboardHandler extends FancyConnector {
 			$this->preparedStatements['getPosts']->execute();
 			$this->preparedStatements['getPosts']->bind_result($id, $title, $timestamp, $html);
 			$postList = array();
-			while ($this->preparedStatements['getPosts']->fetch()) { $postList[] = array('id' => $id, 'title' => $title); }
+			while ($this->preparedStatements['getPosts']->fetch()) { $postList[] = array('id' => $id, 'timestamp' => date('F j, Y', strtotime($timestamp)), 'title' => $title); }
 			return json_encode($postList);
 		}
 		else {

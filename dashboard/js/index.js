@@ -1,6 +1,8 @@
 $(document).ready(function() {
 	//Get elements and pages + blogs/posts
 	if (get.site) {
+		$('#websiteInstructions').show();
+
 		$.get("api/getElements.php", {site: get.site}).done(function(data) {
 			if (!httpCheck(data)) return;
 
@@ -24,6 +26,8 @@ $(document).ready(function() {
 		});
 	}
 	else if (get.blog) {
+		$('#blogInstructions').show();
+
 		$.get("api/getPosts.php", {blog: get.blog}).done(function(data) {
 			if (!httpCheck(data)) return;
 
@@ -41,8 +45,8 @@ $(document).ready(function() {
 
 			var json = JSON.parse(data);
 			$('#newPost').attr('href', url+"?blog="+get.blog+"&id=0");
-			for (var i = 0; i <= json.length - 1; i++) {
-				var code = "<a class='list-group-item' href='"+url+"?blog="+get.blog+"&id="+json[i].id+"'>"+json[i].title+"</a>";
+			for (var i = json.length - 1; i >= 0; i--) {
+				var code = "<a class='list-group-item' href='{0}?blog={1}&id={2}'>{3} <em>{4}</em></a>".format(url, get.blog, json[i].id, json[i].title, json[i].timestamp);
 				$('#postList').append(code);
 			};
 		}).fail(function() {

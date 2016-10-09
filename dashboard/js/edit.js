@@ -69,7 +69,7 @@ $(document).ready(function() {
 			if (!httpCheck(data)) return;
 
 			var json = JSON.parse(data);
-			for (var i = 0; i <= json.length - 1; i++) {
+			for (var i = json.length - 1; i >= 0; i--) {
 				var code = '<li>';
 				if (json[i].title.toLowerCase() === $('#name').text().toLowerCase()) code = '<li class="active">';
 				code += "<a href='edit.html?blog="+get.blog+"&id="+json[i].id+"'>"+json[i].title+"</a></li>";
