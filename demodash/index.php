@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -67,7 +65,7 @@
 							<a href="javascript:void(0);" onclick="changePassword()"><i class="fa fa-fw fa-key"></i> Change Password</a>
 						</li>
 						<li>
-							<a href="#"><i class="fa fa-fw fa-power-off"></i> Logout</a>
+							<a href="javascript:void(0);"><i class="fa fa-fw fa-power-off"></i> Logout</a>
 						</li>
 						<li id="menu-dropdown-divider" class="divider"></li>
 						<li><span id="fancyVersion" class="dropdown-hint">Loading...</span></li>
@@ -81,6 +79,10 @@
 					<li>
 						<a href="javascript:void(0);" onclick="newsite();"><i class="fa fa-fw fa-plus"></i> Add Site</a>
 					</li>
+					
+					<li id="addBlogButton">
+						<a href="javascript:void(0);" onclick="newblog();"><i class="fa fa-fw fa-plus"></i> Add Blog</a>
+					</li>
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
@@ -93,29 +95,79 @@
 				<!-- Page Heading -->
 				<div class="row">
 					<div class="col-lg-12">
-						<h1 class="page-header"><script>document.write(get.site);</script> <a href="javascript:void(0);" class="btn btn-danger" onclick="del(get.site);">Delete Site</a></h1>
+						<h1 id="pageTitle" class="page-header"></h1>
 						
 						<!-- Page content -->
-						<div id="elementList" class="list-group">
+						<div id="elementList" class="list-group index-list">
 							<a id="newElement" class="list-group-item"><i class="fa fa-fw fa-plus"></i> Add a new Fancy element</a>
 						</div>
+
+						<div id="postList" class="list-group index-list" style="display: none;">
+							<a id="newPost" class="list-group-item"><i class="fa fa-fw fa-pencil"></i> Write a new post</a>
+						</div>
 						
-						<h3>How to enable Fancy on your webpages:</h3>
-						<ol>
-							<li>Download these two files (<a href="#">settings.php</a> and <a href="#">FancyConnector.php</a>)</li>
-							<li>Put the files in the folder of the site.</li>
-							<li>
-								Paste the following code at the very top of any page you wish to add Fancy elements to:<br />
-								<code>
-									<?php
-										echo htmlspecialchars('<?php');
-										echo ' require_once(\'FancyConnector.php\');';
-										echo ' $f = new FancyConnector(\'<script>document.write(get.site);</script>\');';
-										echo ' ?>';
-									?>
-								</code>
-							</li>
-						</ol>
+						<div id="websiteInstructions" style="display: none;">
+							<h3>How to enable Fancy on your webpages:</h3>
+							<ol>
+								<li>Download these two files (<a href="javascript:void(0);" target="_blank">settings.php</a> and <a href="javascript:void(0);" target="_blank">FancyConnector.php</a>)</li>
+								<li>Put the files in the folder of the site.</li>
+								<li>
+									Paste the following code at the very top of any page you wish to add Fancy elements to:<br />
+									<code>
+										<?php
+											echo htmlspecialchars('<?php');
+											echo ' require_once(\'FancyConnector.php\');';
+											echo ' $f = new FancyConnector(\'<script>document.write(getTitle());</script>\');';
+											echo ' ?>';
+										?>
+									</code>
+								</li>
+							</ol>
+						</div>
+
+						<div id="blogInstructions" style="display: none;">
+							<h3>How to enable Fancy on your blog:</h3>
+							<ol>
+								<li>Download these three files (<a href="javascript:void(0);" target="_blank">settings.php</a>, <a href="javascript:void(0);" target="_blank">FancyConnector.php</a>, and <a href="javascript:void(0);" target="_blank">fancy_blog.min.js</a>)</li>
+								<li>Put the files in the folder of your blog.</li>
+								<li>
+									Paste the following code at the very top of your blog page:<br />
+									<code>
+										<?php
+											echo htmlspecialchars('<?php');
+											echo ' require_once(\'FancyConnector.php\');';
+											echo ' $f = new FancyConnector(false, \'<script>document.write(getTitle());</script>\');';
+											echo ' ?>';
+										?>
+									</code>
+									<ul>
+										<li><em>Note: If you want to use Fancy elements from a site on your page, put the site's name where it says "false".</em></li>
+									</ul>
+								</li>
+								<li>
+									Paste the following code right above your last <code>&lt;/body&gt;</code> tag:<br />
+									<code>&lt;script src="fancy_blog.min.js"&gt;&lt;/script&gt;</code>
+								</li>
+								<li>
+									Create a template for what a post looks like and put it where you want the posts to load. An example is the following:<br />
+									<code>
+										&lt;div ftemplate="container"&gt;<br />
+										&nbsp;&nbsp;&lt;article ftemplate="post"&gt;<br />
+										&nbsp;&nbsp;&nbsp;&nbsp;&lt;h1 ftemplate="title"&gt;&lt;/h1&gt;<br />
+										&nbsp;&nbsp;&nbsp;&nbsp;&lt;em ftemplate="timestamp"&gt;&lt;/em&gt;<br />
+										&nbsp;&nbsp;&nbsp;&nbsp;&lt;p ftemplate="content"&gt;&lt;/p&gt;<br />
+										&nbsp;&nbsp;&lt;/article&gt;<br />
+										&lt;/div&gt;<br />
+										&lt;div ftemplate="comments"&gt;&lt;/div&gt;
+									</code>
+									<ul>
+										<li><em>Note: All of the fields are optional (except for the container and the post). You don't need to include the timestamp, comments, etc.</em></li>
+										<li><em>Note: The comments will only show on a full post page, not on the list</em></li>
+										<li><em>Note: If you want an example, look at the code for the 'Demo Blog' <a target="_blank" href="https://github.com/NickGeek/Fancy/blob/master/demo/blog.php">here</a>.</em></li>
+									</ul>
+								</li>
+							</ol>
+						</div>
 
 						<div id="modal" class="modal fade" tabindex="-1">
 							<div class="modal-dialog">

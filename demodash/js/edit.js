@@ -9,45 +9,82 @@ $(document).ready(function() {
 			name: "Enter name here",
 			html: ""
 		}
+		if (get.blog) data.name = "Enter title here";
 		displayResult(data);
 		updateHint();
 	}
 	else if (get.inStorage) {
-		var data = JSON.parse(localStorage.getItem(get.site+":"+get.id));
+		var data = JSON.parse(localStorage.getItem(getType()+":"+getTitle()+":"+get.id));
+		console.log(data);
 		displayResult(data);
 		updateHint();
 	}
 	else {
-		$.get("api/getElement.php", {id: get.id, site: get.site}).done(function(data) {
+		if (get.site) {
+			$.get("api/getElement.php", {id: get.id, site: get.site}).done(function(data) {
+				if (!httpCheck(data)) return;
+
+				var json = JSON.parse(data);
+				displayResult(json);
+				updateHint();
+			}).fail(function() {
+				alert("There was an error contacting the server. Please check your Internet connection.");
+			});
+		}
+		else if (get.blog) {
+			$.get("api/getPost.php", {id: get.id, blog: get.blog}).done(function(data) {
+				if (!httpCheck(data)) return;
+
+				var json = JSON.parse(data);
+				displayResult(json);
+				updateHint();
+			}).fail(function() {
+				alert("There was an error contacting the server. Please check your Internet connection.");
+			});
+		}
+	}
+
+	if (get.site) {
+		$('#newButton').html('<i class="fa fa-fw fa-plus"></i> New Element');
+
+		$.get("api/getElements.php", {site: get.site}).done(function(data) {
 			if (!httpCheck(data)) return;
 
 			var json = JSON.parse(data);
-			displayResult(json);
-			updateHint();
+			for (var i = 0; i <= json.length - 1; i++) {
+				var code = '<li>';
+				if (json[i].name.toLowerCase() === $('#name').text().toLowerCase()) code = '<li class="active">';
+				code += "<a href='edit.html?site="+get.site+"&id="+json[i].id+"'>"+json[i].name+"</a></li>";
+				$('#elementSidebar').append(code);
+			};
+		}).fail(function() {
+			alert("There was an error contacting the server. Please check your Internet connection.");
+		});
+	}
+	else if (get.blog) {
+		$('#newButton').html('<i class="fa fa-fw fa-pencil"></i> Write a new post');
+		$('#instructions').hide();
+
+		$.get("api/getPosts.php", {blog: get.blog}).done(function(data) {
+			if (!httpCheck(data)) return;
+
+			var json = JSON.parse(data);
+			for (var i = json.length - 1; i >= 0; i--) {
+				var code = '<li>';
+				if (json[i].title.toLowerCase() === $('#name').text().toLowerCase()) code = '<li class="active">';
+				code += "<a href='edit.html?blog="+get.blog+"&id="+json[i].id+"'>"+json[i].title+"</a></li>";
+				$('#elementSidebar').append(code);
+			};
 		}).fail(function() {
 			alert("There was an error contacting the server. Please check your Internet connection.");
 		});
 	}
 
-	$.get("api/getElements.php", {site: get.site}).done(function(data) {
-		if (!httpCheck(data)) return;
-
-		var json = JSON.parse(data);
-		for (var i = 0; i <= json.length - 1; i++) {
-			var code = '<li>';
-			if (json[i].name.toLowerCase() === $('#name').text().toLowerCase()) code = '<li class="active">';
-			code += "<a href='edit.html?site="+get.site+"&id="+json[i].id+"'>"+json[i].name+"</a></li>";
-			$('#elementSidebar').append(code);
-		};
-	}).fail(function() {
-		alert("There was an error contacting the server. Please check your Internet connection.");
-	});
-
 	if (localStorage.getItem('defaultEditor') == 'power') $('#defaulter').hide();
 
 	function displayResult(result) {
 		$('#name').text(result.name);
-		document.title = result.name+' - '+get.site+' - Fancy Dashboard';
+		document.title = result.name+' - '+getTitle()+' - Fancy Dashboard';
 		$('#htmleditor').val(result.html);
 		$('#visualEditor').html(noscript(result.html));
 		$('#md').val(toMarkdown(result.html, { gfm: true }));
@@ -110,7 +147,7 @@ $(document).ready(function() {
 		var raw = $('#name').text();
 		gName = $('<textarea />').html(raw).val();
 		$('#nameCode').html("'"+gName.addSlashes()+"'");
-		document.title = gName+' - '+get.site+' - Fancy Dashboard';
+		document.title = gName+' - '+getTitle()+' - Fancy Dashboard';
 	}
 	
 	document.getElementById("name").addEventListener("input", function() {
@@ -119,7 +156,7 @@ $(document).ready(function() {
 
 	//Form prefilling
 	$('input[name="id"]').val(get.id);
-	$('input[name="site"]').val(get.site);
+	$('input[name="site"]').val(getTitle());
 
 	//Handle DOCX stuff
 	document.getElementById("docxUpload").addEventListener("change", handleFileSelect, false);
@@ -204,7 +241,7 @@ function fullscreenMe(element) {
 }
 
 function save() {
-	window.location.href="index.php?site="+get.site;
+	return;
 }
 
 function changeEditor() {
@@ -212,6 +249,6 @@ function changeEditor() {
 		name: gName,
 		html: $('#visualEditor').html()
 	}
-	localStorage.setItem(get.site+":"+get.id, JSON.stringify(data));
-	window.location.href = "simpleEditor.html?inStorage=true&site="+get.site+"&id="+get.id;
+	localStorage.setItem(getType()+":"+getTitle()+":"+get.id, JSON.stringify(data));
+	window.location.href = "simpleEditor.html?inStorage=true&"+getType()+"="+getTitle()+"&id="+get.id;
 }
