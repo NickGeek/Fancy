@@ -12,7 +12,9 @@ You can view a live demo at [http://fancyxht.ml/demo](http://fancyxht.ml/demo) a
 
 	a. If you used `git clone` to download, just copy the 'dashboard' directory
 2. Upload your dashboard folder onto a webserver that can run PHP and MySQL
-3. Create a MySQL database for Fancy to use
+3. Create a MySQL compatible database for Fancy to use
+
+	a. As of v2100 Fancy requires at least a database compatible with MySQL 5.6.5 or MariaDB 10.0.1
 4. Go to the dashboard folder in a web browser
 5. Follow the steps on screen
 
