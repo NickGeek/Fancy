@@ -99,10 +99,9 @@ $(document).ready(function() {
 			$('#siteSidebar').append(code);
 		};
 	}).fail(function() {
-		alert("There was an error contacting the server. Please check your Internet connection.");
+		// alert("There was an error contacting the server. Please check your Internet connection.");
 	});
 
-	$(document).ready(function() {
 	$.get("api/getVersions.php").done(function(data) {
 		if (!httpCheck(data)) return;
 
@@ -121,7 +120,6 @@ $(document).ready(function() {
 
 	var t = "false"; if (get.blog) t = "true";
 	$('#pageTitle').html('{0} <a href="javascript:void(0);" class="btn btn-danger" onclick="del(\'{0}\', {1});">Delete</a>'.format(getTitle(), t));
-});
 });
 function newsite() {
 	return;
