@@ -123,73 +123,18 @@ $(document).ready(function() {
 	$('#pageTitle').html('{0} <a href="javascript:void(0);" class="btn btn-danger" onclick="del(\'{0}\', {1});">Delete</a>'.format(getTitle(), t));
 });
 });
-
 function newsite() {
-	var name = prompt("Name of site:", "");
-	if (!name || name.length == 0) return;
-	$.get("api/newsite.php", {name: name}).done(function(data) {
-		if (!httpCheck(data)) return;
-
-		window.location.href="index.php?site="+name;
-	}).fail(function() {
-		alert("There was an error contacting the server. Please check your Internet connection.");
-	});
+	return;
 }
 
-function newblog() {
-	var name = prompt("Name of blog:", "");
-	if (!name || name.length == 0) return;
-	$.get("api/newblog.php", {name: name}).done(function(data) {
-		if (!httpCheck(data)) return;
-
-		window.location.href="index.php?blog="+name;
-	}).fail(function() {
-		alert("There was an error contacting the server. Please check your Internet connection.");
-	});
-}
-
-function del(name, isBlog) {
-	if (confirm('Are you sure you want to delete this?')) {
-		var type = "site";
-		if (isBlog) type = "blog";
-		$.get("api/delete.php", {type: type, name: name}).done(function(data) {
-			if (!httpCheck(data)) return;
-
-			window.location.href="index.php";
-		}).fail(function() {
-			alert("There was an error contacting the server. Please check your Internet connection.");
-		});
-	} else {
-		return;
-	}
+function del(name) {
+	return;
 }
 
 function changePassword() {
-	var password = prompt("Enter your current password:", "");
-	if (password.length == 0) return;
-	var newPassword = prompt("Enter your new password:", "");
-	if (newPassword.length == 0) return;
-
-	$.post("api/changePassword.php", {password: password, newPassword: newPassword}).done(function(data) {
-		if (!httpCheck(data)) return;
-		
-		$('.modal-title').html("Password Change")
-		$("#modal-text").html(data);
-		$("#modal").modal({show: true});
-
-	}).fail(function() {
-		alert("There was an error contacting the server. Please check your Internet connection.");
-	});
+	return;
 }
 
 function update(url) {
-	$.get(url).done(function(data) {
-		if (!httpCheck(data)) return;
-		
-		$('.modal-title').html("Fancy Update")
-		$("#modal-text").html(data);
-		$("#modal").modal({show: true});
-	}).fail(function() {
-		alert("There was an error contacting the server. Please check your Internet connection.");
-	});
+	return;
 }

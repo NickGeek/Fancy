@@ -37,9 +37,17 @@ body {
 	width: 100%;
 }
 
-#elementList {
+.index-list {
 	width: 40%;
 	margin: auto;
+}
+
+.dropdown-hint {
+	color: #808080;
+	font-style: italic;
+	font-size:  0.9em;
+	padding: 4px;
+
 }
 
 /* Mobile Devices */

@@ -31,6 +31,9 @@ else {
 	elseif ($_GET['id'] == "connector") {
 		download(realpath(realpath(__DIR__).'/api/FancyConnector.php'));
 	}
+	elseif ($_GET['id'] == "blog") {
+		download(realpath(realpath(__DIR__).'/fancy_blog.min.js'));
+	}
 }
 
 ?>

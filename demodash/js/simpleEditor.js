@@ -92,24 +92,7 @@ function displayResult(result) {
 
 function save(publish) {
 	if (publish) {
-		if (get.site) {
-			$.post("api/update.php", {name: gName, site: getTitle(), id: get.id, html: $('#visualEditor').html()}).done(function(data) {
-			if (!httpCheck(data)) return;
-
-			if (data === "done") window.location.href="index.php?site="+getTitle();
-			}).fail(function() {
-				alert("There was an error contacting the server. Please check your Internet connection.");
-			});
-		}
-		else if (get.blog) {
-			$.post("api/updateBlog.php", {title: gName, blog: getTitle(), id: get.id, html: $('#visualEditor').html()}).done(function(data) {
-				if (!httpCheck(data)) return;
-
-				if (data === "done") window.location.href="index.php?blog="+getTitle();
-			}).fail(function() {
-				alert("There was an error contacting the server. Please check your Internet connection.");
-			});
-		}
+		return;
 	}
 	else {
 		var data = {
