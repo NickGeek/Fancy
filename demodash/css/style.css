@@ -52,7 +52,7 @@ body {
 
 /* Mobile Devices */
 @media (max-width: 900px) {
-	#elementList {
+	.index-list {
 		width: 90%;
 	}
 }
