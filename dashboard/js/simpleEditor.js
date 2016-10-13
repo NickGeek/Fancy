@@ -134,43 +134,4 @@ function fullscreen() {
 		$('#editorHolder').css('height', '');
 	}
 	isFullscreen = !isFullscreen;
-
-	// var element = document.getElementById('visualEditor');
-	// var turningFullscreen = false;
-	// $(element).css("min-height", "100%");
-
-	// //Handle changing CSS back when we go out of full screen
-	// $(document).bind("webkitfullscreenchange mozfullscreenchange fullscreenChange MSFullscreenChange", function() {
-	// 	if (turningFullscreen) {
-	// 		turningFullscreen = false;
-	// 		return;
-	// 	}
-
-	// 	if (!document.fullScreen && !document.mozFullScreen && !document.webkitIsFullScreen && isMSFullscreen && !turningFullscreen) {
-	// 		isMSFullscreen = false;
-	// 		$(element).css("min-height", "310px");
-	// 	}
-	// });
-	
-	// var isMSFullscreen = false;
-	// if (element.requestFullscreen) {
-	// 	isMSFullscreen = true;
-	// 	element.requestFullscreen();
-	// }
-	// else if (element.msRequestFullscreen) {
-	// 	turningFullscreen = true;
-	// 	isMSFullscreen = true;
-	// 	element.msRequestFullscreen();
-	// }
-	// else if (element.mozRequestFullScreen) {
-	// 	isMSFullscreen = true;
-	// 	element.mozRequestFullScreen();
-	// }
-	// else if (element.webkitRequestFullscreen) {
-	// 	isMSFullscreen = true;
-	// 	element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-	// }
-	// else {
-	// 	alert("Your browser doesn't support fullscreen mode");
-	// }
 }
