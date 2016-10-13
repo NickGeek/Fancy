@@ -46,22 +46,58 @@
 			background-image: none !important;
 		}
 
-		body {
-			background-color: #fff;
+		html, body {
+			background: url(img/simple-editor-bg.jpg);
 			height: 100%;
+		}
+
+		.navbar {
+			margin-bottom: 0px;
 		}
 
 		#visualEditor {
 			background-color: #fff;
 			height: 100%;
-			width: 50%;
+			width: 100%;
+			padding: 10px;
 			margin: auto;
 		}
 
+		#editorHolder {
+			background-color: #fff;
+			height: 85%;
+			width: 40%;
+			margin: auto;
+			margin-top: 20px;
+			-webkit-transition-property: width, height, margin-top;
+			transition-property: width, height, margin-top;
+			-webkit-transition-duration: 1s;
+			transition-property: width;
+			transition-duration: 1s;
+		}
+
 		@media (max-width: 768px) {
-			#visualEditor {
-				height: 100%;
+			/* Mobile */
+			html, body {
+				background: #fff;
+			}
+
+			#editorHolder {
+				height: 80%;
 				width: 100%;
+			}
+
+			#fullscreenButton {
+				display: none;
+			}
+		}
+
+		@media (min-width: 769px) {
+			/* Desktop */
+			#editorHolder {
+				-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+				-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+				box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 			}
 		}
 	</style>
@@ -88,6 +124,7 @@
 			<ul class="nav navbar-nav">
 				<!-- Save -->
 				<li><a href="javascript:void(0);" onclick="save(true);">Save</a></li>
+				<li id="fullscreenButton"><a href="javascript:void(0);" onclick="fullscreen();">Toggle Fullscreen</a></li>
 				<li><a id="defaulter" href="javascript:void(0);" onclick="localStorage.setItem('defaultEditor', 'simple'); if (localStorage.getItem('defaultEditor') == 'simple') $('#defaulter').hide();">Set this as the default editor</a></li>
 			</ul>
 
@@ -97,6 +134,6 @@
 		</div>
 	</div>
 
-	<div id="visualEditor"></div>
+	<div id="editorHolder"><div id="visualEditor"></div></div>
 </body>
 </html>
