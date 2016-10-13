@@ -103,3 +103,18 @@ function save(publish) {
 		window.location.href = "edit.html?inStorage=true&"+getType()+"="+getTitle()+"&id="+get.id;
 	}
 }
+
+var isFullscreen = false;
+function fullscreen() {
+	if (!isFullscreen) {
+		$('#editorHolder').css('width', '100%');
+		$('#editorHolder').css('margin-top', '0px');
+		$('#editorHolder').css('height', 'calc(100% - 52px)');
+	}
+	else {
+		$('#editorHolder').css('width', '');
+		$('#editorHolder').css('margin-top', '');
+		$('#editorHolder').css('height', '');
+	}
+	isFullscreen = !isFullscreen;
+}
