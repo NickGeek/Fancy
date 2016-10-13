@@ -22,7 +22,7 @@ $(document).ready(function() {
 				$('#elementList').append(code);
 			};
 		}).fail(function() {
-			alert("There was an error contacting the server. Please check your Internet connection.");
+			console.log("There was an error contacting the server. Please check your Internet connection.");
 		});
 	}
 	else if (get.blog) {
@@ -50,7 +50,7 @@ $(document).ready(function() {
 				$('#postList').append(code);
 			};
 		}).fail(function() {
-			alert("There was an error contacting the server. Please check your Internet connection.");
+			console.log("There was an error contacting the server. Please check your Internet connection.");
 		});
 	}
 
@@ -72,7 +72,7 @@ $(document).ready(function() {
 			$('#addBlogButton').before(code);
 		};
 	}).fail(function() {
-		alert("There was an error contacting the server. Please check your Internet connection.");
+		console.log("There was an error contacting the server. Please check your Internet connection.");
 	}).always(function() {
 
 	});
@@ -99,7 +99,7 @@ $(document).ready(function() {
 			$('#siteSidebar').append(code);
 		};
 	}).fail(function() {
-		alert("There was an error contacting the server. Please check your Internet connection.");
+		console.log("There was an error contacting the server. Please check your Internet connection.");
 	});
 
 	$(document).ready(function() {
@@ -116,7 +116,7 @@ $(document).ready(function() {
 			$('#apiVersion').html('Fancy API v{0}{1}'.format(json.api, updateMsg))
 		});
 	}).fail(function() {
-		alert("There was an error contacting the server. Please check your Internet connection.");
+		console.log("There was an error contacting the server. Please check your Internet connection.");
 	});
 
 	var t = "false"; if (get.blog) t = "true";
