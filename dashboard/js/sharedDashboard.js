@@ -9,3 +9,9 @@ function getType() {
 	if (get.blog) return "blog";
 	return "";
 }
+
+function showSnackbar(message) {
+	$('#snackbar').html(message);
+	$('#snackbar').addClass('show');
+	setTimeout(function() { $('#snackbar').removeClass('show'); }, 1500);
+}

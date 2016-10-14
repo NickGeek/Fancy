@@ -280,7 +280,9 @@ function save() {
 		$.post("api/update.php", {name: gName, site: getTitle(), id: get.id, html: $('#htmleditor').val()}).done(function(data) {
 			if (!httpCheck(data)) return;
 
-			if (data === "done") window.location.href="index.php?site="+getTitle();
+			if (data === "done") {
+				showSnackbar("Element updated successfully");
+			}
 		}).fail(function() {
 			alert("There was an error contacting the server. Please check your Internet connection.");
 		});
@@ -289,7 +291,9 @@ function save() {
 		$.post("api/updateBlog.php", {title: gName, blog: getTitle(), id: get.id, html: $('#htmleditor').val()}).done(function(data) {
 			if (!httpCheck(data)) return;
 
-			if (data === "done") window.location.href="index.php?blog="+getTitle();
+			if (data === "done") {
+				showSnackbar("Element updated successfully");
+			}
 		}).fail(function() {
 			alert("There was an error contacting the server. Please check your Internet connection.");
 		});
@@ -304,3 +308,4 @@ function changeEditor() {
 	localStorage.setItem(getType()+":"+getTitle()+":"+get.id, JSON.stringify(data));
 	window.location.href = "simpleEditor.html?inStorage=true&"+getType()+"="+getTitle()+"&id="+get.id;
 }
+

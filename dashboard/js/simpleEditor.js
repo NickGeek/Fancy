@@ -96,7 +96,7 @@ function save(publish) {
 			$.post("api/update.php", {name: gName, site: getTitle(), id: get.id, html: $('#visualEditor').html()}).done(function(data) {
 			if (!httpCheck(data)) return;
 
-			if (data === "done") window.location.href="index.php?site="+getTitle();
+			if (data === "done") showSnackbar("Element updated successfully");
 			}).fail(function() {
 				alert("There was an error contacting the server. Please check your Internet connection.");
 			});
@@ -105,7 +105,7 @@ function save(publish) {
 			$.post("api/updateBlog.php", {title: gName, blog: getTitle(), id: get.id, html: $('#visualEditor').html()}).done(function(data) {
 				if (!httpCheck(data)) return;
 
-				if (data === "done") window.location.href="index.php?blog="+getTitle();
+				if (data === "done") showSnackbar("Element updated successfully");
 			}).fail(function() {
 				alert("There was an error contacting the server. Please check your Internet connection.");
 			});
