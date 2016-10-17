@@ -73,8 +73,6 @@ $(document).ready(function() {
 		};
 	}).fail(function() {
 		console.log("There was an error contacting the server. Please check your Internet connection.");
-	}).always(function() {
-
 	});
 
 	$.get("api/getBlogs.php").done(function(data) {
