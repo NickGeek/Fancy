@@ -9,3 +9,7 @@ function login() {
 		alert("There was an error contacting the server. Please check your Internet connection.");
 	});
 }
+
+$(window).bind('keypress', function (e) {
+	if (e.keyCode == 13) login();
+});
