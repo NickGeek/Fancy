@@ -105,7 +105,7 @@ class FancyConnector {
 		$this->preparedStatements['getElement'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `id`, `html` FROM `elements` WHERE `site` = ? AND `name` = ?;");
 
 		$this->preparedStatements['getPostByID'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `id`, `title`, `timestamp`, `html` FROM `blog_posts` WHERE `blog` = ? AND `id` = ?;");	
-		$this->preparedStatements['getPosts'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `id`, `title`, `timestamp`, `html` FROM `blog_posts` WHERE `blog` = ?;");
+		$this->preparedStatements['getPosts'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `id`, `title`, `timestamp`, `html` FROM `blog_posts` WHERE `blog` = ? ORDER BY id DESC;");
 	}
 
 	public function fancy($name) {

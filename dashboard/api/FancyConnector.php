@@ -77,7 +77,7 @@ class FancyConnector {
 					$address .= '://'.$_SERVER['HTTP_HOST'].strtok($_SERVER['REQUEST_URI'], '?');
 
 					/** Generate RSS */
-					header('Content-Type: application/xml');
+					header('Content-Type: application/xml; charset=utf-8');
 					$rssStr = '<?xml version="1.0" encoding="UTF-8" ?>'."\n";
 					$rssStr .= '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">';
 						$rssStr .= '<channel>';
@@ -105,7 +105,7 @@ class FancyConnector {
 		$this->preparedStatements['getElement'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `id`, `html` FROM `elements` WHERE `site` = ? AND `name` = ?;");
 
 		$this->preparedStatements['getPostByID'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `id`, `title`, `timestamp`, `html` FROM `blog_posts` WHERE `blog` = ? AND `id` = ?;");	
-		$this->preparedStatements['getPosts'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `id`, `title`, `timestamp`, `html` FROM `blog_posts` WHERE `blog` = ?;");
+		$this->preparedStatements['getPosts'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `id`, `title`, `timestamp`, `html` FROM `blog_posts` WHERE `blog` = ? ORDER BY id DESC;");
 	}
 
 	public function fancy($name) {
