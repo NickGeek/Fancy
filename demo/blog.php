@@ -21,6 +21,7 @@
 				</ul>
 			</div>
 			<div ftemplate="container" class="body">
+				<a href="?rss=1"><img src="images/valid-rss.png" /></a>
 				<article ftemplate="post">
 					<h1 ftemplate="title"></h1>
 					<em ftemplate="timestamp"></em>
