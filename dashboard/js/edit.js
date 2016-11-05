@@ -161,11 +161,35 @@ $(document).ready(function() {
 	//Handle DOCX stuff
 	document.getElementById("docxUpload").addEventListener("change", handleFileSelect, false);
 	function handleFileSelect(event) {
-		readFileInputEventAsArrayBuffer(event, function(arrayBuffer) {
-			mammoth.convertToHtml({arrayBuffer: arrayBuffer})
-				.then(displayDocx)
-				.done();
-		});
+		var fileExt = event.target.files[0].name.split(".")[event.target.files[0].name.split(".").length-1];
+		switch (fileExt) {
+			case "docx":
+				readFileInputEventAsArrayBuffer(event, function(arrayBuffer) {
+					mammoth.convertToHtml({arrayBuffer: arrayBuffer})
+						.then(displayDocx)
+						.done();
+				});
+				break;
+			case "md":
+				readFileInputEventAsText(event, function(text) {
+					$('#md').val(text);
+					simpleEditing = false;
+					$('#visualEditor').html(markdown.toHTML(text));
+					$('#htmleditor').val(markdown.toHTML(text));
+				});
+				break;
+			case "html":
+				readFileInputEventAsText(event, function(text) {
+					$('#htmleditor').val(text);
+					simpleEditing = false;
+					$('#visualEditor').html(noscript(text));
+					$('#md').val(toMarkdown(text, { gfm: true }));
+				});
+				break;
+			default:
+				alert("Fancy only supports 'docx', 'md', and 'html' files");
+				break;
+		}
 	}
 
 	function displayDocx(result) {
@@ -187,6 +211,19 @@ function readFileInputEventAsArrayBuffer(event, callback) {
 	};
 	
 	reader.readAsArrayBuffer(file);
+}
+
+function readFileInputEventAsText(event, callback) {
+	var file = event.target.files[0];
+
+	var reader = new FileReader();
+	
+	reader.onload = function() {
+		var text = reader.result;
+		callback(text);
+	};
+	
+	reader.readAsText(file);
 }
 
 function del(name) {
