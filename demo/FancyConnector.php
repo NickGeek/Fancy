@@ -68,9 +68,9 @@ class FancyConnector {
 			}
 			elseif($_GET['rss']) {
 				if ($this->fancyVars['apiVersion'] >= 2100) {
-					$this->preparedStatements['getPosts']->bind_param('s', $this->blog);
-					$this->preparedStatements['getPosts']->execute();
-					$this->preparedStatements['getPosts']->bind_result($id, $title, $timestamp, $html);
+					$this->preparedStatements['getPostsReverse']->bind_param('s', $this->blog);
+					$this->preparedStatements['getPostsReverse']->execute();
+					$this->preparedStatements['getPostsReverse']->bind_result($id, $title, $timestamp, $html);
 
 					$address = "http";
 					if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') $address = "https";
@@ -102,11 +102,11 @@ class FancyConnector {
 	}
 
 	protected function prepareStatements() {
-		$this->preparedStatements['getElement'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `id`, `html` FROM `elements` WHERE `site` = ? AND `name` = ?;");
+		$this->preparedStatements['getElement'] = $this->con->prepare("SELECT `id`, `html` FROM `elements` WHERE `site` = ? AND `name` = ?;");
 
-		$this->preparedStatements['getPostByID'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `id`, `title`, `timestamp`, `html` FROM `blog_posts` WHERE `blog` = ? AND `id` = ?;");
-		$this->preparedStatements['getPosts'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `id`, `title`, `timestamp`, `html` FROM `blog_posts` WHERE `blog` = ?;");
-		$this->preparedStatements['getPostsReverse'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `id`, `title`, `timestamp`, `html` FROM `blog_posts` WHERE `blog` = ? ORDER BY id DESC;");
+		$this->preparedStatements['getPostByID'] = $this->con->prepare("SELECT `id`, `title`, `timestamp`, `html` FROM `blog_posts` WHERE `blog` = ? AND `id` = ?;");
+		$this->preparedStatements['getPosts'] = $this->con->prepare("SELECT `id`, `title`, `timestamp`, `html` FROM `blog_posts` WHERE `blog` = ?;");
+		$this->preparedStatements['getPostsReverse'] = $this->con->prepare("SELECT `id`, `title`, `timestamp`, `html` FROM `blog_posts` WHERE `blog` = ? ORDER BY `timestamp` DESC;");
 	}
 
 	public function fancy($name) {
