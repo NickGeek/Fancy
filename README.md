@@ -5,7 +5,7 @@ Unlike other CMSs (like WordPress) you don't have to design your website around 
 Go to https://nick.geek.nz/fancy for more information.
 
 # Demo
-You can view a live demo at [https://nick.geek.nz/fancy/demo](http://fancyxht.ml/demo) and view its dashboard at [https://nick.geek.nz/fancy/demodash](https://nick.geek.nz/fancy/demodash).
+You can view a live demo at [https://nick.geek.nz/fancy/demo](https://nick.geek.nz/fancy/demo) and view its dashboard at [https://nick.geek.nz/fancy/demodash](https://nick.geek.nz/fancy/demodash).
 
 # Install
 1. Extract the 'dashboard' folder from 'fancy-master.zip'
