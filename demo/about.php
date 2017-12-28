@@ -67,7 +67,7 @@
 					<br /><br />Polygonal graphic by <a href="http://www.freepik.com/">Freepik</a><br /> from <a href="http://www.flaticon.com/">Flaticon</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a>
 				</p>
 				<div class="footerLeft fancya">
-					<p>This website is <a target="_blank" href="http://fancyxht.ml">Fancy</a></p>
+					<p>This website is <a target="_blank" href="https://nick.geek.nz/fancy">Fancy</a></p>
 				</div>
 			</div>
 		</div>

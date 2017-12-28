@@ -22,7 +22,7 @@
 			</div>
 			<div class="body">
 				<div id="featured">
-					<h3>This page is very <a href="http://fancyxht.ml" target="_blank"><em>Fancy</em></a></h3>
+					<h3>This page is very <a href="https://nick.geek.nz/fancy" target="_blank"><em>Fancy</em></a></h3>
 					<p>This website has dynamic content all throughout it using Fancy. This entire website took next to no time to class it up and make it <em>fancy</em>! Have a look around and see how this website has no CMS junk; just simple HTML, CSS, and a little bit of fanciness. Once you're done here consider saving yourself time and hassle by putting Fancy in your website.</p>
 					<input type="button" value="Read more" onClick="parent.location='about.php'"/>
 				</div>
@@ -58,7 +58,7 @@
 					<br /><br />Polygonal graphic by <a href="http://www.freepik.com/">Freepik</a><br /> from <a href="http://www.flaticon.com/">Flaticon</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a>
 				</p>
 				<div class="footerLeft fancya">
-					<p>This website is <a target="_blank" href="http://fancyxht.ml">Fancy</a></p>
+					<p>This website is <a target="_blank" href="https://nick.geek.nz/fancy">Fancy</a></p>
 				</div>
 			</div>
 		</div>
