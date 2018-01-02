@@ -104,9 +104,7 @@
 						<h1 id="pageTitle" class="page-header"></h1>
 						
 						<!-- Page content -->
-						<div id="elementList" class="list-group index-list">
-							<a id="newElement" class="list-group-item"><i class="fa fa-fw fa-plus"></i> Add a new Fancy element</a>
-						</div>
+						<div id="elementList" class="list-group index-list"></div>
 
 						<div id="postList" class="list-group index-list" style="display: none;">
 							<a id="newPost" class="list-group-item"><i class="fa fa-fw fa-pencil"></i> Write a new post</a>
@@ -192,16 +190,16 @@
 						</div>
 					</div>
 				</div>
-				<!-- /.row -->
-
 			</div>
-			<!-- /.container-fluid -->
-
 		</div>
-		<!-- /#page-wrapper -->
-
 	</div>
-	<!-- /#wrapper -->
-</body>
 
+	<!-- JavaScript imports -->
+	<script type="text/javascript" src="elm/element-selector.js"></script>
+
+	<!-- Attach Elm -->
+	<script type="text/javascript">
+		var app = Elm.Main.embed(document.getElementById('elementList'));
+	</script>
+</body>
 </html>

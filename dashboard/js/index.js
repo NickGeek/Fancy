@@ -3,27 +3,27 @@ $(document).ready(function() {
 	if (get.site) {
 		$('#websiteInstructions').show();
 
-		$.get("api/getElements.php", {site: get.site}).done(function(data) {
-			if (!httpCheck(data)) return;
+		// $.get("api/getElements.php", {site: get.site}).done(function(data) {
+		// 	if (!httpCheck(data)) return;
 
-			//Set to default editor
-			if (localStorage.getItem('defaultEditor') == 'simple') {
-				var url = 'simpleEditor.html';
-			}
-			else {
-				var url = 'edit.html';
-				localStorage.setItem('defaultEditor', 'power')
-			}
+		// 	//Set to default editor
+		// 	if (localStorage.getItem('defaultEditor') == 'simple') {
+		// 		var url = 'simpleEditor.html';
+		// 	}
+		// 	else {
+		// 		var url = 'edit.html';
+		// 		localStorage.setItem('defaultEditor', 'power')
+		// 	}
 
-			var json = JSON.parse(data);
-			$('#newElement').attr('href', url+"?site="+get.site+"&id=0");
-			for (var i = 0; i <= json.length - 1; i++) {
-				var code = "<a class='list-group-item' href='"+url+"?site="+get.site+"&id="+json[i].id+"'>"+json[i].name+"</a>";
-				$('#elementList').append(code);
-			};
-		}).fail(function() {
-			console.log("There was an error contacting the server. Please check your Internet connection.");
-		});
+		// 	var json = JSON.parse(data);
+		// 	$('#newElement').attr('href', url+"?site="+get.site+"&id=0");
+		// 	for (var i = 0; i <= json.length - 1; i++) {
+		// 		var code = "<a class='list-group-item' href='"+url+"?site="+get.site+"&id="+json[i].id+"'>"+json[i].name+"</a>";
+		// 		$('#elementList').append(code);
+		// 	};
+		// }).fail(function() {
+		// 	console.log("There was an error contacting the server. Please check your Internet connection.");
+		// });
 	}
 	else if (get.blog) {
 		$('#blogInstructions').show();
