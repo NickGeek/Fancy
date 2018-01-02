@@ -24,11 +24,14 @@ main =
 
 
 type alias Model =
-    List Element
+    { elements : List Element
+    , storagePreference : String
+    , site : String
+    }
 
 
 type Msg
-    = UpdateStr String
+    = InitData String
     | SendToJs String
     | NoOp
 
@@ -45,7 +48,12 @@ type alias Element =
 
 init : ( Model, Cmd Msg )
 init =
-    ( [], Cmd.none )
+    ( { elements = []
+      , storagePreference = "edit"
+      , site = ""
+      }
+    , Cmd.none
+    )
 
 
 
@@ -55,14 +63,14 @@ init =
 port toJs : String -> Cmd msg
 
 
-port toElm : (Value -> msg) -> Sub msg
+port initData : ({ storagePreference : String } -> msg) -> Sub msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        UpdateStr str ->
-            ( Element 1 str :: model, Cmd.none )
+        InitData prefs ->
+            ( { model | storagePreference = prefs }, Cmd.none )
 
         SendToJs str ->
             ( model, toJs str )
@@ -78,36 +86,38 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div []
-        [ elementList ( (Element 0 "Add a new Fancy element"), FontAwesome.plus (rgb 85 85 85) 14 )
-        , div [] (List.map (\element -> elementList ( element, text "" )) model)
+        [ elementList ( model.site, model.storagePreference, (Element 0 "Add a new Fancy element"), FontAwesome.plus (rgb 85 85 85) 14 )
+        , div [] (List.map (\element -> elementList ( model.site, model.storagePreference, element, text "" )) model.elements)
         ]
 
 
-elementList : ( Element, Html Msg ) -> Html Msg
-elementList ( element, icon ) =
+elementList : ( String, String, Element, Html Msg ) -> Html Msg
+elementList ( site, storagePreference, element, textPrefix ) =
     a
-        [ class "list-group-item", href "https://example.com" ]
-        [ icon, text (" " ++ element.title) ]
+        [ class "list-group-item", href (createEditUrl ( site, element.id, storagePreference )) ]
+        [ textPrefix, text (" " ++ element.title) ]
+
+
+createEditUrl : ( String, Int, String ) -> String
+createEditUrl ( site, id, storagePreference ) =
+    storagePreference ++ ".html?site=" ++ site ++ "&id=" ++ toString id
 
 
 
 -- SUBSCRIPTIONS
-
-
-decodeValue : Value -> Msg
-decodeValue x =
-    let
-        result =
-            Decode.decodeValue Decode.string x
-    in
-        case result of
-            Ok string ->
-                UpdateStr string
-
-            Err _ ->
-                NoOp
+--decodeToString : Value -> Msg
+--decodeToString x =
+--    let
+--        result =
+--            Decode.decodeValue Decode.string x
+--    in
+--        case result of
+--            Ok string ->
+--                AddElement string
+--            Err _ ->
+--                NoOp
 
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    toElm (decodeValue)
+    initData (.storagePreference >> InitData)

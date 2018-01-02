@@ -199,7 +199,8 @@
 
 	<!-- Attach Elm -->
 	<script type="text/javascript">
-		var app = Elm.Main.embed(document.getElementById('elementList'));
+		var elementList = Elm.Main.embed(document.getElementById('elementList'));
+		elementList.ports.initData.send({storagePreference: "tset"});
 	</script>
 </body>
 </html>

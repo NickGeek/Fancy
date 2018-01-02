@@ -9559,8 +9559,25 @@ var _jystic$elm_font_awesome$FontAwesome$adn = _jystic$elm_font_awesome$FontAwes
 var _jystic$elm_font_awesome$FontAwesome$adjust = _jystic$elm_font_awesome$FontAwesome_Internal$icon('M896 1440v-1088q-148 0-273 73t-198 198-73 273 73 273 198 198 273 73zm768-544q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z');
 var _jystic$elm_font_awesome$FontAwesome$fa_500px = _jystic$elm_font_awesome$FontAwesome_Internal$icon('M1529 1547l-6 6q-113 114-259 175-154 64-317 64-165 0-317-64-148-63-259-175-113-112-175-258-42-103-54-189-4-28 48-36 51-8 56 20 1 1 1 4 18 90 46 159 50 124 152 226 98 98 226 152 132 56 276 56 143 0 276-56 128-55 225-152l6-6q10-10 25-6 12 3 33 22 36 37 17 58zm-472-615l-66 66 63 63q21 21-7 49-17 17-32 17-10 0-19-10l-62-61-66 66q-5 5-15 5-15 0-31-16l-2-2q-18-15-18-29 0-7 8-17l66-65-66-66q-16-16 14-45 18-18 31-18 6 0 13 5l65 66 65-65q18-17 48 13 27 27 11 44zm471 57q0 118-46 228-45 105-126 186-80 80-187 126t-228 46-228-46-187-126q-82-82-125-186-15-32-15-40h-1q-9-27 43-44 50-16 60 12 37 99 97 167h1v-341q3-136 102-232 105-103 253-103 147 0 251 103t104 249q0 147-104.5 251t-250.5 104q-58 0-112-16-28-11-13-61 16-51 44-43l14 3q14 3 32.5 6t30.5 3q104 0 176-71.5t72-174.5q0-101-72-171-71-71-175-71-107 0-178 80-64 72-64 160v413q110 67 242 67 96 0 185-36.5t156-103.5 103.5-155 36.5-183q0-198-141-339-140-140-339-140-200 0-340 140-53 53-77 87l-2 2q-8 11-13 15.5t-21.5 9.5-38.5-3q-21-5-36.5-16.5t-15.5-26.5v-680q0-15 10.5-26.5t27.5-11.5h877q30 0 30 55t-30 55h-811v483h1q40-42 102-84t108-61q109-46 231-46 121 0 228 46t187 126q81 81 126 186 46 112 46 229zm-31-581q9 8 9 18t-5.5 18-16.5 21q-26 26-39 26-9 0-16-7-106-91-207-133-128-56-276-56-133 0-262 49-27 10-45-37-9-25-8-38 3-16 16-20 130-57 299-57 164 0 316 64 137 58 235 152z');
 
-var _NickGeek$fancy$Main$elementList = function (_p0) {
+var _NickGeek$fancy$Main$createEditUrl = function (_p0) {
 	var _p1 = _p0;
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		_p1._2,
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			'.html?site=',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_p1._0,
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'&id=',
+					_elm_lang$core$Basics$toString(_p1._1)))));
+};
+var _NickGeek$fancy$Main$elementList = function (_p2) {
+	var _p3 = _p2;
+	var _p4 = _p3._2;
 	return A2(
 		_elm_lang$html$Html$a,
 		{
@@ -9568,24 +9585,30 @@ var _NickGeek$fancy$Main$elementList = function (_p0) {
 			_0: _elm_lang$html$Html_Attributes$class('list-group-item'),
 			_1: {
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$href('https://example.com'),
+				_0: _elm_lang$html$Html_Attributes$href(
+					_NickGeek$fancy$Main$createEditUrl(
+						{ctor: '_Tuple3', _0: _p3._0, _1: _p4.id, _2: _p3._1})),
 				_1: {ctor: '[]'}
 			}
 		},
 		{
 			ctor: '::',
-			_0: _p1._1,
+			_0: _p3._3,
 			_1: {
 				ctor: '::',
 				_0: _elm_lang$html$Html$text(
-					A2(_elm_lang$core$Basics_ops['++'], ' ', _p1._0.title)),
+					A2(_elm_lang$core$Basics_ops['++'], ' ', _p4.title)),
 				_1: {ctor: '[]'}
 			}
 		});
 };
 var _NickGeek$fancy$Main$init = {
 	ctor: '_Tuple2',
-	_0: {ctor: '[]'},
+	_0: {
+		elements: {ctor: '[]'},
+		storagePreference: 'edit',
+		site: ''
+	},
 	_1: _elm_lang$core$Platform_Cmd$none
 };
 var _NickGeek$fancy$Main$toJs = _elm_lang$core$Native_Platform.outgoingPort(
@@ -9593,34 +9616,44 @@ var _NickGeek$fancy$Main$toJs = _elm_lang$core$Native_Platform.outgoingPort(
 	function (v) {
 		return v;
 	});
-var _NickGeek$fancy$Main$toElm = _elm_lang$core$Native_Platform.incomingPort('toElm', _elm_lang$core$Json_Decode$value);
-var _NickGeek$fancy$Main$Element = F2(
-	function (a, b) {
-		return {id: a, title: b};
-	});
 var _NickGeek$fancy$Main$update = F2(
 	function (msg, model) {
-		var _p2 = msg;
-		switch (_p2.ctor) {
-			case 'UpdateStr':
+		var _p5 = msg;
+		switch (_p5.ctor) {
+			case 'InitData':
 				return {
 					ctor: '_Tuple2',
-					_0: {
-						ctor: '::',
-						_0: A2(_NickGeek$fancy$Main$Element, 1, _p2._0),
-						_1: model
-					},
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{storagePreference: _p5._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'SendToJs':
 				return {
 					ctor: '_Tuple2',
 					_0: model,
-					_1: _NickGeek$fancy$Main$toJs(_p2._0)
+					_1: _NickGeek$fancy$Main$toJs(_p5._0)
 				};
 			default:
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 		}
+	});
+var _NickGeek$fancy$Main$initData = _elm_lang$core$Native_Platform.incomingPort(
+	'initData',
+	A2(
+		_elm_lang$core$Json_Decode$andThen,
+		function (storagePreference) {
+			return _elm_lang$core$Json_Decode$succeed(
+				{storagePreference: storagePreference});
+		},
+		A2(_elm_lang$core$Json_Decode$field, 'storagePreference', _elm_lang$core$Json_Decode$string)));
+var _NickGeek$fancy$Main$Model = F3(
+	function (a, b, c) {
+		return {elements: a, storagePreference: b, site: c};
+	});
+var _NickGeek$fancy$Main$Element = F2(
+	function (a, b) {
+		return {id: a, title: b};
 	});
 var _NickGeek$fancy$Main$view = function (model) {
 	return A2(
@@ -9630,9 +9663,11 @@ var _NickGeek$fancy$Main$view = function (model) {
 			ctor: '::',
 			_0: _NickGeek$fancy$Main$elementList(
 				{
-					ctor: '_Tuple2',
-					_0: A2(_NickGeek$fancy$Main$Element, 0, 'Add a new Fancy element'),
-					_1: A2(
+					ctor: '_Tuple4',
+					_0: model.site,
+					_1: model.storagePreference,
+					_2: A2(_NickGeek$fancy$Main$Element, 0, 'Add a new Fancy element'),
+					_3: A2(
 						_jystic$elm_font_awesome$FontAwesome$plus,
 						A3(_elm_lang$core$Color$rgb, 85, 85, 85),
 						14)
@@ -9647,12 +9682,14 @@ var _NickGeek$fancy$Main$view = function (model) {
 						function (element) {
 							return _NickGeek$fancy$Main$elementList(
 								{
-									ctor: '_Tuple2',
-									_0: element,
-									_1: _elm_lang$html$Html$text('')
+									ctor: '_Tuple4',
+									_0: model.site,
+									_1: model.storagePreference,
+									_2: element,
+									_3: _elm_lang$html$Html$text('')
 								});
 						},
-						model)),
+						model.elements)),
 				_1: {ctor: '[]'}
 			}
 		});
@@ -9661,20 +9698,17 @@ var _NickGeek$fancy$Main$NoOp = {ctor: 'NoOp'};
 var _NickGeek$fancy$Main$SendToJs = function (a) {
 	return {ctor: 'SendToJs', _0: a};
 };
-var _NickGeek$fancy$Main$UpdateStr = function (a) {
-	return {ctor: 'UpdateStr', _0: a};
-};
-var _NickGeek$fancy$Main$decodeValue = function (x) {
-	var result = A2(_elm_lang$core$Json_Decode$decodeValue, _elm_lang$core$Json_Decode$string, x);
-	var _p3 = result;
-	if (_p3.ctor === 'Ok') {
-		return _NickGeek$fancy$Main$UpdateStr(_p3._0);
-	} else {
-		return _NickGeek$fancy$Main$NoOp;
-	}
+var _NickGeek$fancy$Main$InitData = function (a) {
+	return {ctor: 'InitData', _0: a};
 };
 var _NickGeek$fancy$Main$subscriptions = function (model) {
-	return _NickGeek$fancy$Main$toElm(_NickGeek$fancy$Main$decodeValue);
+	return _NickGeek$fancy$Main$initData(
+		function (_p6) {
+			return _NickGeek$fancy$Main$InitData(
+				function (_) {
+					return _.storagePreference;
+				}(_p6));
+		});
 };
 var _NickGeek$fancy$Main$main = _elm_lang$html$Html$program(
 	{init: _NickGeek$fancy$Main$init, update: _NickGeek$fancy$Main$update, view: _NickGeek$fancy$Main$view, subscriptions: _NickGeek$fancy$Main$subscriptions})();
