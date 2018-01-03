@@ -22,24 +22,30 @@ function fail() {
 	alert("There was an error contacting the server. Please check your Internet connection.");
 }
 
+function safeElement(element) {
+	return element || {innerHTML: "", style: {display: ""}};
+}
+
 function displayPost(post, domPost) {
 	//Copy the template into the post
 	domPost.innerHTML = document.querySelector('[ftemplate="post"]').innerHTML;
 
 	//Fill out the template
-	domPost.querySelector('[ftemplate="title"]').innerHTML = post.title;
-	domPost.querySelector('[ftemplate="timestamp"]').innerHTML = post.timestamp;
-	domPost.querySelector('[ftemplate="content"]').innerHTML = post.html;
+	safeElement(domPost.querySelector('[ftemplate="title"]')).innerHTML = post.title;
+	safeElement(domPost.querySelector('[ftemplate="timestamp"]')).innerHTML = post.timestamp;
+	safeElement(domPost.querySelector('[ftemplate="content"]')).innerHTML = post.html;
 }
 
 /*! Fancy Bloggifier */
 document.addEventListener("DOMContentLoaded", function() {
 	var container = document.querySelector('[ftemplate="container"]');
-	document.querySelector('[ftemplate="post"]').style.display = 'none';
-	document.querySelector('[ftemplate="comments"]').style.display = 'none';
+
+	safeElement(document.querySelector('[ftemplate="post"]')).style.display = 'none';
+
+	safeElement(document.querySelector('[ftemplate="comments"]')).style.display = 'none';
 
 	if (get.view) {
-		document.querySelector('[ftemplate="comments"]').style.display = 'inherit';
+		safeElement(document.querySelector('[ftemplate="comments"]')).style.display = 'inherit';
 
 		reqGET("{0}{1}?fancy_getPost={2}".format(document.location.origin, document.location.pathname, get.view), function(data, code) {
 			if (code !== 200) return fail();
