@@ -42,7 +42,7 @@ class FancyConnector {
 		}
 
 		if ($this->blog) {
-			if ($_GET['fancy_getPosts']) {
+			if (array_key_exists('fancy_getPosts', $_GET)) {
 				if ($this->fancyVars['apiVersion'] >= 2100) {
 					$this->preparedStatements['getPosts']->bind_param('s', $this->blog);
 					$this->preparedStatements['getPosts']->execute();
@@ -55,18 +55,20 @@ class FancyConnector {
 					echo "Feature not in API"; exit();
 				}
 			}
-			elseif ($_GET['fancy_getPost']) {
+			elseif (array_key_exists('fancy_getPost', $_GET)) {
 				if ($this->fancyVars['apiVersion'] >= 2100) {
 					$this->preparedStatements['getPostByID']->bind_param('ss', $this->blog, $_GET['fancy_getPost']);
 					$this->preparedStatements['getPostByID']->execute();
 					$this->preparedStatements['getPostByID']->bind_result($id, $title, $timestamp, $post);
-					while ($this->preparedStatements['getPostByID']->fetch()) { echo json_encode(array('id' => $id, 'title' => $title, 'timestamp' => date('F j, Y', strtotime($timestamp)), 'html' => $post)); exit();  }
+					while ($this->preparedStatements['getPostByID']->fetch()) {
+						echo json_encode(array('id' => $id, 'title' => $title, 'timestamp' => date('F j, Y', strtotime($timestamp)), 'html' => $post)); exit();
+					}
 				}
 				else {
 					echo "Feature not in API"; exit();
 				}
 			}
-			elseif($_GET['rss']) {
+			elseif (array_key_exists('rss', $_GET)) {
 				if ($this->fancyVars['apiVersion'] >= 2100) {
 					$this->preparedStatements['getPostsReverse']->bind_param('s', $this->blog);
 					$this->preparedStatements['getPostsReverse']->execute();
