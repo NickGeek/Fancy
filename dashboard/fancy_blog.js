@@ -36,7 +36,10 @@ function displayPost(post, domPost) {
 	safeElement(domPost.querySelector('[ftemplate="content"]')).innerHTML = post.html;
 }
 
-/*! Fancy Bloggifier */
+function removeOpenPTag(html) {
+	return html.toLowerCase().substring(0, 3) === '<p>' ? html.substring(3, html.length - 4) : html;
+}
+
 document.addEventListener("DOMContentLoaded", function() {
 	var container = document.querySelector('[ftemplate="container"]');
 
@@ -52,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			
 			if (!httpCheck(data)) return;
 			var post = JSON.parse(data);
+			post.html = removeOpenPTag(post.html);
 
 			container.innerHTML += '<article id="post{0}" class="fancy-post"></article>'.format(post.id);
 			displayPost(post, document.getElementById("post"+post.id));
@@ -65,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 			for (var i = json.length-1; i >= 0; i--) {
 				var post = json[i];
+				post.html = removeOpenPTag(post.html);
 				post.html = '{0}&hellip; <a href="?view={1}">Read More >></a></p>'.format(post.html.split('</p>')[0], post.id);
 				
 				container.innerHTML += '<article id="post{0}" class="fancy-post"></article>'.format(post.id);
