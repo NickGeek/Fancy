@@ -37,7 +37,12 @@ function displayPost(post, domPost) {
 }
 
 function removeOpenPTag(html) {
-	return html.toLowerCase().substring(0, 3) === '<p>' ? html.substring(3, html.length - 4) : html;
+	function shouldFix() {
+		return html.toLowerCase().substring(0, 3) === '<p>'
+			&& safeElement(document.querySelector('[ftemplate="content"]')).tagName.toLowerCase() === '<p>';
+	}
+
+	return shouldFix() ? html.substring(3, html.length - 4) : html;
 }
 
 document.addEventListener("DOMContentLoaded", function() {
