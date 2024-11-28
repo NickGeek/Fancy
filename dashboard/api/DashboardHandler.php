@@ -14,20 +14,20 @@ class DashboardHandler extends FancyConnector {
 		//Prepare Statements using the new system
 		parent::prepareStatements();
 
-		$this->preparedStatements['getElementByID'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `name`, `html` FROM `elements` WHERE `site` = ? AND `id` = ?;");
-		$this->preparedStatements['getElements'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `id`, `name` FROM `elements` WHERE `site` = ?;");
+		$this->preparedStatements['getElementByID'] = $this->con->prepare("SELECT `name`, `html` FROM `elements` WHERE `site` = ? AND `id` = ?;");
+		$this->preparedStatements['getElements'] = $this->con->prepare("SELECT `id`, `name` FROM `elements` WHERE `site` = ?;");
 		$this->preparedStatements['deleteElement'] = $this->con->prepare("DELETE FROM `elements` WHERE `name` = ? AND `site` = ?;");
 		$this->preparedStatements['newElement'] = $this->con->prepare("INSERT INTO `elements` (`name`, `html`, `site`) VALUES (?, ?, ?);");
 		$this->preparedStatements['updateElement'] = $this->con->prepare("UPDATE `elements` SET `name`=?, `html`=? WHERE `id` = ?;");
 
-		$this->preparedStatements['getSites'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `name` FROM `sites` WHERE 1;");
+		$this->preparedStatements['getSites'] = $this->con->prepare("SELECT `name` FROM `sites` WHERE 1;");
 		$this->preparedStatements['newSite'] = $this->con->prepare("INSERT INTO `sites` (`name`) VALUES (?);");
 		$this->preparedStatements['deleteSite'] = $this->con->prepare("DELETE FROM `sites` WHERE `name` = ?;");
 
-		$this->preparedStatements['getBlogs'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `name` FROM `blogs` WHERE 1;");
+		$this->preparedStatements['getBlogs'] = $this->con->prepare("SELECT `name` FROM `blogs` WHERE 1;");
 		$this->preparedStatements['newBlog'] = $this->con->prepare("INSERT INTO `blogs` (`name`) VALUES (?);");
 		$this->preparedStatements['deleteBlog'] = $this->con->prepare("DELETE FROM `blogs` WHERE `name` = ?;");
-		
+
 		$this->preparedStatements['deletePost'] = $this->con->prepare("DELETE FROM `blog_posts` WHERE `title` = ? AND `blog` = ?;");
 		$this->preparedStatements['newPost'] = $this->con->prepare("INSERT INTO `blog_posts` (`title`, `html`, `blog`) VALUES (?, ?, ?);");
 		$this->preparedStatements['updatePost'] = $this->con->prepare("UPDATE `blog_posts` SET `title`=?, `html`=? WHERE `id` = ?;");
@@ -36,8 +36,8 @@ class DashboardHandler extends FancyConnector {
 
 	public function oldPrepareStatements() {
 		if ($this->site) {
-			$this->preparedStatements['getElementByID'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `name`, `html` FROM `{$this->con->real_escape_string($this->site)}` WHERE `id` = ?;");
-			$this->preparedStatements['getElements'] = $this->con->prepare("/*".MYSQLND_QC_ENABLE_SWITCH."*/ SELECT `id`, `name` FROM `{$this->con->real_escape_string($this->site)}` WHERE 1;");
+			$this->preparedStatements['getElementByID'] = $this->con->prepare("SELECT `name`, `html` FROM `{$this->con->real_escape_string($this->site)}` WHERE `id` = ?;");
+			$this->preparedStatements['getElements'] = $this->con->prepare("SELECT `id`, `name` FROM `{$this->con->real_escape_string($this->site)}` WHERE 1;");
 			$this->preparedStatements['deleteElement'] = $this->con->prepare("DELETE FROM `{$this->con->real_escape_string($this->site)}` WHERE `name` = ?;");
 			$this->preparedStatements['newElement'] = $this->con->prepare("INSERT INTO `{$this->con->real_escape_string($this->site)}` (`name`, `html`) VALUES (?, ?);");
 			$this->preparedStatements['updateElement'] = $this->con->prepare("UPDATE `{$this->con->real_escape_string($this->site)}` SET `name`=?, `html`=? WHERE `id` = ?;");

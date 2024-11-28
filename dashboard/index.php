@@ -42,7 +42,7 @@
 	<![endif]-->
 
 	<script>
-		
+
 	</script>
 </head>
 
@@ -85,7 +85,7 @@
 					<li>
 						<a href="javascript:void(0);" onclick="newsite();"><i class="fa fa-fw fa-plus"></i> Add Site</a>
 					</li>
-					
+
 					<li id="addBlogButton">
 						<a href="javascript:void(0);" onclick="newblog();"><i class="fa fa-fw fa-plus"></i> Add Blog</a>
 					</li>
@@ -102,7 +102,7 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<h1 id="pageTitle" class="page-header"></h1>
-						
+
 						<!-- Page content -->
 						<div id="elementList" class="list-group index-list">
 							<a id="newElement" class="list-group-item"><i class="fa fa-fw fa-plus"></i> Add a new Fancy element</a>
@@ -111,7 +111,7 @@
 						<div id="postList" class="list-group index-list" style="display: none;">
 							<a id="newPost" class="list-group-item"><i class="fa fa-fw fa-pencil"></i> Write a new post</a>
 						</div>
-						
+
 						<div id="websiteInstructions" style="display: none;">
 							<h3>How to enable Fancy on your webpages:</h3>
 							<ol>
